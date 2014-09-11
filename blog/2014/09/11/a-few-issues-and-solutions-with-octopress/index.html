@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>First Try With Github and Octopress - Lijun's Blog</title>
+  <title>A Few Issues and Solutions With Octopress - Lijun's Blog</title>
   <meta name="author" content="Lijun Wang">
 
   
-  <meta name="description" content="
-">
+  <meta name="description" content="Errors when running &ldquo;rake generate&rdquo; Error reading file /home/wanglij/octopress/source/posts/2014-09-11-first-try-with-github-and- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://wanglij.github.io/blog/2014/09/11/first-try-with-github-and-octopress">
+  <link rel="canonical" href="http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Lijun's Blog" type="application/atom+xml">
@@ -69,7 +68,7 @@
   
   <header>
     
-      <h1 class="entry-title">First Try With Github and Octopress</h1>
+      <h1 class="entry-title">A Few Issues and Solutions With Octopress</h1>
     
     
       <p class="meta">
@@ -85,7 +84,7 @@
   
 
 
-<time datetime="2014-09-11T16:28:59+00:00" pubdate data-updated="true">Sep 11<sup>th</sup>, 2014</time>
+<time datetime="2014-09-11T16:55:09+00:00" pubdate data-updated="true">Sep 11<sup>th</sup>, 2014</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://wanglij.github.io">Comments</a>
@@ -95,7 +94,25 @@
   </header>
 
 
-<div class="entry-content">
+<div class="entry-content"><h3>Errors when running &ldquo;rake generate&rdquo;</h3>
+
+<p>Error reading file /home/wanglij/octopress/source/<em>posts/2014-09-11-first-try-with-github-and-octopress.markdown: (<unknown>): did not find expected key while parsing a block mapping at line 2 column 1
+Error reading file /home/wanglij/octopress/source/</em>posts/2014-08-04-first-try-with-github-and-octopress.markdown: (<unknown>): did not find expected key while parsing a block mapping at line 2 column 1</p>
+
+<p>This is because there are too double quote marks with the title like &ldquo;&#8221;title&rdquo;&ldquo;.
+This is stupid, since it was generated automatically by rake new_post I believe.</p>
+
+<h3>Errors when running &ldquo;rake new_post&rdquo;</h3>
+
+<p>$rake new_post[&ldquo;title&rdquo;]
+zsh: no matches found: new_post[title]</p>
+
+<p>This was resolved by adding
+alias rake=&lsquo;noglob rake&rsquo;
+in the .zshrc file</p>
+
+<p>Found the solution here
+<a href="https://github.com/robbyrussell/oh-my-zsh/issues/433">https://github.com/robbyrussell/oh-my-zsh/issues/433</a></p>
 </div>
 
 
@@ -118,7 +135,7 @@
   
 
 
-<time datetime="2014-09-11T16:28:59+00:00" pubdate data-updated="true">Sep 11<sup>th</sup>, 2014</time>
+<time datetime="2014-09-11T16:55:09+00:00" pubdate data-updated="true">Sep 11<sup>th</sup>, 2014</time>
       
 
 <span class="categories">
@@ -132,7 +149,7 @@
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wanglij.github.io/blog/2014/09/11/first-try-with-github-and-octopress/" data-via="" data-counturl="http://wanglij.github.io/blog/2014/09/11/first-try-with-github-and-octopress/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/" data-via="" data-counturl="http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/" >Tweet</a>
   
   
   
@@ -141,10 +158,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/08/04/first-try-with-github-and-octopress/" title="Previous Post: First try with github and octopress">&laquo; First try with github and octopress</a>
+        <a class="basic-alignment left" href="/blog/2014/09/11/title/" title="Previous Post: title">&laquo; title</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/09/11/title/" title="Next Post: title">title &raquo;</a>
       
     </p>
   </footer>
@@ -206,8 +221,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://wanglij.github.io/blog/2014/09/11/first-try-with-github-and-octopress/';
-        var disqus_url = 'http://wanglij.github.io/blog/2014/09/11/first-try-with-github-and-octopress/';
+        var disqus_identifier = 'http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/';
+        var disqus_url = 'http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/';
         var disqus_script = 'embed.js';
       
     (function () {

@@ -9,7 +9,7 @@
   <meta name="author" content="Lijun Wang">
 
   
-  <meta name="description" content="It&rsquo;s been many years that I&rsquo;ve hardly written something. Once in a while, it&rsquo;s like something was tucked in you mind, and you just &hellip;">
+  <meta name="description" content="Errors when running &ldquo;rake generate&rdquo; Error reading file /home/wanglij/octopress/source/posts/2014-09-11-first-try-with-github-and- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -26,12 +26,9 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  
-
-<!--Fonts from Google's Web font directory at http://google.com/webfonts -->
-<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
 
@@ -74,6 +71,102 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/">A Few Issues and Solutions With Octopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-11T16:55:09+00:00" pubdate data-updated="true">Sep 11<sup>th</sup>, 2014</time>
+        
+           | <a href="/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/#disqus_thread"
+             data-disqus-identifier="http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Errors when running &ldquo;rake generate&rdquo;</h3>
+
+<p>Error reading file /home/wanglij/octopress/source/<em>posts/2014-09-11-first-try-with-github-and-octopress.markdown: (<unknown>): did not find expected key while parsing a block mapping at line 2 column 1
+Error reading file /home/wanglij/octopress/source/</em>posts/2014-08-04-first-try-with-github-and-octopress.markdown: (<unknown>): did not find expected key while parsing a block mapping at line 2 column 1</p>
+
+<p>This is because there are too double quote marks with the title like &ldquo;&#8221;title&rdquo;&ldquo;.
+This is stupid, since it was generated automatically by rake new_post I believe.</p>
+
+<h3>Errors when running &ldquo;rake new_post&rdquo;</h3>
+
+<p>$rake new_post[&ldquo;title&rdquo;]
+zsh: no matches found: new_post[title]</p>
+
+<p>This was resolved by adding
+alias rake=&lsquo;noglob rake&rsquo;
+in the .zshrc file</p>
+
+<p>Found the solution here
+<a href="https://github.com/robbyrussell/oh-my-zsh/issues/433">https://github.com/robbyrussell/oh-my-zsh/issues/433</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/11/title/">Title</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-11T16:47:59+00:00" pubdate data-updated="true">Sep 11<sup>th</sup>, 2014</time>
+        
+           | <a href="/blog/2014/09/11/title/#disqus_thread"
+             data-disqus-identifier="http://wanglij.github.io/blog/2014/09/11/title/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/09/11/first-try-with-github-and-octopress/">First Try With Github and Octopress</a></h1>
     
     
@@ -90,7 +183,7 @@
   
 
 
-<time datetime="2014-09-11T00:00:00+00:00" pubdate data-updated="true"></time>
+<time datetime="2014-09-11T16:28:59+00:00" pubdate data-updated="true">Sep 11<sup>th</sup>, 2014</time>
         
            | <a href="/blog/2014/09/11/first-try-with-github-and-octopress/#disqus_thread"
              data-disqus-identifier="http://wanglij.github.io/blog/2014/09/11/first-try-with-github-and-octopress/">Comments</a>
@@ -100,9 +193,7 @@
   </header>
 
 
-  <div class="entry-content"><p>It&rsquo;s been many years that I&rsquo;ve hardly written something. Once in a while, it&rsquo;s like something was tucked in you mind, and you just feel not right if you don&rsquo;t put it down somewhere. However, it&rsquo;s hard to find a place to do this for sort of geek person like me. My favorable editor is vim, and I like the pages to be neat and concise. Thank my friend, feipeng&rsquo;s help, I got this in github. This looks cool. I hope I am able to feel at home with it, and share something here soon.</p>
-
-<p>This is the first shot, and also a first test/practice.</p>
+  <div class="entry-content">
 </div>
   
   
@@ -131,7 +222,7 @@
   
 
 
-<time datetime="2014-08-04T00:00:00+00:00" pubdate data-updated="true"></time>
+<time datetime="2014-08-04T12:32:03+00:00" pubdate data-updated="true">Aug 4<sup>th</sup>, 2014</time>
         
            | <a href="/blog/2014/08/04/first-try-with-github-and-octopress/#disqus_thread"
              data-disqus-identifier="http://wanglij.github.io/blog/2014/08/04/first-try-with-github-and-octopress/">Comments</a>
@@ -162,6 +253,14 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/">A Few Issues and Solutions With Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/11/title/">Title</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/11/first-try-with-github-and-octopress/">First Try With Github and Octopress</a>
