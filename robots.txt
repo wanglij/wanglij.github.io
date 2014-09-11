@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://wanglij.github.io/sitemap.xml 
