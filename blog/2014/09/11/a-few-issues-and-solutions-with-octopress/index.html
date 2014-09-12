@@ -9,8 +9,9 @@
   <meta name="author" content="Lijun Wang">
 
   
-  <meta name="description" content="Errors when running &ldquo;rake generate&rdquo; &lsquo;&rsquo;&lsquo;
-Error reading file /home/wanglij/octopress/source/posts/2014-09-11-first-try- &hellip;">
+  <meta name="description" content="Errors when I run &ldquo;rake generate&rdquo; 1
+2
+Error reading file /home/wanglij/octopress/source/_posts/2014-09-11-first-try-with-github-and- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -95,28 +96,68 @@ Error reading file /home/wanglij/octopress/source/posts/2014-09-11-first-try- &h
   </header>
 
 
-<div class="entry-content"><h3>Errors when running &ldquo;rake generate&rdquo;</h3>
+<div class="entry-content"><h3>Errors when I run &ldquo;rake generate&rdquo;</h3>
 
-<p>&lsquo;&rsquo;&lsquo;
-Error reading file /home/wanglij/octopress/source/<em>posts/2014-09-11-first-try-with-github-and-octopress.markdown: (<unknown>): did not find expected key while parsing a block mapping at line 2 column 1
-Error reading file /home/wanglij/octopress/source/</em>posts/2014-08-04-first-try-with-github-and-octopress.markdown: (<unknown>): did not find expected key while parsing a block mapping at line 2 column 1
-&rsquo;&lsquo;&rsquo;
-This is because there are too double quote marks with the title like &ldquo;&#8221;title&rdquo;&ldquo;.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Error reading file /home/wanglij/octopress/source/_posts/2014-09-11-first-try-with-github-and-octopress.markdown: (&lt;unknown&gt;): did not find expected key while parsing a block mapping at line 2 column 1
+</span><span class='line'>Error reading file /home/wanglij/octopress/source/_posts/2014-08-04-first-try-with-github-and-octopress.markdown: (&lt;unknown&gt;): did not find expected key while parsing a block mapping at line 2 column 1</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is because there are too double quote marks with the title like &ldquo;&#8221;title&rdquo;&ldquo;.
 This is stupid, since it was generated automatically by rake new_post I believe.</p>
 
-<h3>Errors when running &ldquo;rake new_post&rdquo;</h3>
+<h3>Errors when I run &ldquo;rake new_post&rdquo;</h3>
 
-<p>$rake new_post[&ldquo;title&rdquo;]
-zsh: no matches found: new_post[title]</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$rake new_post["title"]
+</span><span class='line'>zsh: no matches found: new_post[title]</span></code></pre></td></tr></table></div></figure>
 
-<p>This was resolved by adding
-&lsquo;&rsquo;&lsquo;
-alias rake=&#8217;noglob rake&rsquo;
-&lsquo;&rsquo;&lsquo;
-in the .zshrc file</p>
 
-<p>Found the solution here
-<a href="https://github.com/robbyrussell/oh-my-zsh/issues/433">https://github.com/robbyrussell/oh-my-zsh/issues/433</a></p>
+<p>This was resolved by adding</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>alias rake='noglob rake' </span></code></pre></td></tr></table></div></figure>
+
+
+<p>in the .zshrc file</p>
+
+<p>Found the solution <a href="https://github.com/robbyrussell/oh-my-zsh/issues/433">here</a></p>
+
+<h3>Error when I run &ldquo;rake deploy&rdquo;</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>...
+</span><span class='line'>To https://github.com/wanglij/wanglij.github.io
+</span><span class='line'> ! [rejected]        master -&gt; master (non-fast-forward)
+</span><span class='line'>error: failed to push some refs to 'https://github.com/wanglij/wanglij.github.io'
+</span><span class='line'>hint: Updates were rejected because the tip of your current branch is behind
+</span><span class='line'>hint: its remote counterpart. Integrate the remote changes (e.g.
+</span><span class='line'>hint: 'git pull ...') before pushing again.
+</span><span class='line'>hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+</span><span class='line'>
+</span><span class='line'>## Github Pages deploy complete</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Sloved by running the following command in the /source/_post direcotry</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git pull origin master</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>A good reference to make Octopress and Disques Comments work finally.</h3>
+
+<p><a href="http://hal.case.edu/~rrc/blog/2013/09/29/disqus-comments-not-visible/">Troubleshooting Octopress - Disqus Comments Not Visible</a></p>
 </div>
 
 

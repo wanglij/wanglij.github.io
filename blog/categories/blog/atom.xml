@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Blog | Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/blog/categories/blog/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2014-09-12T11:05:38+00:00</updated>
+  <updated>2014-09-12T11:27:08+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -18,28 +18,51 @@
     <link href="http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/"/>
     <updated>2014-09-11T16:55:09+00:00</updated>
     <id>http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress</id>
-    <content type="html"><![CDATA[<h3>Errors when running &ldquo;rake generate&rdquo;</h3>
+    <content type="html"><![CDATA[<h3>Errors when I run &ldquo;rake generate&rdquo;</h3>
 
-<p>&lsquo;&rsquo;&lsquo;
-Error reading file /home/wanglij/octopress/source/<em>posts/2014-09-11-first-try-with-github-and-octopress.markdown: (<unknown>): did not find expected key while parsing a block mapping at line 2 column 1
-Error reading file /home/wanglij/octopress/source/</em>posts/2014-08-04-first-try-with-github-and-octopress.markdown: (<unknown>): did not find expected key while parsing a block mapping at line 2 column 1
-&rsquo;&lsquo;&rsquo;
-This is because there are too double quote marks with the title like &ldquo;&#8221;title&rdquo;&ldquo;.
+<pre><code>Error reading file /home/wanglij/octopress/source/_posts/2014-09-11-first-try-with-github-and-octopress.markdown: (&lt;unknown&gt;): did not find expected key while parsing a block mapping at line 2 column 1
+Error reading file /home/wanglij/octopress/source/_posts/2014-08-04-first-try-with-github-and-octopress.markdown: (&lt;unknown&gt;): did not find expected key while parsing a block mapping at line 2 column 1
+</code></pre>
+
+<p>This is because there are too double quote marks with the title like &ldquo;&#8221;title&rdquo;&ldquo;.
 This is stupid, since it was generated automatically by rake new_post I believe.</p>
 
-<h3>Errors when running &ldquo;rake new_post&rdquo;</h3>
+<h3>Errors when I run &ldquo;rake new_post&rdquo;</h3>
 
-<p>$rake new_post[&ldquo;title&rdquo;]
-zsh: no matches found: new_post[title]</p>
+<pre><code>$rake new_post["title"]
+zsh: no matches found: new_post[title]
+</code></pre>
 
 <p>This was resolved by adding
-&lsquo;&rsquo;&lsquo;
-alias rake=&#8217;noglob rake&rsquo;
-&lsquo;&rsquo;&lsquo;
+<code>
+alias rake='noglob rake'
+</code>
 in the .zshrc file</p>
 
-<p>Found the solution here
-<a href="https://github.com/robbyrussell/oh-my-zsh/issues/433">https://github.com/robbyrussell/oh-my-zsh/issues/433</a></p>
+<p>Found the solution <a href="https://github.com/robbyrussell/oh-my-zsh/issues/433">here</a></p>
+
+<h3>Error when I run &ldquo;rake deploy&rdquo;</h3>
+
+<pre><code>...
+To https://github.com/wanglij/wanglij.github.io
+ ! [rejected]        master -&gt; master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/wanglij/wanglij.github.io'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+## Github Pages deploy complete
+</code></pre>
+
+<p>Sloved by running the following command in the /source/_post direcotry
+<code>
+$ git pull origin master
+</code></p>
+
+<h3>A good reference to make Octopress and Disques Comments work finally.</h3>
+
+<p><a href="http://hal.case.edu/~rrc/blog/2013/09/29/disqus-comments-not-visible/">Troubleshooting Octopress - Disqus Comments Not Visible</a></p>
 ]]></content>
   </entry>
   
