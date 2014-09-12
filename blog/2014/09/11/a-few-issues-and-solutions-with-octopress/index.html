@@ -9,7 +9,8 @@
   <meta name="author" content="Lijun Wang">
 
   
-  <meta name="description" content="Errors when running &ldquo;rake generate&rdquo; Error reading file /home/wanglij/octopress/source/posts/2014-09-11-first-try-with-github-and- &hellip;">
+  <meta name="description" content="Errors when running &ldquo;rake generate&rdquo; &lsquo;&rsquo;&lsquo;
+Error reading file /home/wanglij/octopress/source/posts/2014-09-11-first-try- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -96,10 +97,11 @@
 
 <div class="entry-content"><h3>Errors when running &ldquo;rake generate&rdquo;</h3>
 
-<p>Error reading file /home/wanglij/octopress/source/<em>posts/2014-09-11-first-try-with-github-and-octopress.markdown: (<unknown>): did not find expected key while parsing a block mapping at line 2 column 1
-Error reading file /home/wanglij/octopress/source/</em>posts/2014-08-04-first-try-with-github-and-octopress.markdown: (<unknown>): did not find expected key while parsing a block mapping at line 2 column 1</p>
-
-<p>This is because there are too double quote marks with the title like &ldquo;&#8221;title&rdquo;&ldquo;.
+<p>&lsquo;&rsquo;&lsquo;
+Error reading file /home/wanglij/octopress/source/<em>posts/2014-09-11-first-try-with-github-and-octopress.markdown: (<unknown>): did not find expected key while parsing a block mapping at line 2 column 1
+Error reading file /home/wanglij/octopress/source/</em>posts/2014-08-04-first-try-with-github-and-octopress.markdown: (<unknown>): did not find expected key while parsing a block mapping at line 2 column 1
+&rsquo;&lsquo;&rsquo;
+This is because there are too double quote marks with the title like &ldquo;&#8221;title&rdquo;&ldquo;.
 This is stupid, since it was generated automatically by rake new_post I believe.</p>
 
 <h3>Errors when running &ldquo;rake new_post&rdquo;</h3>
@@ -108,7 +110,9 @@ This is stupid, since it was generated automatically by rake new_post I believe.
 zsh: no matches found: new_post[title]</p>
 
 <p>This was resolved by adding
-alias rake=&lsquo;noglob rake&rsquo;
+&lsquo;&rsquo;&lsquo;
+alias rake=&#8217;noglob rake&rsquo;
+&lsquo;&rsquo;&lsquo;
 in the .zshrc file</p>
 
 <p>Found the solution here
@@ -158,7 +162,7 @@ in the .zshrc file</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/09/11/title/" title="Previous Post: title">&laquo; title</a>
+        <a class="basic-alignment left" href="/blog/2014/08/04/first-try-with-github-and-octopress/" title="Previous Post: First try with github and octopress">&laquo; First try with github and octopress</a>
       
       
     </p>
@@ -181,14 +185,6 @@ in the .zshrc file</p>
     
       <li class="post">
         <a href="/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/">A Few Issues and Solutions With Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/09/11/title/">Title</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/09/11/first-try-with-github-and-octopress/">First Try With Github and Octopress</a>
       </li>
     
       <li class="post">
@@ -217,7 +213,7 @@ in the .zshrc file</p>
   
 
 <script type="text/javascript">
-      var disqus_shortname = 'nowoer';
+      var disqus_shortname = 'lijunsblog';
       
         
         // var disqus_developer = 1;
