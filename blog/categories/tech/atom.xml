@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/blog/categories/tech/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2014-09-23T18:01:05+00:00</updated>
+  <updated>2014-09-23T20:33:00+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -120,6 +120,19 @@ Since I want the owner of folders to be my username instead of root, so I added 
 Now all the shared folders should be mounted to your linux directories automatically when you guest ArchLinux is boot up.</li>
 </ol>
 
+
+<h3>Mount vmblock fuse manually</h3>
+
+<p>The issue here is that it gives the following error when I run vmware-user-suid-wrapper command.
+<code>
+[wanglij@~]$ vmware-user-suid-wrapper
+vmware-user: could not open /proc/fs/vmblock/dev
+</code>
+This is because vmblock was not mounted. To fix this problem, run:
+<code>
+[wanglij@~]$ sudo mkdir /var/run/vmblock-fuse
+[wanglij@~]$ sudo vmware-vmblock-fuse -o subtype=vmware-vmblock,default_permissions,allow_other /var/run/vmblock-fuse
+</code></p>
 ]]></content>
   </entry>
   
