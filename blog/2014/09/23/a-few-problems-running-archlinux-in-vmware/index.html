@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Lijun's Blog</title>
+  <title>A Few Problems Running ArchLinux in VMware - Lijun's Blog</title>
   <meta name="author" content="Lijun Wang">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://wanglij.github.io">
+  <link rel="canonical" href="http://wanglij.github.io/blog/2014/09/23/a-few-problems-running-archlinux-in-vmware">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Lijun's Blog" type="application/atom+xml">
@@ -63,15 +63,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/09/23/a-few-problems-running-archlinux-in-vmware/">A Few Problems Running ArchLinux in VMware</a></h1>
+      <h1 class="entry-title">A Few Problems Running ArchLinux in VMware</h1>
     
     
       <p class="meta">
@@ -89,15 +86,15 @@
 
 <time datetime="2014-09-23T16:53:41+00:00" pubdate data-updated="true">Sep 23<sup>rd</sup>, 2014</time>
         
-           | <a href="/blog/2014/09/23/a-few-problems-running-archlinux-in-vmware/#disqus_thread"
-             data-disqus-identifier="http://wanglij.github.io/blog/2014/09/23/a-few-problems-running-archlinux-in-vmware/">Comments</a>
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wanglij.github.io">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I have installed ArchLinux, and the awesome window management system on top of it for a while, but there are still a couple of problems not solved yet. Basically, I sloved these two issues by following the instructions on the wiki page of <a href="https://wiki.archlinux.org/index.php/Installing_Arch_Linux_in_VMware">Installing Arch Linux in VMware</a>, but it&rsquo;s not update to date, so I have to do many trouble shootings to make it work finally, and updated the wiki page.</p>
+<div class="entry-content"><p>I have installed ArchLinux, and the awesome window management system on top of it for a while, but there are still a couple of problems not solved yet. Basically, I sloved these two issues by following the instructions on the wiki page of <a href="https://wiki.archlinux.org/index.php/Installing_Arch_Linux_in_VMware">Installing Arch Linux in VMware</a>, but it&rsquo;s not update to date, so I have to do many trouble shootings to make it work finally, and updated the wiki page.</p>
 
 <p>First, I installed both the official vmware tools and Open-VM-Tools. After installing the xf86-video-vmware and svga-dri (no idea which one is the culprit), my x window was screwed up. I noticed that it complains confiliction with xorg-server during installing. Finally the Xwrapper.config changes combed with xf86-video-vmware-git from the AUR got everything fixed. This trouble shooting was added to the wiki page.</p>
 
@@ -261,122 +258,16 @@ Now all the shared folders should be mounted to your linux directories automatic
 </ol>
 
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/">A Few Issues and Solutions With Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Lijun Wang</span></span>
 
-<time datetime="2014-09-11T16:55:09+00:00" pubdate data-updated="true">Sep 11<sup>th</sup>, 2014</time>
-        
-           | <a href="/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/#disqus_thread"
-             data-disqus-identifier="http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Errors when I run &ldquo;rake generate&rdquo;</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Error reading file /home/wanglij/octopress/source/_posts/2014-09-11-first-try-with-github-and-octopress.markdown: (&lt;unknown&gt;): did not find expected key while parsing a block mapping at line 2 column 1
-</span><span class='line'>Error reading file /home/wanglij/octopress/source/_posts/2014-08-04-first-try-with-github-and-octopress.markdown: (&lt;unknown&gt;): did not find expected key while parsing a block mapping at line 2 column 1</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This is because there are too double quote marks with the title like &ldquo;&#8221;title&rdquo;&ldquo;.
-This is stupid, since it was generated automatically by rake new_post I believe.</p>
-
-<h3>Errors when I run &ldquo;rake new_post&rdquo;</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$rake new_post["title"]
-</span><span class='line'>zsh: no matches found: new_post[title]</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This was resolved by adding</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>alias rake='noglob rake' </span></code></pre></td></tr></table></div></figure>
-
-
-<p>in the .zshrc file</p>
-
-<p>Found the solution <a href="https://github.com/robbyrussell/oh-my-zsh/issues/433">here</a></p>
-
-<h3>Error when I run &ldquo;rake deploy&rdquo;</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>...
-</span><span class='line'>To https://github.com/wanglij/wanglij.github.io
-</span><span class='line'> ! [rejected]        master -&gt; master (non-fast-forward)
-</span><span class='line'>error: failed to push some refs to 'https://github.com/wanglij/wanglij.github.io'
-</span><span class='line'>hint: Updates were rejected because the tip of your current branch is behind
-</span><span class='line'>hint: its remote counterpart. Integrate the remote changes (e.g.
-</span><span class='line'>hint: 'git pull ...') before pushing again.
-</span><span class='line'>hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-</span><span class='line'>
-</span><span class='line'>## Github Pages deploy complete</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Sloved by running the following command in the /source/_post direcotry</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git pull origin master</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>A good reference to make Octopress and Disques Comments work finally.</h3>
-
-<p><a href="http://hal.case.edu/~rrc/blog/2013/09/29/disqus-comments-not-visible/">Troubleshooting Octopress - Disqus Comments Not Visible</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/04/first-try-with-github-and-octopress/">First Try With Github and Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -388,32 +279,44 @@ This is stupid, since it was generated automatically by rake new_post I believe.
   
 
 
-<time datetime="2014-08-04T12:32:03+00:00" pubdate data-updated="true">Aug 4<sup>th</sup>, 2014</time>
-        
-           | <a href="/blog/2014/08/04/first-try-with-github-and-octopress/#disqus_thread"
-             data-disqus-identifier="http://wanglij.github.io/blog/2014/08/04/first-try-with-github-and-octopress/">Comments</a>
-        
-      </p>
+<time datetime="2014-09-23T16:53:41+00:00" pubdate data-updated="true">Sep 23<sup>rd</sup>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>It&rsquo;s been many years that I&rsquo;ve hardly written something. Once in a while, it&rsquo;s like something was tucked in you mind, and you just feel not right if you don&rsquo;t put it down somewhere. However, it&rsquo;s hard to find a place to do this for sort of geek person like me. My favorable editor is vim, and I like the pages to be neat and concise. Thank my friend, feipeng&rsquo;s help, I got this in github. This looks cool. I hope I am able to feel at home with it, and share something here soon.</p>
-
-<p>This is the first shot, and also a first test/practice.</p>
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wanglij.github.io/blog/2014/09/23/a-few-problems-running-archlinux-in-vmware/" data-via="" data-counturl="http://wanglij.github.io/blog/2014/09/23/a-few-problems-running-archlinux-in-vmware/" >Tweet</a>
+  
+  
+  
 </div>
-  
-  
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/" title="Previous Post: A few issues and solutions with octopress">&laquo; A few issues and solutions with octopress</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -442,6 +345,7 @@ This is stupid, since it was generated automatically by rake new_post I believe.
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -456,7 +360,10 @@ This is stupid, since it was generated automatically by rake new_post I believe.
       var disqus_shortname = 'lijunsblog';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wanglij.github.io/blog/2014/09/23/a-few-problems-running-archlinux-in-vmware/';
+        var disqus_url = 'http://wanglij.github.io/blog/2014/09/23/a-few-problems-running-archlinux-in-vmware/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

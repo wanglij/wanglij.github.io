@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2014-09-12T11:27:08+00:00</updated>
+  <updated>2014-09-23T18:01:05+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -12,6 +12,177 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A Few Problems Running ArchLinux in VMware]]></title>
+    <link href="http://wanglij.github.io/blog/2014/09/23/a-few-problems-running-archlinux-in-vmware/"/>
+    <updated>2014-09-23T16:53:41+00:00</updated>
+    <id>http://wanglij.github.io/blog/2014/09/23/a-few-problems-running-archlinux-in-vmware</id>
+    <content type="html"><![CDATA[<p>I have installed ArchLinux, and the awesome window management system on top of it for a while, but there are still a couple of problems not solved yet. Basically, I sloved these two issues by following the instructions on the wiki page of <a href="https://wiki.archlinux.org/index.php/Installing_Arch_Linux_in_VMware">Installing Arch Linux in VMware</a>, but it&rsquo;s not update to date, so I have to do many trouble shootings to make it work finally, and updated the wiki page.</p>
+
+<p>First, I installed both the official vmware tools and Open-VM-Tools. After installing the xf86-video-vmware and svga-dri (no idea which one is the culprit), my x window was screwed up. I noticed that it complains confiliction with xorg-server during installing. Finally the Xwrapper.config changes combed with xf86-video-vmware-git from the AUR got everything fixed. This trouble shooting was added to the wiki page.</p>
+
+<h3>Resolution problem</h3>
+
+<p>When the awesome/X window was started, it always runs in the smallest resolution.
+We can run the xrandr command to change the resolution after the window is started</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ xrandr -s 1920x1200</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But, usually, we hope the window will fit the resolution of our screen when it is started.
+On the other hand, the resolution can only be changed to the mode available listed by the xrandr command.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~]$ xrandr
+</span><span class='line'>Screen 0: minimum 1 x 1, current 1920 x 1080, maximum 8192 x 8192
+</span><span class='line'>Virtual1 connected 1920x1080+0+0 (normal left inverted right x axis y axis) 0mm x 0mm
+</span><span class='line'>   800x600       60.00 +  60.32  
+</span><span class='line'>   2560x1600     59.99  
+</span><span class='line'>   1920x1440     60.00  
+</span><span class='line'>   1856x1392     60.00  
+</span><span class='line'>   1792x1344     60.00  
+</span><span class='line'>   1920x1200     59.88  
+</span><span class='line'>   1600x1200     60.00  
+</span><span class='line'>   1680x1050     59.95  
+</span><span class='line'>   1400x1050     59.98  
+</span><span class='line'>   1280x1024     60.02  
+</span><span class='line'>   1440x900      59.89  
+</span><span class='line'>   1280x960      60.00  
+</span><span class='line'>   1360x768      60.02  
+</span><span class='line'>   1280x800      59.81  
+</span><span class='line'>   1152x864      75.00  
+</span><span class='line'>   1280x768      59.87  
+</span><span class='line'>   1024x768      60.00  
+</span><span class='line'>   640x480       59.94  
+</span><span class='line'>Virtual2 disconnected (normal left inverted right x axis y axis)
+</span><span class='line'>Virtual3 disconnected (normal left inverted right x axis y axis)
+</span><span class='line'>Virtual4 disconnected (normal left inverted right x axis y axis)
+</span><span class='line'>Virtual5 disconnected (normal left inverted right x axis y axis)
+</span><span class='line'>Virtual6 disconnected (normal left inverted right x axis y axis)
+</span><span class='line'>Virtual7 disconnected (normal left inverted right x axis y axis)
+</span><span class='line'>Virtual8 disconnected (normal left inverted right x axis y axis)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To fix this problem, we can follow the following steps:</p>
+
+<ol>
+<li><p>Create an xorg.conf
+If there is no this file in /etc/X11/, create an xorg.conf by following the instructions <a href="https://wiki.archlinux.org/index.php/xorg">here</a>, otherwise just skip this step.</p></li>
+<li><p>Run the gtf command to calculate the modeline:
+For example, I want my window to be in the resolution of 1920x1080, then I got the modeline like below:</p></li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gtf 1920 1080 60
+</span><span class='line'>  # 1920x1080 @ 60.00 Hz (GTF) hsync: 67.08 kHz; pclk: 172.80 MHz
+</span><span class='line'>  Modeline "1920x1080_60.00"  172.80  1920 2040 2248 2576  1080 1081 1084 1118  -HSync +Vsync</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>Open the xorg.conf, and make the changes:
+Find the &ldquo;Monitor&rdquo; Section, and add the following two lines:</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Modeline "1920x1080_60.00"  172.80  1920 2040 2248 2576  1080 1081 1084 1118
+</span><span class='line'>Option        "PreferredMode" "1920x1080_60.00"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that when we copy the Modeline generated by the gtf command above, we deleted the &ldquo;-HSync +Vsync&rdquo; part.
+Go to the &ldquo;Display&rdquo; SubSection of the &ldquo;Screen&rdquo; Section, and add the following line</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Modes        "1920x1080"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now if you restart you awesome, it will be run in the resolution that you expected.</p>
+
+<h3>Sharing Folders between host and guest</h3>
+
+<ol>
+<li>Share folders by selecting Edit virtual machine settings > Options > Shared Folders > Always enabled, and creating new shares. After doing this, we should be able to see the shared folders by running the following command:
+For example, I created two shared folders, Documents and P4.</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ vmware-hgfsclient
+</span><span class='line'>Documents
+</span><span class='line'>P4</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>Add the vmhgfs module to mkinitcpio.conf</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/etc/mkinitcpio.conf
+</span><span class='line'>MODULES="vsock vmw_vsock_vmci_transport vmw_balloon vmw_vmci vmwgfx vmhgfs"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Run:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo mkinitcpio -p linux</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>Add a rule in /etc/fstab for each share
+Since I want the owner of folders to be my username instead of root, so I added some options to each rule.</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>.host:/Documents    /home/wanglij/Documents vmhgfs  defaults,uid=1000,dmask=022,fmask=022,user  0 0
+</span><span class='line'>.host:/P4       /home/wanglij/P4    vmhgfs  defaults,uid=1000,dmask=022,fmask=022,user  0 0</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>Reboot ArchLinux
+Now all the shared folders should be mounted to your linux directories automatically when you guest ArchLinux is boot up.</li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A Few Issues and Solutions With Octopress]]></title>
