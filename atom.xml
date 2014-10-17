@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2014-09-23T20:33:00+00:00</updated>
+  <updated>2014-10-17T18:31:28+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[读书]]></title>
+    <link href="http://wanglij.github.io/blog/2014/10/17/reading/"/>
+    <updated>2014-10-17T18:23:41+00:00</updated>
+    <id>http://wanglij.github.io/blog/2014/10/17/reading</id>
+    <content type="html"><![CDATA[<p>读书是另一种旅行
+且是只属于一个人的静静的旅行
+没有嘈杂，只有风景
+没有限速，在文字里走过舒畅的每个英里
+喜欢读书，也喜欢旅行</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A Few Problems Running ArchLinux in VMware]]></title>
