@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Bible | Lijun's Blog]]></title>
-  <link href="http://wanglij.github.io/blog/categories/bible/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Bible_study | Lijun's Blog]]></title>
+  <link href="http://wanglij.github.io/blog/categories/bible-study/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2014-10-24T20:17:49+00:00</updated>
+  <updated>2014-10-24T20:53:15+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -34,12 +34,16 @@
 
 <h3>背景知识</h3>
 
+<h4>参考时间表</h4>
+
+<p><img class="center" src="/images/BibleTimeline-4.png"></p>
+
 <h4>新巴比伦王列表</h4>
 
 <table>
 <thead>
 <tr>
-<th>王名字</th>
+<th>王的名字</th>
 <th> 在位的时间</th>
 <th> 关系</th>
 </tr>
@@ -83,6 +87,8 @@
 </tbody>
 </table>
 
+
+<p><br></p>
 
 <h4>伯沙撒其人</h4>
 
