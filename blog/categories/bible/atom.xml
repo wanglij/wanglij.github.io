@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bible | Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/blog/categories/bible/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2014-10-24T18:39:54+00:00</updated>
+  <updated>2014-10-24T18:42:06+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -18,7 +18,11 @@
     <link href="http://wanglij.github.io/blog/2014/10/24/daniel05-study-notes/"/>
     <updated>2014-10-24T15:28:39+00:00</updated>
     <id>http://wanglij.github.io/blog/2014/10/24/daniel05-study-notes</id>
-    <content type="html"><![CDATA[<table>
+    <content type="html"><![CDATA[<p>body {
+    margin: 0; padding: 0;
+}</p>
+
+<table>
 <thead>
 <tr>
 <th>Scripture       </th>
