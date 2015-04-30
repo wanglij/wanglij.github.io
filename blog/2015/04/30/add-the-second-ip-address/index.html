@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>A Few Issues and Solutions With Octopress - Lijun's Blog</title>
+  <title>Add the Second IP Address - Lijun's Blog</title>
   <meta name="author" content="Lijun Wang">
 
   
-  <meta name="description" content="Errors when I run &ldquo;rake generate&rdquo; 1
-2
-Error reading file /home/wanglij/octopress/source/_posts/2014-09-11-first-try-with-github-and- &hellip;">
+  <meta name="description" content="The senario is like this I need my Arch Linux to be able to work in two different network environments, and I hate the idea of adding another network &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@ Error reading file /home/wanglij/octopress/source/_posts/2014-09-11-first-try-wi
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress">
+  <link rel="canonical" href="http://wanglij.github.io/blog/2015/04/30/add-the-second-ip-address">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Lijun's Blog" type="application/atom+xml">
@@ -70,7 +68,7 @@ Error reading file /home/wanglij/octopress/source/_posts/2014-09-11-first-try-wi
   
   <header>
     
-      <h1 class="entry-title">A Few Issues and Solutions With Octopress</h1>
+      <h1 class="entry-title">Add the Second IP Address</h1>
     
     
       <p class="meta">
@@ -86,7 +84,7 @@ Error reading file /home/wanglij/octopress/source/_posts/2014-09-11-first-try-wi
   
 
 
-<time datetime="2014-09-11T16:55:09+00:00" pubdate data-updated="true">Sep 11<sup>th</sup>, 2014</time>
+<time datetime="2015-04-30T22:10:53+00:00" pubdate data-updated="true">Apr 30<sup>th</sup>, 2015</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://wanglij.github.io">Comments</a>
@@ -96,36 +94,31 @@ Error reading file /home/wanglij/octopress/source/_posts/2014-09-11-first-try-wi
   </header>
 
 
-<div class="entry-content"><h3>Errors when I run &ldquo;rake generate&rdquo;</h3>
+<div class="entry-content"><h3>The senario is like this</h3>
+
+<p>I need my Arch Linux to be able to work in two different network environments, and I hate the idea of adding another network adapter to it, although it is running in a VMWare virtual machine.</p>
+
+<h3>Solution: adding new IP address</h3>
+
+<p>It was configured to get dynamic IP address by running the following command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo systemctl enable dhcpcd@net0.service</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note: /usr/lib/systemd/system/dhcpcd@.service should be there if dhcpcd was installed.</p>
+
+<p>Now add the following files:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Error reading file /home/wanglij/octopress/source/_posts/2014-09-11-first-try-with-github-and-octopress.markdown: (&lt;unknown&gt;): did not find expected key while parsing a block mapping at line 2 column 1
-</span><span class='line'>Error reading file /home/wanglij/octopress/source/_posts/2014-08-04-first-try-with-github-and-octopress.markdown: (&lt;unknown&gt;): did not find expected key while parsing a block mapping at line 2 column 1</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/etc/conf.d/network@net0
+</span><span class='line'>address=10.255.255.77
+</span><span class='line'>netmask=24
+</span><span class='line'>broadcast=10.255.255.255</span></code></pre></td></tr></table></div></figure>
 
-
-<p>This is because there are too double quote marks with the title like &ldquo;&#8221;title&rdquo;&ldquo;.
-This is stupid, since it was generated automatically by rake new_post I believe.</p>
-
-<h3>Errors when I run &ldquo;rake new_post&rdquo;</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$rake new_post["title"]
-</span><span class='line'>zsh: no matches found: new_post[title]</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This was resolved by adding</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>alias rake='noglob rake' </span></code></pre></td></tr></table></div></figure>
-
-
-<p>in the .zshrc file</p>
-
-<p>Found the solution <a href="https://github.com/robbyrussell/oh-my-zsh/issues/433">here</a></p>
-
-<h3>Error when I run &ldquo;rake deploy&rdquo;</h3>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -137,27 +130,45 @@ This is stupid, since it was generated automatically by rake new_post I believe.
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>...
-</span><span class='line'>To https://github.com/wanglij/wanglij.github.io
-</span><span class='line'> ! [rejected]        master -&gt; master (non-fast-forward)
-</span><span class='line'>error: failed to push some refs to 'https://github.com/wanglij/wanglij.github.io'
-</span><span class='line'>hint: Updates were rejected because the tip of your current branch is behind
-</span><span class='line'>hint: its remote counterpart. Integrate the remote changes (e.g.
-</span><span class='line'>hint: 'git pull ...') before pushing again.
-</span><span class='line'>hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/etc/systemd/system/network@net0.service
+</span><span class='line'>[Unit]
+</span><span class='line'>Description=Network connectivity (%i)
+</span><span class='line'>Wants=network.target
+</span><span class='line'>Before=network.target
+</span><span class='line'>BindsTo=sys-subsystem-net-devices-%i.device
+</span><span class='line'>After=sys-subsystem-net-devices-%i.device
 </span><span class='line'>
-</span><span class='line'>## Github Pages deploy complete</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>[Service]
+</span><span class='line'>Type=oneshot
+</span><span class='line'>RemainAfterExit=yes
+</span><span class='line'>EnvironmentFile=/etc/conf.d/network@%i
+</span><span class='line'>
+</span><span class='line'>ExecStart=/usr/bin/ip link add link %i name %i.1 type vlan id 1
+</span><span class='line'>ExecStart=/usr/bin/ip link set dev %i.1 up
+</span><span class='line'>ExecStart=/usr/bin/ip addr add ${address}/${netmask} dev %i.1 broadcast ${broadcast}
+</span><span class='line'>
+</span><span class='line'>ExecStop=/usr/bin/ip addr flush dev %i.1
+</span><span class='line'>ExecStop=/usr/bin/ip route flush dev %i.1
+</span><span class='line'>ExecStop=/usr/bin/ip link set dev %i.1 down
+</span><span class='line'>
+</span><span class='line'>[Install]
+</span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Sloved by running the following command in the /source/_post direcotry</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git pull origin master</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>A good reference to make Octopress and Disques Comments work finally.</h3>
-
-<p><a href="http://hal.case.edu/~rrc/blog/2013/09/29/disqus-comments-not-visible/">Troubleshooting Octopress - Disqus Comments Not Visible</a></p>
+<p>Then enable <a href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x6e;&#101;&#116;&#119;&#111;&#114;&#107;&#64;&#x6e;&#101;&#x74;&#x30;&#x2e;&#115;&#x65;&#x72;&#x76;&#105;&#99;&#x65;&#46;">&#x6e;&#x65;&#x74;&#119;&#111;&#x72;&#107;&#x40;&#110;&#101;&#116;&#x30;&#46;&#115;&#x65;&#114;&#118;&#x69;&#x63;&#101;&#46;</a></p>
 </div>
 
 
@@ -180,21 +191,15 @@ This is stupid, since it was generated automatically by rake new_post I believe.
   
 
 
-<time datetime="2014-09-11T16:55:09+00:00" pubdate data-updated="true">Sep 11<sup>th</sup>, 2014</time>
+<time datetime="2015-04-30T22:10:53+00:00" pubdate data-updated="true">Apr 30<sup>th</sup>, 2015</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/tech/'>tech</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/" data-via="" data-counturl="http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wanglij.github.io/blog/2015/04/30/add-the-second-ip-address/" data-via="" data-counturl="http://wanglij.github.io/blog/2015/04/30/add-the-second-ip-address/" >Tweet</a>
   
   
   
@@ -203,10 +208,8 @@ This is stupid, since it was generated automatically by rake new_post I believe.
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/08/04/first-try-with-github-and-octopress/" title="Previous Post: First try with github and octopress">&laquo; First try with github and octopress</a>
+        <a class="basic-alignment left" href="/blog/2015/04/21/about-belief/" title="Previous Post: 理解基督信仰">&laquo; 理解基督信仰</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/09/23/a-few-problems-running-archlinux-in-vmware/" title="Next Post: A few problems running ArchLinux in VMware">A few problems running ArchLinux in VMware &raquo;</a>
       
     </p>
   </footer>
@@ -272,8 +275,8 @@ This is stupid, since it was generated automatically by rake new_post I believe.
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/';
-        var disqus_url = 'http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/';
+        var disqus_identifier = 'http://wanglij.github.io/blog/2015/04/30/add-the-second-ip-address/';
+        var disqus_url = 'http://wanglij.github.io/blog/2015/04/30/add-the-second-ip-address/';
         var disqus_script = 'embed.js';
       
     (function () {

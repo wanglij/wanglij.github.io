@@ -9,8 +9,7 @@
   <meta name="author" content="Lijun Wang">
 
   
-  <meta name="description" content="关于罪 我们常说人无完人，就是说世上没有一个人是完美的人。那之所以让人不完美的原因就是这里所说的罪，或者说是原罪。这个罪有别于法律上所说的罪，但又相关。
-打个不恰当的比方，比如我们在路上开车的时候总要按照限速行驶。如果严格按照限速的规定，我们开过车的人没有一个没超过速的人，无论是有意还是无意的。 &hellip;">
+  <meta name="description" content="The senario is like this I need my Arch Linux to be able to work in two different network environments, and I hate the idea of adding another network &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,119 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/30/add-the-second-ip-address/">Add the Second IP Address</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-30T22:10:53+00:00" pubdate data-updated="true">Apr 30<sup>th</sup>, 2015</time>
+        
+           | <a href="/blog/2015/04/30/add-the-second-ip-address/#disqus_thread"
+             data-disqus-identifier="http://wanglij.github.io/blog/2015/04/30/add-the-second-ip-address/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>The senario is like this</h3>
+
+<p>I need my Arch Linux to be able to work in two different network environments, and I hate the idea of adding another network adapter to it, although it is running in a VMWare virtual machine.</p>
+
+<h3>Solution: adding new IP address</h3>
+
+<p>It was configured to get dynamic IP address by running the following command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo systemctl enable dhcpcd@net0.service</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note: /usr/lib/systemd/system/dhcpcd@.service should be there if dhcpcd was installed.</p>
+
+<p>Now add the following files:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/etc/conf.d/network@net0
+</span><span class='line'>address=10.255.255.77
+</span><span class='line'>netmask=24
+</span><span class='line'>broadcast=10.255.255.255</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/etc/systemd/system/network@net0.service
+</span><span class='line'>[Unit]
+</span><span class='line'>Description=Network connectivity (%i)
+</span><span class='line'>Wants=network.target
+</span><span class='line'>Before=network.target
+</span><span class='line'>BindsTo=sys-subsystem-net-devices-%i.device
+</span><span class='line'>After=sys-subsystem-net-devices-%i.device
+</span><span class='line'>
+</span><span class='line'>[Service]
+</span><span class='line'>Type=oneshot
+</span><span class='line'>RemainAfterExit=yes
+</span><span class='line'>EnvironmentFile=/etc/conf.d/network@%i
+</span><span class='line'>
+</span><span class='line'>ExecStart=/usr/bin/ip link add link %i name %i.1 type vlan id 1
+</span><span class='line'>ExecStart=/usr/bin/ip link set dev %i.1 up
+</span><span class='line'>ExecStart=/usr/bin/ip addr add ${address}/${netmask} dev %i.1 broadcast ${broadcast}
+</span><span class='line'>
+</span><span class='line'>ExecStop=/usr/bin/ip addr flush dev %i.1
+</span><span class='line'>ExecStop=/usr/bin/ip route flush dev %i.1
+</span><span class='line'>ExecStop=/usr/bin/ip link set dev %i.1 down
+</span><span class='line'>
+</span><span class='line'>[Install]
+</span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then enable <a href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x6e;&#101;&#116;&#119;&#111;&#114;&#107;&#64;&#x6e;&#101;&#x74;&#x30;&#x2e;&#115;&#x65;&#x72;&#x76;&#105;&#99;&#x65;&#46;">&#x6e;&#x65;&#x74;&#119;&#111;&#x72;&#107;&#x40;&#110;&#101;&#116;&#x30;&#46;&#115;&#x65;&#114;&#118;&#x69;&#x63;&#101;&#46;</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1076,6 +1188,10 @@ This is stupid, since it was generated automatically by rake new_post I believe.
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/30/add-the-second-ip-address/">Add the Second IP Address</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/21/about-belief/">理解基督信仰</a>
       </li>
     
@@ -1089,10 +1205,6 @@ This is stupid, since it was generated automatically by rake new_post I believe.
     
       <li class="post">
         <a href="/blog/2014/09/23/a-few-problems-running-archlinux-in-vmware/">A Few Problems Running ArchLinux in VMware</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/">A Few Issues and Solutions With Octopress</a>
       </li>
     
   </ul>
