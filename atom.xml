@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2015-05-19T21:51:29+00:00</updated>
+  <updated>2015-05-19T22:09:32+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -93,7 +93,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Add the second IP address]]></title>
+    <title type="html"><![CDATA[Add the Second IP Address]]></title>
     <link href="http://wanglij.github.io/blog/2015/04/30/add-the-second-ip-address/"/>
     <updated>2015-04-30T22:10:53+00:00</updated>
     <id>http://wanglij.github.io/blog/2015/04/30/add-the-second-ip-address</id>
@@ -171,7 +171,7 @@
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#110;&#x65;&#x74;&#x77;&#x6f;&#x72;&#107;&#x40;&#x6e;&#x65;&#116;&#48;&#46;&#x73;&#x65;&#114;&#118;&#105;&#99;&#101;&#46;">&#110;&#101;&#116;&#x77;&#x6f;&#x72;&#107;&#64;&#110;&#x65;&#116;&#48;&#46;&#x73;&#x65;&#x72;&#x76;&#x69;&#x63;&#x65;&#x2e;</a></p>
+<p>Then enable <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#58;&#110;&#101;&#116;&#x77;&#111;&#114;&#107;&#64;&#x6e;&#x65;&#116;&#x30;&#x2e;&#x73;&#101;&#114;&#x76;&#x69;&#x63;&#x65;&#46;">&#x6e;&#101;&#116;&#x77;&#111;&#x72;&#107;&#x40;&#110;&#x65;&#116;&#48;&#x2e;&#x73;&#101;&#114;&#x76;&#105;&#x63;&#101;&#46;</a></p>
 ]]></content>
   </entry>
   
@@ -722,7 +722,7 @@ without fighting.&rdquo;</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[A few problems running ArchLinux in VMware]]></title>
+    <title type="html"><![CDATA[A Few Problems Running ArchLinux in VMware]]></title>
     <link href="http://wanglij.github.io/blog/2014/09/23/a-few-problems-running-archlinux-in-vmware/"/>
     <updated>2014-09-23T16:53:41+00:00</updated>
     <id>http://wanglij.github.io/blog/2014/09/23/a-few-problems-running-archlinux-in-vmware</id>
@@ -911,7 +911,7 @@ Now all the shared folders should be mounted to your linux directories automatic
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[A few issues and solutions with octopress]]></title>
+    <title type="html"><![CDATA[A Few Issues and Solutions With Octopress]]></title>
     <link href="http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/"/>
     <updated>2014-09-11T16:55:09+00:00</updated>
     <id>http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress</id>
@@ -981,7 +981,7 @@ This is stupid, since it was generated automatically by rake new_post I believe.
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[First try with github and octopress]]></title>
+    <title type="html"><![CDATA[First Try With Github and Octopress]]></title>
     <link href="http://wanglij.github.io/blog/2014/08/04/first-try-with-github-and-octopress/"/>
     <updated>2014-08-04T12:32:03+00:00</updated>
     <id>http://wanglij.github.io/blog/2014/08/04/first-try-with-github-and-octopress</id>
