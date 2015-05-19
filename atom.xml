@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2015-05-19T17:23:13+00:00</updated>
+  <updated>2015-05-19T17:28:35+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -29,32 +29,59 @@
 
 <p>Octopress repositories have two branches, master and source.</p>
 
-<h2>master  |   source</h2>
+<table>
+<thead>
+<tr>
+<th>master  </th>
+<th>   source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>contains the blog itself </td>
+<td> contains the files that are used to generate the blog</td>
+</tr>
+<tr>
+<td>is stored in _depoly subfolder </td>
+<td> is stored in octopress directory</td>
+</tr>
+<tr>
+<td>gets updated when we run rake depoly </td>
+<td> was not in the remote repository yet</td>
+</tr>
+</tbody>
+</table>
 
-<p>contains the blog itself | contains the files that are used to generate the blog
-is stored in _depoly subfolder | is stored in octopress directory
-gets updated when we run rake depoly | was not in the remote repository yet</p>
 
 <p>Push source to remote repository:</p>
 
-<p>&ldquo;&rdquo;&ldquo;
-cd octopress
-git remote add origin <github HTTPS/SSH clone URL>
-git commit -m &lsquo;any message&rsquo;
-git push origin source
-&rdquo;&ldquo;&rdquo;</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd octopress
+</span><span class='line'>git remote add origin &lt;github HTTPS/SSH clone URL&gt;
+</span><span class='line'>git commit -m 'any message'
+</span><span class='line'>git push origin source</span></code></pre></td></tr></table></div></figure>
+
 
 <p>If it gives the following error message when you are trying to run &lsquo;git remote add origin&rsquo;, then it means there is already a source branch in the repository. You&rsquo;d better double check if the existing source branch is what you want. To remove it, run &lsquo;git remote rm origin&rsquo;</p>
 
-<p>&ldquo;&rdquo;&ldquo;
- ! [rejected]        source -> source (fetch first)
-error: failed to push some refs to &lsquo;<a href="https://github.com/wanglij/wanglij.github.io.git">https://github.com/wanglij/wanglij.github.io.git</a>&rsquo;
-hint: Updates were rejected because the remote contains work that you do
-hint: not have locally. This is usually caused by another repository pushing
-hint: to the same ref. You may want to first integrate the remote changes
-hint: (e.g., &lsquo;git pull &hellip;&rsquo;) before pushing again.
-hint: See the &lsquo;Note about fast-forwards&rsquo; in &lsquo;git push &ndash;help&rsquo; for details.
-&rdquo;&ldquo;&rdquo;</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> ! [rejected]        source -&gt; source (fetch first)
+</span><span class='line'>error: failed to push some refs to '&lt;github HTTPS/SSH clone URL&gt;'
+</span><span class='line'>hint: Updates were rejected because the remote contains work that you do
+</span><span class='line'>hint: not have locally. This is usually caused by another repository pushing
+</span><span class='line'>hint: to the same ref. You may want to first integrate the remote changes
+</span><span class='line'>hint: (e.g., 'git pull ...') before pushing again.
+</span><span class='line'>hint: See the 'Note about fast-forwards' in 'git push --help' for details.</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   
@@ -137,7 +164,7 @@ hint: See the &lsquo;Note about fast-forwards&rsquo; in &lsquo;git push &ndash;h
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#x6d;&#x61;&#105;&#108;&#x74;&#111;&#58;&#x6e;&#101;&#x74;&#119;&#x6f;&#114;&#107;&#64;&#x6e;&#101;&#x74;&#x30;&#46;&#x73;&#101;&#x72;&#118;&#105;&#99;&#101;&#x2e;">&#x6e;&#x65;&#x74;&#119;&#111;&#114;&#107;&#x40;&#110;&#101;&#x74;&#48;&#x2e;&#x73;&#x65;&#x72;&#118;&#x69;&#99;&#101;&#46;</a></p>
+<p>Then enable <a href="&#x6d;&#x61;&#105;&#108;&#x74;&#111;&#x3a;&#x6e;&#101;&#116;&#119;&#111;&#x72;&#x6b;&#x40;&#x6e;&#x65;&#x74;&#48;&#46;&#115;&#x65;&#114;&#118;&#105;&#x63;&#101;&#46;">&#110;&#x65;&#x74;&#119;&#x6f;&#x72;&#107;&#64;&#x6e;&#x65;&#x74;&#x30;&#x2e;&#x73;&#101;&#x72;&#118;&#x69;&#99;&#101;&#46;</a></p>
 ]]></content>
   </entry>
   

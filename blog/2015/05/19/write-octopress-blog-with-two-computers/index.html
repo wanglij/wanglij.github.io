@@ -105,32 +105,59 @@
 
 <p>Octopress repositories have two branches, master and source.</p>
 
-<h2>master  |   source</h2>
+<table>
+<thead>
+<tr>
+<th>master  </th>
+<th>   source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>contains the blog itself </td>
+<td> contains the files that are used to generate the blog</td>
+</tr>
+<tr>
+<td>is stored in _depoly subfolder </td>
+<td> is stored in octopress directory</td>
+</tr>
+<tr>
+<td>gets updated when we run rake depoly </td>
+<td> was not in the remote repository yet</td>
+</tr>
+</tbody>
+</table>
 
-<p>contains the blog itself | contains the files that are used to generate the blog
-is stored in _depoly subfolder | is stored in octopress directory
-gets updated when we run rake depoly | was not in the remote repository yet</p>
 
 <p>Push source to remote repository:</p>
 
-<p>&ldquo;&rdquo;&ldquo;
-cd octopress
-git remote add origin <github HTTPS/SSH clone URL>
-git commit -m &lsquo;any message&rsquo;
-git push origin source
-&rdquo;&ldquo;&rdquo;</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd octopress
+</span><span class='line'>git remote add origin &lt;github HTTPS/SSH clone URL&gt;
+</span><span class='line'>git commit -m 'any message'
+</span><span class='line'>git push origin source</span></code></pre></td></tr></table></div></figure>
+
 
 <p>If it gives the following error message when you are trying to run &lsquo;git remote add origin&rsquo;, then it means there is already a source branch in the repository. You&rsquo;d better double check if the existing source branch is what you want. To remove it, run &lsquo;git remote rm origin&rsquo;</p>
 
-<p>&ldquo;&rdquo;&ldquo;
- ! [rejected]        source -> source (fetch first)
-error: failed to push some refs to &lsquo;<a href="https://github.com/wanglij/wanglij.github.io.git">https://github.com/wanglij/wanglij.github.io.git</a>&rsquo;
-hint: Updates were rejected because the remote contains work that you do
-hint: not have locally. This is usually caused by another repository pushing
-hint: to the same ref. You may want to first integrate the remote changes
-hint: (e.g., &lsquo;git pull &hellip;&rsquo;) before pushing again.
-hint: See the &lsquo;Note about fast-forwards&rsquo; in &lsquo;git push &ndash;help&rsquo; for details.
-&rdquo;&ldquo;&rdquo;</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> ! [rejected]        source -&gt; source (fetch first)
+</span><span class='line'>error: failed to push some refs to '&lt;github HTTPS/SSH clone URL&gt;'
+</span><span class='line'>hint: Updates were rejected because the remote contains work that you do
+</span><span class='line'>hint: not have locally. This is usually caused by another repository pushing
+</span><span class='line'>hint: to the same ref. You may want to first integrate the remote changes
+</span><span class='line'>hint: (e.g., 'git pull ...') before pushing again.
+</span><span class='line'>hint: See the 'Note about fast-forwards' in 'git push --help' for details.</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
