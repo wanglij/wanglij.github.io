@@ -9,7 +9,7 @@
   <meta name="author" content="Lijun Wang">
 
   
-  <meta name="description" content="The senario is like this I need my Arch Linux to be able to work in two different network environments, and I hate the idea of adding another network &hellip;">
+  <meta name="description" content="Issue Sometime, when I want to continue my writing in my blog, the computer where I had the work half way done may not be available to me. So it will &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,81 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/19/write-octopress-blog-with-two-computers/">Write Octopress Blog With Two Computers</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-05-19T16:43:32+00:00" pubdate data-updated="true">May 19<sup>th</sup>, 2015</time>
+        
+           | <a href="/blog/2015/05/19/write-octopress-blog-with-two-computers/#disqus_thread"
+             data-disqus-identifier="http://wanglij.github.io/blog/2015/05/19/write-octopress-blog-with-two-computers/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Issue</h3>
+
+<p>Sometime, when I want to continue my writing in my blog, the computer where I had the work half way done may not be available to me. So it will be great if I can check out my latest work in any computer and continue my previous work. Now that we used github to host our blog, we surely can have this advantage.</p>
+
+<h3>Repository</h3>
+
+<p>I&rsquo;ve already deployed my octopress blog in github by following this article.
+<a href="http://purplepalmdash.github.io/blog/2014/07/30/zai-githubshang-bu-shu-ni-de-octopressbo-ke/">http://purplepalmdash.github.io/blog/2014/07/30/zai-githubshang-bu-shu-ni-de-octopressbo-ke/</a></p>
+
+<p>Octopress repositories have two branches, master and source.</p>
+
+<h2>master  |   source</h2>
+
+<p>contains the blog itself | contains the files that are used to generate the blog
+is stored in _depoly subfolder | is stored in octopress directory
+gets updated when we run rake depoly | was not in the remote repository yet</p>
+
+<p>Push source to remote repository:</p>
+
+<p>&ldquo;&rdquo;&ldquo;
+cd octopress
+git remote add origin <github HTTPS/SSH clone URL>
+git commit -m &lsquo;any message&rsquo;
+git push origin source
+&rdquo;&ldquo;&rdquo;</p>
+
+<p>If it gives the following error message when you are trying to run &lsquo;git remote add origin&rsquo;, then it means there is already a source branch in the repository. You&rsquo;d better double check if the existing source branch is what you want. To remove it, run &lsquo;git remote rm origin&rsquo;</p>
+
+<p>&ldquo;&rdquo;&ldquo;
+ ! [rejected]        source -> source (fetch first)
+error: failed to push some refs to &lsquo;<a href="https://github.com/wanglij/wanglij.github.io.git">https://github.com/wanglij/wanglij.github.io.git</a>&rsquo;
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., &lsquo;git pull &hellip;&rsquo;) before pushing again.
+hint: See the &lsquo;Note about fast-forwards&rsquo; in &lsquo;git push &ndash;help&rsquo; for details.
+&rdquo;&ldquo;&rdquo;</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -171,7 +246,7 @@
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x6e;&#101;&#116;&#119;&#111;&#114;&#107;&#64;&#x6e;&#101;&#x74;&#x30;&#x2e;&#115;&#x65;&#x72;&#x76;&#105;&#99;&#x65;&#46;">&#x6e;&#x65;&#x74;&#119;&#111;&#x72;&#107;&#x40;&#110;&#101;&#116;&#x30;&#46;&#115;&#x65;&#114;&#118;&#x69;&#x63;&#101;&#46;</a></p>
+<p>Then enable <a href="&#x6d;&#x61;&#105;&#108;&#x74;&#111;&#58;&#x6e;&#101;&#x74;&#119;&#x6f;&#114;&#107;&#64;&#x6e;&#101;&#x74;&#x30;&#46;&#x73;&#101;&#x72;&#118;&#105;&#99;&#101;&#x2e;">&#x6e;&#x65;&#x74;&#119;&#111;&#114;&#107;&#x40;&#110;&#101;&#x74;&#48;&#x2e;&#x73;&#x65;&#x72;&#118;&#x69;&#99;&#101;&#46;</a></p>
 </div>
   
   
@@ -1188,6 +1263,10 @@ This is stupid, since it was generated automatically by rake new_post I believe.
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/05/19/write-octopress-blog-with-two-computers/">Write Octopress Blog With Two Computers</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/30/add-the-second-ip-address/">Add the Second IP Address</a>
       </li>
     
@@ -1201,10 +1280,6 @@ This is stupid, since it was generated automatically by rake new_post I believe.
     
       <li class="post">
         <a href="/blog/2014/10/17/reading/">读书</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/09/23/a-few-problems-running-archlinux-in-vmware/">A Few Problems Running ArchLinux in VMware</a>
       </li>
     
   </ul>

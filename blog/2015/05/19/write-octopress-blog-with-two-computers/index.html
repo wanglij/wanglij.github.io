@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>读书 - Lijun's Blog</title>
+  <title>Write Octopress Blog With Two Computers - Lijun's Blog</title>
   <meta name="author" content="Lijun Wang">
 
   
-  <meta name="description" content="读书是另一种旅行 且是只属于一个人的静静的旅行 没有嘈杂，只有风景 没有限速，在文字里走过舒畅的每个英里 喜欢读书，也喜欢旅行
-">
+  <meta name="description" content="Issue Sometime, when I want to continue my writing in my blog, the computer where I had the work half way done may not be available to me. So it will &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://wanglij.github.io/blog/2014/10/17/reading">
+  <link rel="canonical" href="http://wanglij.github.io/blog/2015/05/19/write-octopress-blog-with-two-computers">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Lijun's Blog" type="application/atom+xml">
@@ -69,7 +68,7 @@
   
   <header>
     
-      <h1 class="entry-title">读书</h1>
+      <h1 class="entry-title">Write Octopress Blog With Two Computers</h1>
     
     
       <p class="meta">
@@ -85,7 +84,7 @@
   
 
 
-<time datetime="2014-10-17T18:23:41+00:00" pubdate data-updated="true">Oct 17<sup>th</sup>, 2014</time>
+<time datetime="2015-05-19T16:43:32+00:00" pubdate data-updated="true">May 19<sup>th</sup>, 2015</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://wanglij.github.io">Comments</a>
@@ -95,15 +94,43 @@
   </header>
 
 
-<div class="entry-content"><p>读书是另一种旅行</p>
+<div class="entry-content"><h3>Issue</h3>
 
-<p>且是只属于一个人的静静的旅行</p>
+<p>Sometime, when I want to continue my writing in my blog, the computer where I had the work half way done may not be available to me. So it will be great if I can check out my latest work in any computer and continue my previous work. Now that we used github to host our blog, we surely can have this advantage.</p>
 
-<p>没有嘈杂，只有风景</p>
+<h3>Repository</h3>
 
-<p>没有限速，在文字里走过舒畅的每个英里</p>
+<p>I&rsquo;ve already deployed my octopress blog in github by following this article.
+<a href="http://purplepalmdash.github.io/blog/2014/07/30/zai-githubshang-bu-shu-ni-de-octopressbo-ke/">http://purplepalmdash.github.io/blog/2014/07/30/zai-githubshang-bu-shu-ni-de-octopressbo-ke/</a></p>
 
-<p>喜欢读书，也喜欢旅行</p>
+<p>Octopress repositories have two branches, master and source.</p>
+
+<h2>master  |   source</h2>
+
+<p>contains the blog itself | contains the files that are used to generate the blog
+is stored in _depoly subfolder | is stored in octopress directory
+gets updated when we run rake depoly | was not in the remote repository yet</p>
+
+<p>Push source to remote repository:</p>
+
+<p>&ldquo;&rdquo;&ldquo;
+cd octopress
+git remote add origin <github HTTPS/SSH clone URL>
+git commit -m &lsquo;any message&rsquo;
+git push origin source
+&rdquo;&ldquo;&rdquo;</p>
+
+<p>If it gives the following error message when you are trying to run &lsquo;git remote add origin&rsquo;, then it means there is already a source branch in the repository. You&rsquo;d better double check if the existing source branch is what you want. To remove it, run &lsquo;git remote rm origin&rsquo;</p>
+
+<p>&ldquo;&rdquo;&ldquo;
+ ! [rejected]        source -> source (fetch first)
+error: failed to push some refs to &lsquo;<a href="https://github.com/wanglij/wanglij.github.io.git">https://github.com/wanglij/wanglij.github.io.git</a>&rsquo;
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., &lsquo;git pull &hellip;&rsquo;) before pushing again.
+hint: See the &lsquo;Note about fast-forwards&rsquo; in &lsquo;git push &ndash;help&rsquo; for details.
+&rdquo;&ldquo;&rdquo;</p>
 </div>
 
 
@@ -126,21 +153,15 @@
   
 
 
-<time datetime="2014-10-17T18:23:41+00:00" pubdate data-updated="true">Oct 17<sup>th</sup>, 2014</time>
+<time datetime="2015-05-19T16:43:32+00:00" pubdate data-updated="true">May 19<sup>th</sup>, 2015</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/blog/'>blog</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wanglij.github.io/blog/2014/10/17/reading/" data-via="" data-counturl="http://wanglij.github.io/blog/2014/10/17/reading/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wanglij.github.io/blog/2015/05/19/write-octopress-blog-with-two-computers/" data-via="" data-counturl="http://wanglij.github.io/blog/2015/05/19/write-octopress-blog-with-two-computers/" >Tweet</a>
   
   
   
@@ -149,10 +170,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/09/23/a-few-problems-running-archlinux-in-vmware/" title="Previous Post: A few problems running ArchLinux in VMware">&laquo; A few problems running ArchLinux in VMware</a>
+        <a class="basic-alignment left" href="/blog/2015/04/30/add-the-second-ip-address/" title="Previous Post: Add the second IP address">&laquo; Add the second IP address</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/10/24/daniel05-study-notes/" title="Next Post: 但以理书学习笔记-Ch5">但以理书学习笔记-Ch5 &raquo;</a>
       
     </p>
   </footer>
@@ -218,8 +237,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://wanglij.github.io/blog/2014/10/17/reading/';
-        var disqus_url = 'http://wanglij.github.io/blog/2014/10/17/reading/';
+        var disqus_identifier = 'http://wanglij.github.io/blog/2015/05/19/write-octopress-blog-with-two-computers/';
+        var disqus_url = 'http://wanglij.github.io/blog/2015/05/19/write-octopress-blog-with-two-computers/';
         var disqus_script = 'embed.js';
       
     (function () {
