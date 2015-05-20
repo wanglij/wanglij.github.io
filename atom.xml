@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2015-05-20T22:52:02+00:00</updated>
+  <updated>2015-05-20T23:09:34+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -48,9 +48,11 @@
 <h4>Q(&amp;A)</h4>
 
 <p>1 提阿非罗是谁？<br>
-  路加福音和使徒行传都是写给提阿非罗的；可能是一个卓越的罗马军官。<br>
-2 “在我们中间所成就的事” 是什么事呢？
-3 这一段对我们的信有什么启发？</p>
+  路加福音和使徒行传都是写给提阿非罗的；可能是一个卓越的罗马军官。</p>
+
+<p>2 “在我们中间所成就的事” 是什么事呢？</p>
+
+<p>3 这一段对我们的信有什么启发？</p>
 
 <h3>路加福音 1:5-7</h3>
 
@@ -94,8 +96,12 @@ Period  | Emperor
 
 <p>4 亚伦是谁？</p>
 
-<p>5 圣经中其他相似的描述
+<p>5 旧约圣经中相似的例子<br>
 亚伯拉罕和撒拉</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>创世纪 16：1 16 亚伯兰的妻子撒莱不给他生儿女。</span></code></pre></td></tr></table></div></figure>
+
 
 <h3>路加福音 1: 8-10</h3>
 
@@ -122,16 +128,30 @@ Period  | Emperor
 &emsp;叫悖逆的人转从义人的智慧，<br>
 &emsp;又为主预备合用的百姓。”</p>
 
-<h4>约翰的意思</h4>
+<h4>Q(&amp;A)</h4>
 
-<h4>以利亚是谁？</h4>
+<p>1 约翰的意思</p>
 
-<p>列王记上 17-19,21<br>
+<p>2 以利亚是谁？
+列王记上 17-19,21<br>
 列王记下 1-2</p>
 
-<h4>与旧约中的预言呼应</h4>
+<p>3 旧约圣经中相似的例子<br>
+亚伯拉罕和撒拉
+创世纪 17：1-2, 15-16</p>
 
-<p>玛拉基书 3:1-2</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1 亚伯兰年九十九岁的时候，耶和华向他显现，对他说：“我是全能的神，你当在我面前做完全人。 
+</span><span class='line'>2 我就与你立约，使你的后裔极其繁多。” 
+</span><span class='line'>15 神又对亚伯拉罕说：“你的妻子撒莱，不可再叫撒莱，她的名要叫撒拉。 
+</span><span class='line'>16 我必赐福给她，也要使你从她得一个儿子。我要赐福给她，她也要做多国之母，必有百姓的君王从她而出。” </span></code></pre></td></tr></table></div></figure>
+
+
+<p>4 与旧约中的预言呼应
+玛拉基书 3:1-2</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -322,7 +342,7 @@ Period  | Emperor
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6e;&#x65;&#116;&#x77;&#x6f;&#x72;&#x6b;&#x40;&#110;&#x65;&#116;&#x30;&#46;&#x73;&#x65;&#x72;&#x76;&#105;&#x63;&#x65;&#x2e;">&#110;&#x65;&#116;&#x77;&#111;&#x72;&#107;&#64;&#x6e;&#101;&#116;&#48;&#46;&#x73;&#x65;&#x72;&#118;&#105;&#x63;&#x65;&#46;</a></p>
+<p>Then enable <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#x3a;&#x6e;&#x65;&#x74;&#119;&#x6f;&#x72;&#107;&#x40;&#110;&#x65;&#116;&#x30;&#46;&#115;&#x65;&#114;&#118;&#105;&#99;&#x65;&#x2e;">&#110;&#101;&#x74;&#119;&#x6f;&#x72;&#107;&#x40;&#x6e;&#101;&#116;&#48;&#x2e;&#115;&#x65;&#114;&#118;&#x69;&#99;&#x65;&#x2e;</a></p>
 ]]></content>
   </entry>
   
