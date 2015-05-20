@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2015-05-20T21:39:08+00:00</updated>
+  <updated>2015-05-20T21:45:58+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -20,7 +20,7 @@
     <id>http://wanglij.github.io/blog/2015/05/20/luke-1-study-notes</id>
     <content type="html"><![CDATA[<h3>路加是谁？</h3>
 
-<p>在新约圣经的保罗书信中三次提到路加：</p>
+<p>路加是个医生；曾经和保罗同工，</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -30,7 +30,7 @@
 </span><span class='line'>腓利门书 1:24 与我同工的马可、亚里达古、底马、路加也都问你安。</span></code></pre></td></tr></table></div></figure>
 
 
-<p>路加是个医生；曾经和保罗同工。</p>
+<p>也是路加福音和使徒行传的作者。</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -39,8 +39,6 @@
 </span><span class='line'>1 提阿非罗啊，我已经作了前书，论到耶稣开头一切所行所教训的，
 </span><span class='line'>2 直到他借着圣灵吩咐所拣选的使徒以后，被接上升的日子为止。</span></code></pre></td></tr></table></div></figure>
 
-
-<p>也是路加福音和使徒行传的作者。</p>
 
 <h3>路加福音 1:1-4</h3>
 
@@ -87,10 +85,18 @@
 12 撒迦利亚看见，就<strong>惊慌害怕</strong>。 <br>
 13 天使对他说：“撒迦利亚，不要害怕，因为<strong>你的祈祷已经被听见了</strong>。<br>
 你的妻子伊利莎白要给你生一个儿子，你要给他起名叫约翰。 <br>
-14 你必欢喜快乐，有许多人因他出世也必喜乐。 <br>
-15 他在主面前将要为大，淡酒浓酒都不喝，从母腹里就被圣灵充满了。<br>
-16 他要使许多以色列人回转，归于主他们的神。 <br>
-17 他必有以利亚的心志能力，行在主的前面，叫为父的心转向儿女，叫悖逆的人转从义人的智慧，又为主预备合用的百姓。”</p>
+14 你必欢喜快乐，<br>
+有许多人因他出世也必喜乐。 <br>
+15 他在主面前将要为大，<br>
+淡酒浓酒都不喝，<br>
+从母腹里就被圣灵充满了。<br>
+16 他要使许多以色列人回转，<br>
+归于主他们的神。 <br>
+17 他必有以利亚的心志能力，<br>
+行在主的前面，<br>
+叫为父的心转向儿女，<br>
+叫悖逆的人转从义人的智慧，<br>
+又为主预备合用的百姓。”</p>
 
 <h4>以利亚是谁？</h4>
 
@@ -272,7 +278,7 @@ based on research
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#x6e;&#101;&#116;&#119;&#111;&#114;&#107;&#x40;&#110;&#101;&#x74;&#x30;&#46;&#115;&#x65;&#x72;&#118;&#x69;&#99;&#x65;&#46;">&#110;&#101;&#x74;&#x77;&#111;&#x72;&#107;&#x40;&#x6e;&#x65;&#116;&#x30;&#x2e;&#x73;&#x65;&#x72;&#x76;&#105;&#99;&#101;&#46;</a></p>
+<p>Then enable <a href="&#109;&#97;&#105;&#x6c;&#116;&#111;&#58;&#x6e;&#101;&#x74;&#x77;&#111;&#x72;&#107;&#64;&#110;&#x65;&#116;&#48;&#46;&#x73;&#x65;&#114;&#x76;&#x69;&#99;&#101;&#x2e;">&#x6e;&#x65;&#x74;&#119;&#x6f;&#x72;&#x6b;&#x40;&#x6e;&#101;&#x74;&#x30;&#x2e;&#115;&#x65;&#114;&#118;&#x69;&#x63;&#x65;&#x2e;</a></p>
 ]]></content>
   </entry>
   
