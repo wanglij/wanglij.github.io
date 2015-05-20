@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://wanglij.github.io/blog/2015/05/20/luke-1-study-notes/</loc>
+    <lastmod>2015-05-20T03:36:33+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://wanglij.github.io/blog/2015/05/19/write-octopress-blog-with-two-computers/</loc>
     <lastmod>2015-05-19T16:43:32+00:00</lastmod>
     <priority>0.8</priority>
@@ -53,42 +59,42 @@
   
   <url>
     <loc>http://wanglij.github.io/</loc>
-    <lastmod>2015-05-19T22:12:41+00:00</lastmod>
+    <lastmod>2015-05-20T13:31:02+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/archives/</loc>
-    <lastmod>2015-05-19T22:12:41+00:00</lastmod>
+    <lastmod>2015-05-20T13:31:02+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/blog/</loc>
-    <lastmod>2015-05-19T22:12:41+00:00</lastmod>
+    <lastmod>2015-05-20T13:31:02+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/blog/archives/</loc>
-    <lastmod>2015-05-19T22:12:41+00:00</lastmod>
+    <lastmod>2015-05-20T13:31:02+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/</loc>
-    <lastmod>2015-05-19T22:12:41+00:00</lastmod>
+    <lastmod>2015-05-20T13:31:02+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/about/</loc>
-    <lastmod>2015-05-19T22:12:41+00:00</lastmod>
+    <lastmod>2015-05-20T13:31:02+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
