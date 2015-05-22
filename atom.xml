@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2015-05-22T16:32:58+00:00</updated>
+  <updated>2015-05-22T16:36:50+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -197,11 +197,9 @@ Herod is a name used of several kings belonging to the Herodian Dynasty of the R
 </span><span class='line'>16 我必赐福给她，也要使你从她得一个儿子。我要赐福给她，她也要做多国之母，必有百姓的君王从她而出。” </span></code></pre></td></tr></table></div></figure>
 
 
-<ol>
-<li>与旧约中的预言呼应<br>
-玛拉基书 3:1-2</li>
-</ol>
+<h4>与旧约中的预言呼应</h4>
 
+<p>   玛拉基书 3:1-2</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -395,7 +393,7 @@ Herod is a name used of several kings belonging to the Herodian Dynasty of the R
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#109;&#97;&#x69;&#x6c;&#116;&#x6f;&#58;&#110;&#101;&#116;&#x77;&#111;&#x72;&#107;&#64;&#110;&#x65;&#116;&#48;&#46;&#x73;&#x65;&#x72;&#x76;&#x69;&#99;&#x65;&#46;">&#110;&#x65;&#116;&#119;&#x6f;&#x72;&#107;&#64;&#x6e;&#101;&#116;&#x30;&#46;&#x73;&#x65;&#x72;&#118;&#x69;&#x63;&#x65;&#x2e;</a></p>
+<p>Then enable <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6e;&#x65;&#x74;&#x77;&#x6f;&#x72;&#107;&#64;&#x6e;&#101;&#116;&#x30;&#x2e;&#x73;&#101;&#x72;&#118;&#x69;&#x63;&#x65;&#46;">&#x6e;&#101;&#x74;&#119;&#111;&#114;&#107;&#64;&#110;&#x65;&#x74;&#48;&#x2e;&#115;&#x65;&#114;&#x76;&#x69;&#x63;&#x65;&#46;</a></p>
 ]]></content>
   </entry>
   
