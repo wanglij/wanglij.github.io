@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2015-05-20T23:09:34+00:00</updated>
+  <updated>2015-05-22T15:20:09+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -67,7 +67,7 @@
 <h4>Q(&amp;A)</h4>
 
 <p>1 犹太王希律(Herod)是谁？<br>
-Herod is a name used of several kings belonging to the Herodian Dynasty of the Roman province of Judaea:
+Herod is a name used of several kings belonging to the Herodian Dynasty of the Roman province of Judaea:<br>
 - Herod the Great (c. 74-4 BC)
 - Herod Archelaus (23 BC-c. AD 18)
 - <strong>Herod Antipas</strong> (20 BC-c. AD 40), tetrarch of Galilee and Peraea, called &ldquo;Herod the Tetrarch&rdquo; or &ldquo;Herod&rdquo; in the New Testament up to Acts 4:27, and described therein as ordering John the Baptist&rsquo;s death and as mocking Jesus
@@ -79,17 +79,51 @@ Herod is a name used of several kings belonging to the Herodian Dynasty of the R
 - Herodes Atticus (AD 101-177)</p>
 
 <p>2 犹太王希律的时候是什么时候？<br>
-Emperors of Roman Empire  <br/>
-Period  | Emperor
-&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&mdash;&mdash;
-  27BC-AD14 | Augustus (first)
-  98-117    | Trajan
-  284-305   | Diocletian
-  306-337   | Constantine I
-  379-395   | Theodosius I
-  474-480   | Julius Neposa
-  527-565   | Justinian I
-  1449-1453 | Constantine XI b</p>
+Emperors of Roman Empire</p>
+
+<table>
+<thead>
+<tr>
+<th>Period  </th>
+<th> Emperor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>27BC-AD14 </td>
+<td> Augustus (first)</td>
+</tr>
+<tr>
+<td>98-117    </td>
+<td> Trajan</td>
+</tr>
+<tr>
+<td>284-305   </td>
+<td> Diocletian</td>
+</tr>
+<tr>
+<td>306-337   </td>
+<td> Constantine I</td>
+</tr>
+<tr>
+<td>379-395   </td>
+<td> Theodosius I</td>
+</tr>
+<tr>
+<td>474-480   </td>
+<td> Julius Neposa</td>
+</tr>
+<tr>
+<td>527-565   </td>
+<td> Justinian I</td>
+</tr>
+<tr>
+<td>1449-1453 </td>
+<td> Constantine XI b</td>
+</tr>
+</tbody>
+</table>
+
 
 <p>3 什么是亚比雅班？<br>
 旧约祭司共有24班，亚比雅班是第八班（历代志上 24:6-19）</p>
@@ -342,7 +376,7 @@ Period  | Emperor
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#x3a;&#x6e;&#x65;&#x74;&#119;&#x6f;&#x72;&#107;&#x40;&#110;&#x65;&#116;&#x30;&#46;&#115;&#x65;&#114;&#118;&#105;&#99;&#x65;&#x2e;">&#110;&#101;&#x74;&#119;&#x6f;&#x72;&#107;&#x40;&#x6e;&#101;&#116;&#48;&#x2e;&#115;&#x65;&#114;&#118;&#x69;&#99;&#x65;&#x2e;</a></p>
+<p>Then enable <a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#58;&#110;&#x65;&#x74;&#119;&#111;&#114;&#107;&#x40;&#x6e;&#101;&#x74;&#x30;&#x2e;&#115;&#x65;&#x72;&#118;&#105;&#x63;&#x65;&#x2e;">&#110;&#x65;&#x74;&#119;&#111;&#x72;&#107;&#x40;&#110;&#101;&#x74;&#x30;&#46;&#x73;&#101;&#114;&#118;&#x69;&#x63;&#101;&#46;</a></p>
 ]]></content>
   </entry>
   
