@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2015-05-29T20:58:10+00:00</updated>
+  <updated>2015-05-29T21:22:29+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -238,6 +238,22 @@ Herod is a name used of several kings belonging to the Herodian Dynasty of the R
 &ensp;&emsp;因为他直向他们打手势，竟成了哑巴。<br>
 23&ensp;他供职的日子已满，就回家去了。<br>
 </span></p>
+
+<p>与亚伯拉罕所经历的非常相似</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>创世纪17:15-19
+</span><span class='line'>15 神又对亚伯拉罕说：“你的妻子撒莱，不可再叫撒莱，她的名要叫撒拉。 
+</span><span class='line'>16 我必赐福给她，也要使你从她得一个儿子。我要赐福给她，她也要做多国之母，必有百姓的君王从她而出。”
+</span><span class='line'>17 亚伯拉罕就俯伏在地喜笑，心里说：“一百岁的人还能得孩子吗？撒拉已经九十岁了，还能生养吗？” 
+</span><span class='line'>18 亚伯拉罕对神说：“但愿以实玛利活在你面前。”
+</span><span class='line'>19 神说：“不然，你妻子撒拉要给你生一个儿子，你要给他起名叫以撒。我要与他坚定所立的约，做他后裔永远的约。</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>路加福音 1:24-25</h2>
 
@@ -537,7 +553,7 @@ Herod is a name used of several kings belonging to the Herodian Dynasty of the R
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#111;&#58;&#110;&#x65;&#116;&#x77;&#x6f;&#114;&#107;&#64;&#x6e;&#x65;&#x74;&#x30;&#x2e;&#x73;&#101;&#x72;&#x76;&#105;&#99;&#101;&#46;">&#x6e;&#101;&#116;&#119;&#x6f;&#x72;&#x6b;&#x40;&#x6e;&#x65;&#x74;&#x30;&#x2e;&#115;&#101;&#x72;&#118;&#x69;&#99;&#x65;&#46;</a></p>
+<p>Then enable <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#111;&#58;&#110;&#x65;&#116;&#x77;&#x6f;&#x72;&#107;&#x40;&#110;&#x65;&#x74;&#x30;&#x2e;&#115;&#x65;&#114;&#x76;&#x69;&#99;&#x65;&#x2e;">&#110;&#x65;&#x74;&#119;&#111;&#114;&#107;&#64;&#110;&#101;&#116;&#48;&#46;&#x73;&#x65;&#x72;&#x76;&#105;&#99;&#x65;&#x2e;</a></p>
 ]]></content>
   </entry>
   
