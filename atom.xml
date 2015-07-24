@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2015-07-24T19:30:04+00:00</updated>
+  <updated>2015-07-24T21:42:52+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[路加福音 2 (Study Notes)]]></title>
+    <title type="html"><![CDATA[路加福音 3 (Study Notes)]]></title>
     <link href="http://wanglij.github.io/blog/2015/07/24/luke-3-study-notes/"/>
     <updated>2015-07-24T19:10:04+00:00</updated>
     <id>http://wanglij.github.io/blog/2015/07/24/luke-3-study-notes</id>
@@ -29,13 +29,35 @@
 2 亚那和该亚法做大祭司。<br>
 那时，撒迦利亚的儿子约翰在旷野里，神的话临到他。
 3 他就来到约旦河一带地方，<br>
-宣讲悔改的洗礼，使罪得赦。
+宣讲悔改的洗礼，使罪得赦。 <br>
 4 正如先知以赛亚书上所记的话说：<br>
 “在旷野有人声喊着说：‘预备主的道，修直他的路！ <br>
 5 一切山洼都要填满，大小山冈都要削平，<br>
-弯弯曲曲的地方要改为正直，高高低低的道路要改为平坦。
+弯弯曲曲的地方要改为正直，高高低低的道路要改为平坦。 <br>
 6 凡有血气的，都要见神的救恩。’”
 </span></p>
+
+<h4>Q&amp;A</h4>
+
+<ol>
+<li><p>恺撒提庇留<br>
+Tiberius (16 November 42 BC - 16 March 37 AD) was a Roman Emperor from 14 AD to 37 AD.[1]</p></li>
+<li><p>本丢·彼拉多<br>
+Pontius Pilate was the fifth prefect of the Roman province of Judaea from AD 26 - 36.</p></li>
+<li><p>希律<br>
+Herod Antipas (20 BC-c. AD 40), tetrarch (古罗马帝国行省的四分之一地区的长官) of Galilee and Peraea, called &ldquo;Herod the Tetrarch&rdquo; or &ldquo;Herod&rdquo; in the New Testament up to Acts 4:27.</p></li>
+<li><p>他的兄弟腓力<br>
+Philip the Tetrarch (sometimes called Herod Philip II by modern writers) was son of Herod the Great and his fifth wife, Cleopatra of Jerusalem.
+He was a half-brother of Herod Antipas and Herod Archelaus; and should not be confused with Herod II, whom some writers call Herod Philip I.</p></li>
+<li><p>吕撒聂<br>
+Lysanias tetrarch of Abilene</p></li>
+<li><p>亚那和该亚法<br>
+Annas was appointed by the Roman legate Quirinius as the first High Priest of the newly formed Roman province of Iudaea in 6 AD.<br>
+Joseph Caiaphas, known simply as Caiaphas in the New Testament, was the Jewish high priest who is said to have organized the plot to kill Jesus.</p></li>
+</ol>
+
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Palestine_after_Herod.png/300px-Palestine_after_Herod.png"></p>
 
 <p><span style="background-color:yellow">
 7 约翰对那出来要受他洗的众人说：<br>
@@ -62,7 +84,7 @@
 <h2>必有圣灵与火的洗</h2>
 
 <p><span style="background-color:yellow">
-15 百姓指望基督来的时候，人都心里猜疑或者约翰是基督。
+15 百姓指望基督来的时候，人都心里猜疑或者约翰是基督。<br>
 16 约翰说：<br>
 “我是用水给你们施洗。<br>
 但有一位能力比我更大的要来，<br>
@@ -110,6 +132,16 @@
 36 沙拉是该南的儿子，该南是亚法撒的儿子，亚法撒是闪的儿子，闪是挪亚的儿子，挪亚是拉麦的儿子， <br>
 37 拉麦是玛土撒拉的儿子，玛土撒拉是以诺的儿子，以诺是雅列的儿子，雅列是玛勒列的儿子，玛勒列是该南的儿子，该南是以挪士的儿子， <br>
 38 以挪士是塞特的儿子，塞特是亚当的儿子，<strong>亚当</strong>是神的儿子。<br></p>
+
+<h2>References</h2>
+
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/Tiberius">https://en.wikipedia.org/wiki/Tiberius</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Pontius_Pilate">https://en.wikipedia.org/wiki/Pontius_Pilate</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Annas">https://en.wikipedia.org/wiki/Annas</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Caiaphas">https://en.wikipedia.org/wiki/Caiaphas</a></li>
+</ol>
+
 ]]></content>
   </entry>
   
@@ -1043,7 +1075,7 @@ YAHWEH remembers[4]</p></li>
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#x3a;&#110;&#x65;&#116;&#119;&#111;&#114;&#107;&#x40;&#x6e;&#101;&#x74;&#x30;&#x2e;&#115;&#x65;&#114;&#x76;&#105;&#99;&#x65;&#46;">&#x6e;&#x65;&#x74;&#119;&#111;&#114;&#x6b;&#x40;&#110;&#101;&#x74;&#x30;&#46;&#x73;&#x65;&#114;&#x76;&#105;&#99;&#x65;&#x2e;</a></p>
+<p>Then enable <a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#58;&#x6e;&#x65;&#116;&#x77;&#x6f;&#114;&#107;&#64;&#110;&#x65;&#116;&#x30;&#x2e;&#x73;&#101;&#x72;&#118;&#105;&#x63;&#101;&#46;">&#x6e;&#101;&#116;&#x77;&#111;&#x72;&#107;&#x40;&#110;&#101;&#116;&#x30;&#x2e;&#x73;&#x65;&#x72;&#118;&#x69;&#x63;&#x65;&#x2e;</a></p>
 ]]></content>
   </entry>
   
