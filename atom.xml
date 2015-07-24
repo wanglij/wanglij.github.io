@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2015-07-24T21:42:52+00:00</updated>
+  <updated>2015-07-24T21:52:02+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -29,7 +29,7 @@
 2 亚那和该亚法做大祭司。<br>
 那时，撒迦利亚的儿子约翰在旷野里，神的话临到他。
 3 他就来到约旦河一带地方，<br>
-宣讲悔改的洗礼，使罪得赦。 <br>
+宣讲<strong>悔改的洗礼</strong>，使罪得赦。 <br>
 4 正如先知以赛亚书上所记的话说：<br>
 “在旷野有人声喊着说：‘预备主的道，修直他的路！ <br>
 5 一切山洼都要填满，大小山冈都要削平，<br>
@@ -53,11 +53,22 @@ He was a half-brother of Herod Antipas and Herod Archelaus; and should not be co
 Lysanias tetrarch of Abilene</p></li>
 <li><p>亚那和该亚法<br>
 Annas was appointed by the Roman legate Quirinius as the first High Priest of the newly formed Roman province of Iudaea in 6 AD.<br>
-Joseph Caiaphas, known simply as Caiaphas in the New Testament, was the Jewish high priest who is said to have organized the plot to kill Jesus.</p></li>
+Joseph Caiaphas, known simply as Caiaphas in the New Testament, was the Jewish high priest who is said to have organized the plot to kill Jesus. <br></p></li>
 </ol>
 
 
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Palestine_after_Herod.png/300px-Palestine_after_Herod.png"></p>
+<p>The Division of Herod&rsquo;s Kingdom:
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Palestine_after_Herod.png/300px-Palestine_after_Herod.png"></p>
+
+<p>以赛亚书40</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>3 有人声喊着说：“在旷野预备耶和华的路，在沙漠地修平我们神的道！ 
+</span><span class='line'>4 一切山洼都要填满，大小山冈都要削平，高高低低的要改为平坦，崎崎岖岖的必成为平原。 
+</span><span class='line'>5 耶和华的荣耀必然显现，凡有血气的必一同看见，因为这是耶和华亲口说的。”</span></code></pre></td></tr></table></div></figure>
+
 
 <p><span style="background-color:yellow">
 7 约翰对那出来要受他洗的众人说：<br>
@@ -1075,7 +1086,7 @@ YAHWEH remembers[4]</p></li>
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#58;&#x6e;&#x65;&#116;&#x77;&#x6f;&#114;&#107;&#64;&#110;&#x65;&#116;&#x30;&#x2e;&#x73;&#101;&#x72;&#118;&#105;&#x63;&#101;&#46;">&#x6e;&#101;&#116;&#x77;&#111;&#x72;&#107;&#x40;&#110;&#101;&#116;&#x30;&#x2e;&#x73;&#x65;&#x72;&#118;&#x69;&#x63;&#x65;&#x2e;</a></p>
+<p>Then enable <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#58;&#110;&#x65;&#116;&#119;&#x6f;&#114;&#107;&#64;&#x6e;&#101;&#116;&#48;&#x2e;&#x73;&#101;&#x72;&#118;&#105;&#99;&#x65;&#x2e;">&#110;&#x65;&#116;&#x77;&#111;&#x72;&#x6b;&#x40;&#x6e;&#x65;&#x74;&#48;&#x2e;&#115;&#x65;&#x72;&#118;&#105;&#x63;&#101;&#46;</a></p>
 ]]></content>
   </entry>
   
