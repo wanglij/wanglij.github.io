@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://wanglij.github.io/blog/2015/07/30/amazing-dead-sea-scrolls/</loc>
+    <lastmod>2015-07-30T17:40:24+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://wanglij.github.io/blog/2015/07/29/luke-4-study-notes/</loc>
     <lastmod>2015-07-29T16:37:48+00:00</lastmod>
     <priority>0.8</priority>
@@ -77,42 +83,42 @@
   
   <url>
     <loc>http://wanglij.github.io/</loc>
-    <lastmod>2015-07-29T17:50:54+00:00</lastmod>
+    <lastmod>2015-07-30T17:43:16+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/archives/</loc>
-    <lastmod>2015-07-29T17:50:54+00:00</lastmod>
+    <lastmod>2015-07-30T17:43:16+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/blog/</loc>
-    <lastmod>2015-07-29T17:50:54+00:00</lastmod>
+    <lastmod>2015-07-30T17:43:16+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/blog/archives/</loc>
-    <lastmod>2015-07-29T17:50:54+00:00</lastmod>
+    <lastmod>2015-07-30T17:43:16+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/</loc>
-    <lastmod>2015-07-29T17:50:54+00:00</lastmod>
+    <lastmod>2015-07-30T17:43:16+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/about/</loc>
-    <lastmod>2015-07-29T17:50:54+00:00</lastmod>
+    <lastmod>2015-07-30T17:43:16+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
