@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Troubleshooting: Core Dump File Not in Current Directory - Lijun's Blog</title>
+  <meta name="author" content="Lijun Wang">
+
+  
+  <meta name="description" content="ISSUE I was testing the following program in Arch Linux system. I expect a core dump file created in current direcotry, when I send a SIGSEGV signal &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wanglij.github.io/blog/2015/08/21/troubleshooting-core-dump-file-not-in-current-directory">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Lijun's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Lijun's Blog</a></h1>
+  
+    <h2>Your word is a lamp on my feet, a light on my path --Psalm 119:105</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wanglij.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Troubleshooting: Core Dump File Not in Current Directory</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-21T14:40:29+00:00" pubdate data-updated="true">Aug 21<sup>st</sup>, 2015</time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wanglij.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>ISSUE</h2>
+
+<p>I was testing the following program in Arch Linux system. I expect a core dump file created in current direcotry, when I send a SIGSEGV signal to the process.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;stdio.h&gt;
+</span><span class='line'>#include &lt;sys/types.h&gt;
+</span><span class='line'>#include &lt;unistd.h&gt;
+</span><span class='line'>#include &lt;signal.h&gt;
+</span><span class='line'>   
+</span><span class='line'>void sighandler(int signum)
+</span><span class='line'>{
+</span><span class='line'>    printf("Process %d got signal %d\n", getpid(), signum);
+</span><span class='line'>    signal(signum, SIG_DFL);
+</span><span class='line'>    kill(getpid(), signum);
+</span><span class='line'>}
+</span><span class='line'>   
+</span><span class='line'>int main()
+</span><span class='line'>{
+</span><span class='line'>    signal(SIGSEGV, sighandler);
+</span><span class='line'>    printf("Process %d waits for someone to send it SIGSEGV\n",
+</span><span class='line'>        getpid());
+</span><span class='line'>    sleep(1000);
+</span><span class='line'> 
+</span><span class='line'>    return 0;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here is what I did:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~/test]$ ./a.out &
+</span><span class='line'>[1] 38145
+</span><span class='line'>[wanglij@~/test]$ Process 38145 waits for someone to send it SIGSEGV
+</span><span class='line'>kill -11 38145
+</span><span class='line'>Process 38145 got signal 11                                                                                          
+</span><span class='line'>[wanglij@~/test]$ 
+</span><span class='line'>[1]  + segmentation fault (core dumped)  ./a.out</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Everything seems to be fine, but there is no core dump file created at all.</p>
+
+<h2>Troubleshooting</h2>
+
+<p>First check the limit of core file size:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~/test]$ ulimit -a
+</span><span class='line'>-t: cpu time (seconds)              unlimited
+</span><span class='line'>-f: file size (blocks)              unlimited
+</span><span class='line'>-d: data seg size (kbytes)          unlimited
+</span><span class='line'>-s: stack size (kbytes)             8192
+</span><span class='line'>-c: core file size (blocks)         unlimited
+</span><span class='line'>-m: resident set size (kbytes)      unlimited
+</span><span class='line'>-u: processes                       15778
+</span><span class='line'>-n: file descriptors                1024
+</span><span class='line'>-l: locked-in-memory size (kbytes)  64
+</span><span class='line'>-v: address space (kbytes)          unlimited
+</span><span class='line'>-x: file locks                      unlimited
+</span><span class='line'>-i: pending signals                 15778
+</span><span class='line'>-q: bytes in POSIX msg queues       819200
+</span><span class='line'>-e: max nice                        20
+</span><span class='line'>-r: max rt priority                 0
+</span><span class='line'>-N 15:                              unlimited</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then, after googling, it turns out it&rsquo;s because of the /proc/sys/kernel/core_pattern file.
+Here is what&rsquo;s in my core_pattern:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~/test]$ cat /proc/sys/kernel/core_pattern 
+</span><span class='line'>|/usr/lib/systemd/systemd-coredump %p %u %g %s %t %e</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Since the first character is a pipe, &ldquo;|&rdquo;, then the rest of the pattern will be treated as a command by the kernel. Consequently, the core dump will be sent to journald as part of system log.
+We need to change the line of the core_pattern to &ldquo;core&rdquo;.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~/test]$ sudo bash -c 'echo core.%e.%p &gt; /proc/sys/kernel/core_pattern'
+</span><span class='line'>[wanglij@~/test]$ cat /proc/sys/kernel/core_pattern
+</span><span class='line'>core.%e.%p</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>References</h2>
+
+<p>[1] <a href="http://www.bogotobogo.com/cplusplus/debugging_core_memory_dump_segmentation_fault_gdb.php">http://www.bogotobogo.com/cplusplus/debugging_core_memory_dump_segmentation_fault_gdb.php</a>
+[2] <a href="https://wiki.archlinux.org/index.php/Core_dump">https://wiki.archlinux.org/index.php/Core_dump</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Lijun Wang</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-21T14:40:29+00:00" pubdate data-updated="true">Aug 21<sup>st</sup>, 2015</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wanglij.github.io/blog/2015/08/21/troubleshooting-core-dump-file-not-in-current-directory/" data-via="" data-counturl="http://wanglij.github.io/blog/2015/08/21/troubleshooting-core-dump-file-not-in-current-directory/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/08/07/had-such-a-blessed-day/" title="Previous Post: Had such a blessed day">&laquo; Had such a blessed day</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/08/21/troubleshooting-core-dump-file-not-in-current-directory/">Troubleshooting: Core Dump File Not in Current Directory</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/07/had-such-a-blessed-day/">Had Such a Blessed Day</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/07/prayer-in-my-dream/">Prayer in My Dream</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/30/amazing-dead-sea-scrolls/">Amazing Dead Sea Scrolls</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/29/luke-4-study-notes/">路加福音 4 (Study Notes)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Lijun Wang -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'lijunsblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wanglij.github.io/blog/2015/08/21/troubleshooting-core-dump-file-not-in-current-directory/';
+        var disqus_url = 'http://wanglij.github.io/blog/2015/08/21/troubleshooting-core-dump-file-not-in-current-directory/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
