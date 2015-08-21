@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2015-08-21T15:10:21+00:00</updated>
+  <updated>2015-08-21T17:50:16+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -12,6 +12,129 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Research: Generate Core Dump File Programmatically in QNX]]></title>
+    <link href="http://wanglij.github.io/blog/2015/08/21/research-generate-core-dump-file-programmatically/"/>
+    <updated>2015-08-21T15:50:12+00:00</updated>
+    <id>http://wanglij.github.io/blog/2015/08/21/research-generate-core-dump-file-programmatically</id>
+    <content type="html"><![CDATA[<h2>Requirements:</h2>
+
+<p>A core dump is a file containing a process&rsquo;s address space, and it is usually generated when the process terminates unexpectedly.
+But, sometimes, we need our program to recover from the unexpected termination, and also generate a core dump.
+Assume we already had the following code to capture and handle signals so that the program can restart itself, now we need to add the code for core dump.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>void signal_handler(int sig) {
+</span><span class='line'>  // stop and clean up
+</span><span class='line'>  machine-&gt;stop()
+</span><span class='line'>  ...
+</span><span class='line'>  
+</span><span class='line'>  // log this event
+</span><span class='line'>  ...
+</span><span class='line'>
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int main(int argc, char* argv[])
+</span><span class='line'>{
+</span><span class='line'>  ...
+</span><span class='line'>  (void) signal( SIGFPE, signal_handler );
+</span><span class='line'>  (void) signal( SIGSEGV, signal_handler );
+</span><span class='line'>  ...
+</span><span class='line'>  while (run)
+</span><span class='line'>  {
+</span><span class='line'>      machine = new Machine;
+</span><span class='line'>      machine-&gt;run();
+</span><span class='line'>      delete(machine);
+</span><span class='line'>  }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Solutions that I tried</h2>
+
+<p>This has to be done in the signal handler function, because we want to take the snapshot of the process&rsquo;s memory when it recieved the signal.</p>
+
+<h3>Set signal handler back to SIG_DFL</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>signal(sig, SIG_DFL);
+</span><span class='line'>kill(getpid(), sig);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This wouldn&rsquo;t work, since the default behavior of the signals causing core dump will terminate our program, but we want our program keep running.
+This solution is useful in the scenario where we just want to add some addtional processing before the unexceptional signals terminate our program.</p>
+
+<h3>Start a new process for the program, then terminate current process</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>spawnl(P_NOWAITO, program_path, program_name);
+</span><span class='line'>signal(sig, SIG_DFL);
+</span><span class='line'>kill(getpid(), sig);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The spawnl will cause SIGSEGV again.</p>
+
+<h3>Fork a child process, then abort</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pid_t pid = fork();
+</span><span class='line'>if (pid == 0)
+</span><span class='line'>{
+</span><span class='line'>  abort();
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Currently, for QNX, fork() is supported only in single-threaded applications.
+If you create a thread and then call fork(), the function returns -1 and sets errno to ENOSYS.
+This will not work either, since our program is multiple-threaded.</p>
+
+<h3>gcore</h3>
+
+<p>AFAK, QNX doesn&rsquo;t support gcore yet.</p>
+
+<h2>Conclusion</h2>
+
+<p>So far, it looks like we cannot have both core dump and recovery together.</p>
+
+<h2>References</h2>
+
+<p>[1] <a href="http://www.alexonlinux.com/how-to-handle-sigsegv-but-also-generate-core-dump">How to handle SIGSEGV, but also generate a core dump</a>
+[2] <a href="http://stackoverflow.com/questions/979141/how-to-programatically-cause-a-core-dump-in-c-c">How to programatically cause a core dump in C/C++</a>
+[3] <a href="http://www.qnx.com/developers/docs/6.3.0SP3/neutrino/lib_ref/s/spawnl.html">http://www.qnx.com/developers/docs/6.3.0SP3/neutrino/lib_ref/s/spawnl.html</a>
+[4] <a href="http://www.qnx.com/developers/docs/6.3.0SP3/neutrino/lib_ref/f/fork.html">http://www.qnx.com/developers/docs/6.3.0SP3/neutrino/lib_ref/f/fork.html</a>
+[5] [core dump file] (<a href="https://www.google.com/search?q=core+dump+file&amp;ie=utf-8&amp;oe=utf-8">https://www.google.com/search?q=core+dump+file&amp;ie=utf-8&amp;oe=utf-8</a>)
+[6] <a href="http://man7.org/linux/man-pages/man1/gcore.1.html">http://man7.org/linux/man-pages/man1/gcore.1.html</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Troubleshooting: Core Dump File Not in Current Directory]]></title>
@@ -148,7 +271,7 @@ We need to change the line of the core_pattern to &ldquo;core&rdquo;.</p>
 
 <h2>References</h2>
 
-<p>[1] <a href="http://www.bogotobogo.com/cplusplus/debugging_core_memory_dump_segmentation_fault_gdb.php">http://www.bogotobogo.com/cplusplus/debugging_core_memory_dump_segmentation_fault_gdb.php</a>
+<p>[1] <a href="http://www.bogotobogo.com/cplusplus/debugging_core_memory_dump_segmentation_fault_gdb.php">http://www.bogotobogo.com/cplusplus/debugging_core_memory_dump_segmentation_fault_gdb.php</a><br>
 [2] <a href="https://wiki.archlinux.org/index.php/Core_dump">https://wiki.archlinux.org/index.php/Core_dump</a></p>
 ]]></content>
   </entry>
@@ -1584,7 +1707,7 @@ YAHWEH remembers[4]</p></li>
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#x6e;&#x65;&#116;&#119;&#111;&#114;&#107;&#x40;&#x6e;&#101;&#x74;&#48;&#46;&#x73;&#x65;&#x72;&#x76;&#x69;&#x63;&#101;&#46;">&#x6e;&#x65;&#x74;&#119;&#x6f;&#x72;&#x6b;&#64;&#x6e;&#x65;&#x74;&#x30;&#x2e;&#x73;&#x65;&#x72;&#x76;&#105;&#x63;&#x65;&#x2e;</a></p>
+<p>Then enable <a href="&#x6d;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#101;&#x74;&#x77;&#x6f;&#x72;&#x6b;&#64;&#x6e;&#101;&#x74;&#48;&#46;&#115;&#101;&#114;&#118;&#x69;&#99;&#101;&#x2e;">&#x6e;&#x65;&#x74;&#119;&#x6f;&#x72;&#107;&#x40;&#x6e;&#101;&#116;&#48;&#x2e;&#x73;&#x65;&#x72;&#x76;&#x69;&#99;&#x65;&#46;</a></p>
 ]]></content>
   </entry>
   
