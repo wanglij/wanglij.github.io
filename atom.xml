@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2015-08-28T03:22:49+00:00</updated>
+  <updated>2015-08-28T03:23:31+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -14,19 +14,11 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Luke 5 Study Notes]]></title>
+    <title type="html"><![CDATA[路加福音 5 (Study Notes)]]></title>
     <link href="http://wanglij.github.io/blog/2015/08/28/luke-5-study-notes/"/>
-    <updated>2015-08-28T00:00:00+00:00</updated>
+    <updated>2015-08-28T02:00:55+00:00</updated>
     <id>http://wanglij.github.io/blog/2015/08/28/luke-5-study-notes</id>
-    <content type="html"><![CDATA[<p>﻿&mdash;
-layout: post
-title: &ldquo;路加福音 5 (Study Notes)&rdquo;
-date: 2015-08-28 02:00:55 +0000
-comments: true</p>
-
-<h2>categories: </h2>
-
-<h2>在革尼撒勒湖边教训人</h2>
+    <content type="html"><![CDATA[<h2>在革尼撒勒湖边教训人</h2>
 
 <p><span style="background-color:yellow">
 1 耶稣站在<strong>革尼撒勒湖</strong>边，<br>
@@ -1849,7 +1841,7 @@ YAHWEH remembers[4]</p></li>
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#109;&#97;&#x69;&#108;&#x74;&#x6f;&#58;&#110;&#x65;&#x74;&#119;&#111;&#x72;&#107;&#x40;&#110;&#x65;&#x74;&#x30;&#x2e;&#x73;&#x65;&#x72;&#118;&#105;&#99;&#101;&#x2e;">&#x6e;&#101;&#x74;&#x77;&#111;&#114;&#107;&#x40;&#x6e;&#101;&#x74;&#48;&#x2e;&#x73;&#101;&#114;&#118;&#105;&#99;&#x65;&#x2e;</a></p>
+<p>Then enable <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#58;&#x6e;&#x65;&#116;&#119;&#111;&#x72;&#107;&#x40;&#110;&#101;&#x74;&#48;&#x2e;&#x73;&#101;&#114;&#118;&#105;&#99;&#x65;&#x2e;">&#x6e;&#x65;&#x74;&#x77;&#111;&#114;&#107;&#x40;&#110;&#101;&#116;&#x30;&#46;&#115;&#101;&#x72;&#118;&#x69;&#x63;&#101;&#46;</a></p>
 ]]></content>
   </entry>
   
