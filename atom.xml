@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2015-09-05T20:53:11+00:00</updated>
+  <updated>2016-01-14T23:30:22+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -12,6 +12,67 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[VNC Over SSH Tunnel]]></title>
+    <link href="http://wanglij.github.io/blog/2016/01/14/vnc-over-ssh-tunnel/"/>
+    <updated>2016-01-14T20:48:20+00:00</updated>
+    <id>http://wanglij.github.io/blog/2016/01/14/vnc-over-ssh-tunnel</id>
+    <content type="html"><![CDATA[<h3>Precondition:</h3>
+
+<p>TigerVNC was installed and running in my Arch Linux virtual box.
+I have TightVNC viewer installed in my local Windows computer.
+PuTTY is installed in the Windows computer.</p>
+
+<h3>Issue:</h3>
+
+<p>I could be able to connect to my VNC server directly before,
+but recent it seems like the port number was blocked by my company network,
+so I got the following error whenever I tried to connect to my Linux VNC server.</p>
+
+<p>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;<br>
+192.168.91.100::5901 - TightVNC Viewer<br>
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;<br>
+Error in TightVNC Viewer: An attempt was made to access a socket in a way forbidden by its access permissions.<br>
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;<br>
+OK   <br>
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;<br></p>
+
+<h3>Solution: connect VNC over SSH tunnel</h3>
+
+<h4>On the server (optional)</h4>
+
+<p>Edit /etc/systemd/system/vncserver@:1.service, and change the following line
+ExecStart=/usr/bin/vncserver -geometry 1920x1080 -fg -alwaysshared -dpi 100 %i
+to
+ExecStart=/usr/bin/vncserver -geometry 1920x1080 -fg -alwaysshared -dpi 100 -localhost %i
+By doing this change, it will only allow connections from the localhost. This is why it is optional.</p>
+
+<h4>On the windows client</h4>
+
+<p>Run PuTTY.
+- Fill &ldquo;Host Name (or IP address):&rdquo; field with &ldquo;<user>@<host>&rdquo;. Here the host is the IP address of my Linux machine where the VNC server is running. In my case, it&rsquo;s 192.168.91.100.<br>
+- Make sure &ldquo;SSH&rdquo; is selected in &ldquo;Connection Type:&rdquo;.<br>
+Go to the &ldquo;Connection&rdquo; -> &ldquo;SSH&rdquo; -> &ldquo;Tunnels&rdquo; screen.<br>
+Under &ldquo;Ad new forwarded port:&rdquo;,
+- Enter 5901 for the &ldquo;Source port&rdquo; field.
+- Enter &ldquo;127.0.0.1:5901&rdquo;.
+- Click the &ldquo;Add&rdquo; button. (You should se a line in the text box that reads &ldquo;L5901 127.0.0.1:5901&rdquo;)
+Go back to the &ldquo;Session&rdquo; screen, enter a name for the session and save it.
+Now open the connection, and enter the password when prompted.</p>
+
+<p>Run TightVNC.
+Change the &ldquo;Remote Host:&rdquo; field to 127.0.0.1::5901, and connect to the VNC like before.</p>
+
+<h3>References</h3>
+
+<ol>
+<li><a href="https://wiki.archlinux.org/index.php/TigerVNC">https://wiki.archlinux.org/index.php/TigerVNC</a></li>
+<li><a href="https://www.ocf.berkeley.edu/~xuanluo/sshproxywin.html">How to tunnel Internet traffic over SSH in Windows</a></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[路加福音 5 (Study Notes)]]></title>
@@ -2281,7 +2342,7 @@ YAHWEH remembers[4]</p></li>
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#58;&#x6e;&#x65;&#116;&#x77;&#x6f;&#114;&#107;&#x40;&#x6e;&#101;&#x74;&#48;&#x2e;&#x73;&#x65;&#x72;&#118;&#105;&#99;&#x65;&#x2e;">&#110;&#101;&#116;&#119;&#111;&#114;&#107;&#x40;&#110;&#101;&#116;&#x30;&#x2e;&#x73;&#x65;&#x72;&#x76;&#105;&#99;&#101;&#x2e;</a></p>
+<p>Then enable <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x6e;&#101;&#116;&#x77;&#111;&#114;&#x6b;&#x40;&#110;&#x65;&#x74;&#x30;&#46;&#115;&#101;&#114;&#x76;&#x69;&#x63;&#101;&#x2e;">&#110;&#x65;&#116;&#x77;&#111;&#114;&#107;&#64;&#110;&#x65;&#116;&#x30;&#x2e;&#x73;&#x65;&#x72;&#118;&#x69;&#x63;&#101;&#46;</a></p>
 ]]></content>
   </entry>
   
