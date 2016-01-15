@@ -9,9 +9,9 @@
   <meta name="author" content="Lijun Wang">
 
   
-  <meta name="description" content="RubyGem gem command [arguments&hellip;] [options&hellip;] &ndash;http-proxy http://username:password@company.proxy.address:port
-or
-export HTTP_PROXY= &hellip;">
+  <meta name="description" content="RubyGem 1
+gem command [arguments...] [options...] --http-proxy http://username:password@company.proxy.address:port or 1
+export HTTP_PROXY=http:// &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -98,9 +98,15 @@ export HTTP_PROXY= &hellip;">
 
 <div class="entry-content"><h3>RubyGem</h3>
 
-<p>gem command [arguments&hellip;] [options&hellip;] &ndash;http-proxy <a href="http://username:password@company.proxy.address:port">http://username:password@company.proxy.address:port</a>
-or
-export HTTP_PROXY=<a href="http://username:password@company.proxy.address:port">http://username:password@company.proxy.address:port</a></p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem command [arguments...] [options...] --http-proxy http://username:password@company.proxy.address:port</span></code></pre></td></tr></table></div></figure>
+
+
+<p>or</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>export HTTP_PROXY=http://username:password@company.proxy.address:port</span></code></pre></td></tr></table></div></figure>
+
 
 <h3>Proxy settings for ArchLinux</h3>
 
@@ -114,7 +120,17 @@ export HTTP_PROXY=<a href="http://username:password@company.proxy.address:port">
 </span><span class='line'> export rsync_proxy=$http_proxy</span></code></pre></td></tr></table></div></figure>
 
 
+<p>At least, after doing this, I can deploy my octopress log again by running rake deploy.</p>
+
 <h3>pacman</h3>
+
+<p>Make sure that the relevant environment variables ($http_proxy, $ftp_proxy etc.) are set up. Should this not work, you may need to configure pacman to use wget to fetch packages. If you use pacman with sudo, you need to configure sudo to pass these environment variables to pacman.</p>
+
+<p>o have pacman automatically use Wget and a proxy with authentication, place the Wget command into /etc/pacman.conf, in the [options] section:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>XferCommand = /usr/bin/wget --proxy-user "domain\user" --proxy-password="password" --passive-ftp -q --show-progress -c -O %o %u</span></code></pre></td></tr></table></div></figure>
+
 
 <p>If you have a lot of environment variables, or you export your proxy settings via export http_proxy=&ldquo;&hellip;&rdquo;, when using sudo these variables do not get passed to the root account unless you run sudo with the -E option.</p>
 
@@ -129,6 +145,13 @@ export HTTP_PROXY=<a href="http://username:password@company.proxy.address:port">
 </pre></td><td class='code'><pre><code class=''><span class='line'>/etc/sudoers
 </span><span class='line'>Defaults env_keep += "ftp_proxy http_proxy https_proxy no_proxy"</span></code></pre></td></tr></table></div></figure>
 
+
+<h3>References</h3>
+
+<p><a href="http://stackoverflow.com/questions/4418/how-do-i-update-ruby-gems-from-behind-a-proxy-isa-ntlm">http://stackoverflow.com/questions/4418/how-do-i-update-ruby-gems-from-behind-a-proxy-isa-ntlm</a>
+<a href="https://wiki.archlinux.org/index.php/proxy_settings">https://wiki.archlinux.org/index.php/proxy_settings</a>
+<a href="https://wiki.archlinux.org/index.php/Wget#pacman_integration">https://wiki.archlinux.org/index.php/Wget#pacman_integration</a>
+<a href="https://wiki.archlinux.org/index.php/pacman#pacman_does_not_honor_proxy_settings">https://wiki.archlinux.org/index.php/pacman#pacman_does_not_honor_proxy_settings</a></p>
 </div>
 
 

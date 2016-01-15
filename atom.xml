@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2016-01-15T20:32:00+00:00</updated>
+  <updated>2016-01-15T20:34:52+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -20,9 +20,15 @@
     <id>http://wanglij.github.io/blog/2016/01/15/behind-companys-firewall</id>
     <content type="html"><![CDATA[<h3>RubyGem</h3>
 
-<p>gem command [arguments&hellip;] [options&hellip;] &ndash;http-proxy <a href="http://username:password@company.proxy.address:port">http://username:password@company.proxy.address:port</a>
-or
-export HTTP_PROXY=<a href="http://username:password@company.proxy.address:port">http://username:password@company.proxy.address:port</a></p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem command [arguments...] [options...] --http-proxy http://username:password@company.proxy.address:port</span></code></pre></td></tr></table></div></figure>
+
+
+<p>or</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>export HTTP_PROXY=http://username:password@company.proxy.address:port</span></code></pre></td></tr></table></div></figure>
+
 
 <h3>Proxy settings for ArchLinux</h3>
 
@@ -36,7 +42,17 @@ export HTTP_PROXY=<a href="http://username:password@company.proxy.address:port">
 </span><span class='line'> export rsync_proxy=$http_proxy</span></code></pre></td></tr></table></div></figure>
 
 
+<p>At least, after doing this, I can deploy my octopress log again by running rake deploy.</p>
+
 <h3>pacman</h3>
+
+<p>Make sure that the relevant environment variables ($http_proxy, $ftp_proxy etc.) are set up. Should this not work, you may need to configure pacman to use wget to fetch packages. If you use pacman with sudo, you need to configure sudo to pass these environment variables to pacman.</p>
+
+<p>o have pacman automatically use Wget and a proxy with authentication, place the Wget command into /etc/pacman.conf, in the [options] section:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>XferCommand = /usr/bin/wget --proxy-user "domain\user" --proxy-password="password" --passive-ftp -q --show-progress -c -O %o %u</span></code></pre></td></tr></table></div></figure>
+
 
 <p>If you have a lot of environment variables, or you export your proxy settings via export http_proxy=&ldquo;&hellip;&rdquo;, when using sudo these variables do not get passed to the root account unless you run sudo with the -E option.</p>
 
@@ -51,6 +67,13 @@ export HTTP_PROXY=<a href="http://username:password@company.proxy.address:port">
 </pre></td><td class='code'><pre><code class=''><span class='line'>/etc/sudoers
 </span><span class='line'>Defaults env_keep += "ftp_proxy http_proxy https_proxy no_proxy"</span></code></pre></td></tr></table></div></figure>
 
+
+<h3>References</h3>
+
+<p><a href="http://stackoverflow.com/questions/4418/how-do-i-update-ruby-gems-from-behind-a-proxy-isa-ntlm">http://stackoverflow.com/questions/4418/how-do-i-update-ruby-gems-from-behind-a-proxy-isa-ntlm</a>
+<a href="https://wiki.archlinux.org/index.php/proxy_settings">https://wiki.archlinux.org/index.php/proxy_settings</a>
+<a href="https://wiki.archlinux.org/index.php/Wget#pacman_integration">https://wiki.archlinux.org/index.php/Wget#pacman_integration</a>
+<a href="https://wiki.archlinux.org/index.php/pacman#pacman_does_not_honor_proxy_settings">https://wiki.archlinux.org/index.php/pacman#pacman_does_not_honor_proxy_settings</a></p>
 ]]></content>
   </entry>
   
@@ -2396,7 +2419,7 @@ YAHWEH remembers[4]</p></li>
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#110;&#x65;&#116;&#119;&#x6f;&#114;&#107;&#x40;&#110;&#x65;&#116;&#48;&#x2e;&#115;&#101;&#x72;&#118;&#105;&#x63;&#x65;&#46;">&#110;&#x65;&#116;&#x77;&#111;&#114;&#107;&#x40;&#110;&#x65;&#x74;&#x30;&#x2e;&#x73;&#x65;&#x72;&#118;&#105;&#x63;&#x65;&#46;</a></p>
+<p>Then enable <a href="&#109;&#x61;&#x69;&#108;&#x74;&#111;&#x3a;&#x6e;&#x65;&#x74;&#x77;&#111;&#x72;&#107;&#x40;&#x6e;&#101;&#x74;&#48;&#x2e;&#115;&#x65;&#114;&#118;&#x69;&#99;&#x65;&#46;">&#x6e;&#x65;&#116;&#119;&#111;&#x72;&#107;&#64;&#x6e;&#x65;&#x74;&#48;&#46;&#115;&#x65;&#x72;&#x76;&#105;&#x63;&#x65;&#x2e;</a></p>
 ]]></content>
   </entry>
   
