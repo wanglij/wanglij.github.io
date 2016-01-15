@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2016-01-14T23:30:22+00:00</updated>
+  <updated>2016-01-15T17:41:03+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Behind Company's Firewall]]></title>
+    <link href="http://wanglij.github.io/blog/2016/01/15/behind-companys-firewall/"/>
+    <updated>2016-01-15T17:33:46+00:00</updated>
+    <id>http://wanglij.github.io/blog/2016/01/15/behind-companys-firewall</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[VNC Over SSH Tunnel]]></title>
@@ -2342,7 +2351,7 @@ YAHWEH remembers[4]</p></li>
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x6e;&#101;&#116;&#x77;&#111;&#114;&#x6b;&#x40;&#110;&#x65;&#x74;&#x30;&#46;&#115;&#101;&#114;&#x76;&#x69;&#x63;&#101;&#x2e;">&#110;&#x65;&#116;&#x77;&#111;&#114;&#107;&#64;&#110;&#x65;&#116;&#x30;&#x2e;&#x73;&#x65;&#x72;&#118;&#x69;&#x63;&#101;&#46;</a></p>
+<p>Then enable <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#x6e;&#x65;&#116;&#119;&#x6f;&#114;&#x6b;&#x40;&#110;&#101;&#116;&#x30;&#46;&#x73;&#101;&#x72;&#118;&#105;&#99;&#x65;&#46;">&#x6e;&#101;&#116;&#x77;&#x6f;&#114;&#107;&#64;&#110;&#x65;&#116;&#x30;&#x2e;&#115;&#101;&#114;&#x76;&#x69;&#99;&#x65;&#x2e;</a></p>
 ]]></content>
   </entry>
   
