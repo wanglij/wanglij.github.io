@@ -120,23 +120,36 @@ OK   <br>
 
 <h4>On the server (optional)</h4>
 
-<p>Edit /etc/systemd/system/vncserver@:1.service, and change the following line
-ExecStart=/usr/bin/vncserver -geometry 1920x1080 -fg -alwaysshared -dpi 100 %i
-to
-ExecStart=/usr/bin/vncserver -geometry 1920x1080 -fg -alwaysshared -dpi 100 -localhost %i
-By doing this change, it will only allow connections from the localhost. This is why it is optional.</p>
+<p>Edit /etc/systemd/system/vncserver@:1.service, and change the following line</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ExecStart=/usr/bin/vncserver -geometry 1920x1080 -fg -alwaysshared -dpi 100 %i</span></code></pre></td></tr></table></div></figure>
+
+
+<p>to</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ExecStart=/usr/bin/vncserver -geometry 1920x1080 -fg -alwaysshared -dpi 100 -localhost %i</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By doing this change, it will only allow connections from the localhost. This is why it is optional.</p>
 
 <h4>On the windows client</h4>
 
-<p>Run PuTTY.
-- Fill &ldquo;Host Name (or IP address):&rdquo; field with &ldquo;<user>@<host>&rdquo;. Here the host is the IP address of my Linux machine where the VNC server is running. In my case, it&rsquo;s 192.168.91.100.<br>
-- Make sure &ldquo;SSH&rdquo; is selected in &ldquo;Connection Type:&rdquo;.<br>
+<p>Run PuTTY.</p>
+
+<ul>
+<li>Fill &ldquo;Host Name (or IP address):&rdquo; field with &ldquo;<user>@<host>&rdquo;. Here the host is the IP address of my Linux machine where the VNC server is running. In my case, it&rsquo;s 192.168.91.100.<br></li>
+<li><p>Make sure &ldquo;SSH&rdquo; is selected in &ldquo;Connection Type:&rdquo;.<br>
 Go to the &ldquo;Connection&rdquo; -> &ldquo;SSH&rdquo; -> &ldquo;Tunnels&rdquo; screen.<br>
-Under &ldquo;Ad new forwarded port:&rdquo;,
-- Enter 5901 for the &ldquo;Source port&rdquo; field.
-- Enter &ldquo;127.0.0.1:5901&rdquo;.
-- Click the &ldquo;Add&rdquo; button. (You should se a line in the text box that reads &ldquo;L5901 127.0.0.1:5901&rdquo;)
-Go back to the &ldquo;Session&rdquo; screen, enter a name for the session and save it.
+Under &ldquo;Ad new forwarded port:&rdquo;,</p></li>
+<li><p>Enter 5901 for the &ldquo;Source port&rdquo; field.</p></li>
+<li>Enter &ldquo;127.0.0.1:5901&rdquo;.</li>
+<li>Click the &ldquo;Add&rdquo; button. (You should se a line in the text box that reads &ldquo;L5901 127.0.0.1:5901&rdquo;)</li>
+</ul>
+
+
+<p>Go back to the &ldquo;Session&rdquo; screen, enter a name for the session and save it.
 Now open the connection, and enter the password when prompted.</p>
 
 <p>Run TightVNC.

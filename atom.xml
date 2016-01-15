@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2016-01-15T17:54:07+00:00</updated>
+  <updated>2016-01-15T20:32:00+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -18,7 +18,39 @@
     <link href="http://wanglij.github.io/blog/2016/01/15/behind-companys-firewall/"/>
     <updated>2016-01-15T17:33:46+00:00</updated>
     <id>http://wanglij.github.io/blog/2016/01/15/behind-companys-firewall</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<h3>RubyGem</h3>
+
+<p>gem command [arguments&hellip;] [options&hellip;] &ndash;http-proxy <a href="http://username:password@company.proxy.address:port">http://username:password@company.proxy.address:port</a>
+or
+export HTTP_PROXY=<a href="http://username:password@company.proxy.address:port">http://username:password@company.proxy.address:port</a></p>
+
+<h3>Proxy settings for ArchLinux</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> export http_proxy=$HTTP_PROXY
+</span><span class='line'> export https_proxy=$http_proxy
+</span><span class='line'> export ftp_proxy=$http_proxy
+</span><span class='line'> export rsync_proxy=$http_proxy</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>pacman</h3>
+
+<p>If you have a lot of environment variables, or you export your proxy settings via export http_proxy=&ldquo;&hellip;&rdquo;, when using sudo these variables do not get passed to the root account unless you run sudo with the -E option.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo -E pacman -Syu</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The recommended way of preserving environment variables is to append them to env_keep:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/etc/sudoers
+</span><span class='line'>Defaults env_keep += "ftp_proxy http_proxy https_proxy no_proxy"</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   
@@ -51,23 +83,36 @@ OK   <br>
 
 <h4>On the server (optional)</h4>
 
-<p>Edit /etc/systemd/system/vncserver@:1.service, and change the following line
-ExecStart=/usr/bin/vncserver -geometry 1920x1080 -fg -alwaysshared -dpi 100 %i
-to
-ExecStart=/usr/bin/vncserver -geometry 1920x1080 -fg -alwaysshared -dpi 100 -localhost %i
-By doing this change, it will only allow connections from the localhost. This is why it is optional.</p>
+<p>Edit /etc/systemd/system/vncserver@:1.service, and change the following line</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ExecStart=/usr/bin/vncserver -geometry 1920x1080 -fg -alwaysshared -dpi 100 %i</span></code></pre></td></tr></table></div></figure>
+
+
+<p>to</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ExecStart=/usr/bin/vncserver -geometry 1920x1080 -fg -alwaysshared -dpi 100 -localhost %i</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By doing this change, it will only allow connections from the localhost. This is why it is optional.</p>
 
 <h4>On the windows client</h4>
 
-<p>Run PuTTY.
-- Fill &ldquo;Host Name (or IP address):&rdquo; field with &ldquo;<user>@<host>&rdquo;. Here the host is the IP address of my Linux machine where the VNC server is running. In my case, it&rsquo;s 192.168.91.100.<br>
-- Make sure &ldquo;SSH&rdquo; is selected in &ldquo;Connection Type:&rdquo;.<br>
+<p>Run PuTTY.</p>
+
+<ul>
+<li>Fill &ldquo;Host Name (or IP address):&rdquo; field with &ldquo;<user>@<host>&rdquo;. Here the host is the IP address of my Linux machine where the VNC server is running. In my case, it&rsquo;s 192.168.91.100.<br></li>
+<li><p>Make sure &ldquo;SSH&rdquo; is selected in &ldquo;Connection Type:&rdquo;.<br>
 Go to the &ldquo;Connection&rdquo; -> &ldquo;SSH&rdquo; -> &ldquo;Tunnels&rdquo; screen.<br>
-Under &ldquo;Ad new forwarded port:&rdquo;,
-- Enter 5901 for the &ldquo;Source port&rdquo; field.
-- Enter &ldquo;127.0.0.1:5901&rdquo;.
-- Click the &ldquo;Add&rdquo; button. (You should se a line in the text box that reads &ldquo;L5901 127.0.0.1:5901&rdquo;)
-Go back to the &ldquo;Session&rdquo; screen, enter a name for the session and save it.
+Under &ldquo;Ad new forwarded port:&rdquo;,</p></li>
+<li><p>Enter 5901 for the &ldquo;Source port&rdquo; field.</p></li>
+<li>Enter &ldquo;127.0.0.1:5901&rdquo;.</li>
+<li>Click the &ldquo;Add&rdquo; button. (You should se a line in the text box that reads &ldquo;L5901 127.0.0.1:5901&rdquo;)</li>
+</ul>
+
+
+<p>Go back to the &ldquo;Session&rdquo; screen, enter a name for the session and save it.
 Now open the connection, and enter the password when prompted.</p>
 
 <p>Run TightVNC.
@@ -2351,7 +2396,7 @@ YAHWEH remembers[4]</p></li>
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#x6d;&#x61;&#105;&#108;&#x74;&#x6f;&#58;&#110;&#x65;&#116;&#x77;&#x6f;&#x72;&#107;&#x40;&#110;&#x65;&#116;&#x30;&#46;&#x73;&#101;&#x72;&#x76;&#x69;&#99;&#101;&#x2e;">&#x6e;&#x65;&#116;&#119;&#111;&#114;&#107;&#x40;&#110;&#101;&#x74;&#x30;&#46;&#x73;&#101;&#x72;&#x76;&#x69;&#99;&#101;&#46;</a></p>
+<p>Then enable <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#110;&#x65;&#116;&#119;&#x6f;&#114;&#107;&#x40;&#110;&#x65;&#116;&#48;&#x2e;&#115;&#101;&#x72;&#118;&#105;&#x63;&#x65;&#46;">&#110;&#x65;&#116;&#x77;&#111;&#114;&#107;&#x40;&#110;&#x65;&#x74;&#x30;&#x2e;&#x73;&#x65;&#x72;&#118;&#105;&#x63;&#x65;&#46;</a></p>
 ]]></content>
   </entry>
   

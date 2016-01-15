@@ -9,8 +9,9 @@
   <meta name="author" content="Lijun Wang">
 
   
-  <meta name="description" content="
-">
+  <meta name="description" content="RubyGem gem command [arguments&hellip;] [options&hellip;] &ndash;http-proxy http://username:password@company.proxy.address:port
+or
+export HTTP_PROXY= &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -95,7 +96,39 @@
   </header>
 
 
-<div class="entry-content">
+<div class="entry-content"><h3>RubyGem</h3>
+
+<p>gem command [arguments&hellip;] [options&hellip;] &ndash;http-proxy <a href="http://username:password@company.proxy.address:port">http://username:password@company.proxy.address:port</a>
+or
+export HTTP_PROXY=<a href="http://username:password@company.proxy.address:port">http://username:password@company.proxy.address:port</a></p>
+
+<h3>Proxy settings for ArchLinux</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> export http_proxy=$HTTP_PROXY
+</span><span class='line'> export https_proxy=$http_proxy
+</span><span class='line'> export ftp_proxy=$http_proxy
+</span><span class='line'> export rsync_proxy=$http_proxy</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>pacman</h3>
+
+<p>If you have a lot of environment variables, or you export your proxy settings via export http_proxy=&ldquo;&hellip;&rdquo;, when using sudo these variables do not get passed to the root account unless you run sudo with the -E option.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo -E pacman -Syu</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The recommended way of preserving environment variables is to append them to env_keep:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/etc/sudoers
+</span><span class='line'>Defaults env_keep += "ftp_proxy http_proxy https_proxy no_proxy"</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
