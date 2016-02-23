@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2016-01-15T20:34:52+00:00</updated>
+  <updated>2016-02-23T17:09:52+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -12,6 +12,60 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[童言无忌]]></title>
+    <link href="http://wanglij.github.io/blog/2016/02/23/funny-moments-with-kids/"/>
+    <updated>2016-02-23T16:27:28+00:00</updated>
+    <id>http://wanglij.github.io/blog/2016/02/23/funny-moments-with-kids</id>
+    <content type="html"><![CDATA[<h3>儿子的数字</h3>
+
+<p>一天晚上，儿子在地上玩小球。
+我说：“咱们来数数这些小球吧”。
+儿子开始用中文数总是跳过“三、四”。
+然后，我开始引导他用英文数。
+他开始数了：
+one, two, three, &hellip;, nine, ten。
+我说“哇，好棒！”
+然后他继续数：
+eleven, twenteen, &hellip;(没听清), cookie-teen, cracker-teen.</p>
+
+<h3>角色扮演</h3>
+
+<p>周五晚上轮到我带AWANA的puggles(2-3岁的小孩)班。儿子也刚好在这个班。
+游戏时间，我和孩子们一起用积木在墙角围出了一个小城堡。
+孩子们也把我邀请进去蹲坐在里边。
+两个小女孩来了灵感，开始玩起了角色扮演。
+女孩X指着自己说“我是妹妹”指着儿子说“他是爸爸”
+女孩L跟着说“我是妈妈，他是爸爸”然后指着我说“你是狗”
+“啊！我怎么是狗啊？”</p>
+
+<h3>爸爸的奶</h3>
+
+<p>周六的下午，太太去教会上课了，我带两个孩子在家。
+老大玩的正起劲，老二睡醒了。
+我对老大说：“咱们带着弟弟去找妈妈吧，现在弟弟太小了，只能吃妈妈的奶，等弟弟大了就不用了。”
+老大好像听懂了：“哦，好吧，等弟弟大了就可以吃爸爸的奶了！“
+“Ugh”</p>
+
+<h3>种鸟</h3>
+
+<p>早上，太太有和我说起了种菜的事情。
+太太说：“其实自己想种点什么，到超市买种子就行”。
+我有些不耐烦了“别种了，种个鸟啊！”
+儿子也插进来“爸爸，鸟不能种，鸟是在天上飞的。”
+：） “对对，爸爸错了。”</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Install Arm-none-linux-gnueabi-gcc]]></title>
+    <link href="http://wanglij.github.io/blog/2016/01/26/install-arm-none-linux-gnueabi-gcc/"/>
+    <updated>2016-01-26T22:21:43+00:00</updated>
+    <id>http://wanglij.github.io/blog/2016/01/26/install-arm-none-linux-gnueabi-gcc</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Behind Company's Firewall]]></title>
@@ -68,12 +122,55 @@
 </span><span class='line'>Defaults env_keep += "ftp_proxy http_proxy https_proxy no_proxy"</span></code></pre></td></tr></table></div></figure>
 
 
+<h3>yaourt</h3>
+
+<p>It gives the following error:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>symbol lookup error: /usr/lib/libcurl.so.4: undefined symbol: SSL_CTX_set_alpn_protos</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This was resolved by reinstall openssl</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo pacman -S --force openssl</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then it gives the another error:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>curl error: Peer certificate cannot be authenticated with given CA certificates</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Pass &ldquo;&ndash;insecure&rdquo; option to yaourt.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  -&gt; Cloning binutils-gdb git repo...
+</span><span class='line'>Cloning into bare repository '/tmp/yaourt-tmp-wanglij/aur-arm-linux-gnueabihf-binutils/binutils-gdb'...
+</span><span class='line'>fatal: unable to connect to sourceware.org:
+</span><span class='line'>sourceware.org[0: 209.132.180.131]: errno=Connection refused
+</span><span class='line'>
+</span><span class='line'>==&gt; ERROR: Failure while downloading binutils-gdb git repo
+</span><span class='line'>    Aborting...
+</span><span class='line'>==&gt; ERROR: Makepkg was unable to build arm-linux-gnueabihf-binutils.
+</span><span class='line'>==&gt; Restart building arm-linux-gnueabihf-binutils ? [y/N]</span></code></pre></td></tr></table></div></figure>
+
+
 <h3>References</h3>
 
 <p><a href="http://stackoverflow.com/questions/4418/how-do-i-update-ruby-gems-from-behind-a-proxy-isa-ntlm">http://stackoverflow.com/questions/4418/how-do-i-update-ruby-gems-from-behind-a-proxy-isa-ntlm</a>
 <a href="https://wiki.archlinux.org/index.php/proxy_settings">https://wiki.archlinux.org/index.php/proxy_settings</a>
 <a href="https://wiki.archlinux.org/index.php/Wget#pacman_integration">https://wiki.archlinux.org/index.php/Wget#pacman_integration</a>
-<a href="https://wiki.archlinux.org/index.php/pacman#pacman_does_not_honor_proxy_settings">https://wiki.archlinux.org/index.php/pacman#pacman_does_not_honor_proxy_settings</a></p>
+<a href="https://wiki.archlinux.org/index.php/pacman#pacman_does_not_honor_proxy_settings">https://wiki.archlinux.org/index.php/pacman#pacman_does_not_honor_proxy_settings</a>
+<a href="https://bbs.archlinux.org/viewtopic.php?pid=1523915#p1523915">https://bbs.archlinux.org/viewtopic.php?pid=1523915#p1523915</a></p>
 ]]></content>
   </entry>
   
@@ -2419,7 +2516,7 @@ YAHWEH remembers[4]</p></li>
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#109;&#x61;&#x69;&#108;&#x74;&#111;&#x3a;&#x6e;&#x65;&#x74;&#x77;&#111;&#x72;&#107;&#x40;&#x6e;&#101;&#x74;&#48;&#x2e;&#115;&#x65;&#114;&#118;&#x69;&#99;&#x65;&#46;">&#x6e;&#x65;&#116;&#119;&#111;&#x72;&#107;&#64;&#x6e;&#x65;&#x74;&#48;&#46;&#115;&#x65;&#x72;&#x76;&#105;&#x63;&#x65;&#x2e;</a></p>
+<p>Then enable <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#x3a;&#x6e;&#x65;&#x74;&#119;&#111;&#x72;&#x6b;&#x40;&#110;&#101;&#x74;&#48;&#46;&#x73;&#x65;&#114;&#x76;&#x69;&#99;&#x65;&#x2e;">&#x6e;&#101;&#x74;&#119;&#x6f;&#114;&#107;&#64;&#110;&#x65;&#x74;&#x30;&#x2e;&#115;&#101;&#114;&#x76;&#x69;&#99;&#x65;&#46;</a></p>
 ]]></content>
   </entry>
   
@@ -3155,87 +3252,6 @@ Now all the shared folders should be mounted to your linux directories automatic
 </pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~]$ sudo mkdir /var/run/vmblock-fuse
 </span><span class='line'>[wanglij@~]$ sudo vmware-vmblock-fuse -o subtype=vmware-vmblock,default_permissions,allow_other /var/run/vmblock-fuse</span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[A Few Issues and Solutions With Octopress]]></title>
-    <link href="http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress/"/>
-    <updated>2014-09-11T16:55:09+00:00</updated>
-    <id>http://wanglij.github.io/blog/2014/09/11/a-few-issues-and-solutions-with-octopress</id>
-    <content type="html"><![CDATA[<h3>Errors when I run &ldquo;rake generate&rdquo;</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Error reading file /home/wanglij/octopress/source/_posts/2014-09-11-first-try-with-github-and-octopress.markdown: (&lt;unknown&gt;): did not find expected key while parsing a block mapping at line 2 column 1
-</span><span class='line'>Error reading file /home/wanglij/octopress/source/_posts/2014-08-04-first-try-with-github-and-octopress.markdown: (&lt;unknown&gt;): did not find expected key while parsing a block mapping at line 2 column 1</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This is because there are too double quote marks with the title like &ldquo;&#8221;title&rdquo;&ldquo;.
-This is stupid, since it was generated automatically by rake new_post I believe.</p>
-
-<h3>Errors when I run &ldquo;rake new_post&rdquo;</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$rake new_post["title"]
-</span><span class='line'>zsh: no matches found: new_post[title]</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This was resolved by adding</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>alias rake='noglob rake' </span></code></pre></td></tr></table></div></figure>
-
-
-<p>in the .zshrc file</p>
-
-<p>Found the solution <a href="https://github.com/robbyrussell/oh-my-zsh/issues/433">here</a></p>
-
-<h3>Error when I run &ldquo;rake deploy&rdquo;</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>...
-</span><span class='line'>To https://github.com/wanglij/wanglij.github.io
-</span><span class='line'> ! [rejected]        master -&gt; master (non-fast-forward)
-</span><span class='line'>error: failed to push some refs to 'https://github.com/wanglij/wanglij.github.io'
-</span><span class='line'>hint: Updates were rejected because the tip of your current branch is behind
-</span><span class='line'>hint: its remote counterpart. Integrate the remote changes (e.g.
-</span><span class='line'>hint: 'git pull ...') before pushing again.
-</span><span class='line'>hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-</span><span class='line'>
-</span><span class='line'>## Github Pages deploy complete</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Sloved by running the following command in the /source/_post direcotry</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git pull origin master</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>A good reference to make Octopress and Disques Comments work finally.</h3>
-
-<p><a href="http://hal.case.edu/~rrc/blog/2013/09/29/disqus-comments-not-visible/">Troubleshooting Octopress - Disqus Comments Not Visible</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[First Try With Github and Octopress]]></title>
-    <link href="http://wanglij.github.io/blog/2014/08/04/first-try-with-github-and-octopress/"/>
-    <updated>2014-08-04T12:32:03+00:00</updated>
-    <id>http://wanglij.github.io/blog/2014/08/04/first-try-with-github-and-octopress</id>
-    <content type="html"><![CDATA[<p>It&rsquo;s been many years that I&rsquo;ve hardly written something. Once in a while, it&rsquo;s like something was tucked in you mind, and you just feel not right if you don&rsquo;t put it down somewhere. However, it&rsquo;s hard to find a place to do this for sort of geek person like me. My favorable editor is vim, and I like the pages to be neat and concise. Thank my friend, feipeng&rsquo;s help, I got this in github. This looks cool. I hope I am able to feel at home with it, and share something here soon.</p>
-
-<p>This is the first shot, and also a first test/practice.</p>
 ]]></content>
   </entry>
   

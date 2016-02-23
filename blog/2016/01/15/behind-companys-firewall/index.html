@@ -146,12 +146,55 @@ export HTTP_PROXY=http:// &hellip;">
 </span><span class='line'>Defaults env_keep += "ftp_proxy http_proxy https_proxy no_proxy"</span></code></pre></td></tr></table></div></figure>
 
 
+<h3>yaourt</h3>
+
+<p>It gives the following error:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>symbol lookup error: /usr/lib/libcurl.so.4: undefined symbol: SSL_CTX_set_alpn_protos</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This was resolved by reinstall openssl</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo pacman -S --force openssl</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then it gives the another error:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>curl error: Peer certificate cannot be authenticated with given CA certificates</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Pass &ldquo;&ndash;insecure&rdquo; option to yaourt.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  -&gt; Cloning binutils-gdb git repo...
+</span><span class='line'>Cloning into bare repository '/tmp/yaourt-tmp-wanglij/aur-arm-linux-gnueabihf-binutils/binutils-gdb'...
+</span><span class='line'>fatal: unable to connect to sourceware.org:
+</span><span class='line'>sourceware.org[0: 209.132.180.131]: errno=Connection refused
+</span><span class='line'>
+</span><span class='line'>==&gt; ERROR: Failure while downloading binutils-gdb git repo
+</span><span class='line'>    Aborting...
+</span><span class='line'>==&gt; ERROR: Makepkg was unable to build arm-linux-gnueabihf-binutils.
+</span><span class='line'>==&gt; Restart building arm-linux-gnueabihf-binutils ? [y/N]</span></code></pre></td></tr></table></div></figure>
+
+
 <h3>References</h3>
 
 <p><a href="http://stackoverflow.com/questions/4418/how-do-i-update-ruby-gems-from-behind-a-proxy-isa-ntlm">http://stackoverflow.com/questions/4418/how-do-i-update-ruby-gems-from-behind-a-proxy-isa-ntlm</a>
 <a href="https://wiki.archlinux.org/index.php/proxy_settings">https://wiki.archlinux.org/index.php/proxy_settings</a>
 <a href="https://wiki.archlinux.org/index.php/Wget#pacman_integration">https://wiki.archlinux.org/index.php/Wget#pacman_integration</a>
-<a href="https://wiki.archlinux.org/index.php/pacman#pacman_does_not_honor_proxy_settings">https://wiki.archlinux.org/index.php/pacman#pacman_does_not_honor_proxy_settings</a></p>
+<a href="https://wiki.archlinux.org/index.php/pacman#pacman_does_not_honor_proxy_settings">https://wiki.archlinux.org/index.php/pacman#pacman_does_not_honor_proxy_settings</a>
+<a href="https://bbs.archlinux.org/viewtopic.php?pid=1523915#p1523915">https://bbs.archlinux.org/viewtopic.php?pid=1523915#p1523915</a></p>
 </div>
 
 
@@ -194,6 +237,8 @@ export HTTP_PROXY=http:// &hellip;">
         <a class="basic-alignment left" href="/blog/2016/01/14/vnc-over-ssh-tunnel/" title="Previous Post: VNC over SSH tunnel">&laquo; VNC over SSH tunnel</a>
       
       
+        <a class="basic-alignment right" href="/blog/2016/01/26/install-arm-none-linux-gnueabi-gcc/" title="Next Post: Install arm-none-linux-gnueabi-gcc">Install arm-none-linux-gnueabi-gcc &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -213,6 +258,14 @@ export HTTP_PROXY=http:// &hellip;">
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/02/23/funny-moments-with-kids/">童言无忌</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/01/26/install-arm-none-linux-gnueabi-gcc/">Install Arm-none-linux-gnueabi-gcc</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/01/15/behind-companys-firewall/">Behind Company's Firewall</a>
       </li>
     
@@ -222,14 +275,6 @@ export HTTP_PROXY=http:// &hellip;">
     
       <li class="post">
         <a href="/blog/2015/08/28/luke-5-study-notes/">路加福音 5 (Study Notes)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/08/21/research-generate-core-dump-file-programmatically/">Research: Generate Core Dump File Programmatically in QNX</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/08/21/troubleshooting-core-dump-file-not-in-current-directory/">Troubleshooting: Core Dump File Not in Current Directory</a>
       </li>
     
   </ul>

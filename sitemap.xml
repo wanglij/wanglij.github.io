@@ -3,6 +3,18 @@
   
   
   <url>
+    <loc>http://wanglij.github.io/blog/2016/02/23/funny-moments-with-kids/</loc>
+    <lastmod>2016-02-23T16:27:28+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://wanglij.github.io/blog/2016/01/26/install-arm-none-linux-gnueabi-gcc/</loc>
+    <lastmod>2016-01-26T22:21:43+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://wanglij.github.io/blog/2016/01/15/behind-companys-firewall/</loc>
     <lastmod>2016-01-15T17:33:46+00:00</lastmod>
     <priority>0.8</priority>
@@ -125,42 +137,42 @@
   
   <url>
     <loc>http://wanglij.github.io/</loc>
-    <lastmod>2016-01-15T20:34:52+00:00</lastmod>
+    <lastmod>2016-02-23T17:09:52+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/archives/</loc>
-    <lastmod>2016-01-15T20:34:52+00:00</lastmod>
+    <lastmod>2016-02-23T17:09:52+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/blog/</loc>
-    <lastmod>2016-01-15T20:34:52+00:00</lastmod>
+    <lastmod>2016-02-23T17:09:52+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/blog/archives/</loc>
-    <lastmod>2016-01-15T20:34:52+00:00</lastmod>
+    <lastmod>2016-02-23T17:09:52+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/</loc>
-    <lastmod>2016-01-15T20:34:52+00:00</lastmod>
+    <lastmod>2016-02-23T17:09:52+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/about/</loc>
-    <lastmod>2016-01-15T20:34:52+00:00</lastmod>
+    <lastmod>2016-02-23T17:09:52+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
