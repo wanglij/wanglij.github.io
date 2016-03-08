@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://wanglij.github.io/blog/2016/03/08/pacman-the-requested-url-returned-error-404/</loc>
+    <lastmod>2016-03-08T23:02:02+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://wanglij.github.io/blog/2016/02/23/funny-moments-with-kids/</loc>
     <lastmod>2016-02-23T16:27:28+00:00</lastmod>
     <priority>0.8</priority>
@@ -137,42 +143,42 @@
   
   <url>
     <loc>http://wanglij.github.io/</loc>
-    <lastmod>2016-02-26T17:34:25+00:00</lastmod>
+    <lastmod>2016-03-08T23:05:14+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/archives/</loc>
-    <lastmod>2016-02-26T17:34:25+00:00</lastmod>
+    <lastmod>2016-03-08T23:05:14+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/blog/</loc>
-    <lastmod>2016-02-26T17:34:25+00:00</lastmod>
+    <lastmod>2016-03-08T23:05:14+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/blog/archives/</loc>
-    <lastmod>2016-02-26T17:34:25+00:00</lastmod>
+    <lastmod>2016-03-08T23:05:14+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/</loc>
-    <lastmod>2016-02-26T17:34:25+00:00</lastmod>
+    <lastmod>2016-03-08T23:05:14+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://wanglij.github.io/about/</loc>
-    <lastmod>2016-02-26T17:34:25+00:00</lastmod>
+    <lastmod>2016-03-08T23:05:14+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
