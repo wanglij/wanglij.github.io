@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2016-03-14T22:35:23+00:00</updated>
+  <updated>2016-03-14T22:42:50+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -176,6 +176,14 @@ Then reinstall rvm, ruby and octopress. BINGO!</p>
 </span><span class='line'>[wanglij@~/octopress]$ gem install bundler  
 </span><span class='line'>[wanglij@~/octopress]$ bundle install </span></code></pre></td></tr></table></div></figure>
 
+
+<p>NOTE: The reason of downgrading the curl to an older version is that the latest curl requires openssl 1.0.2g. Without the latest openssl, the curl gives the following error:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/usr/lib/libcurl.so.4: undefined symbol: SSL_CTX_set_alpn_protos</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is what we came across when fixing yaourt in here(<a href="http://wanglij.github.io/blog/2016/01/15/behind-companys-firewall/">http://wanglij.github.io/blog/2016/01/15/behind-companys-firewall/</a>).</p>
 
 <h3>References</h3>
 
@@ -2930,7 +2938,7 @@ YAHWEH remembers[4]</p></li>
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#x6d;&#x61;&#105;&#108;&#116;&#111;&#x3a;&#x6e;&#101;&#x74;&#119;&#x6f;&#114;&#107;&#x40;&#x6e;&#101;&#116;&#x30;&#46;&#x73;&#101;&#114;&#118;&#105;&#99;&#101;&#x2e;">&#110;&#101;&#116;&#x77;&#x6f;&#114;&#x6b;&#x40;&#110;&#x65;&#x74;&#48;&#46;&#x73;&#101;&#114;&#x76;&#x69;&#99;&#x65;&#x2e;</a></p>
+<p>Then enable <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#x6f;&#58;&#x6e;&#101;&#x74;&#x77;&#111;&#x72;&#x6b;&#64;&#110;&#101;&#x74;&#48;&#x2e;&#115;&#101;&#114;&#x76;&#x69;&#x63;&#x65;&#x2e;">&#110;&#101;&#x74;&#119;&#111;&#x72;&#107;&#x40;&#110;&#101;&#116;&#48;&#x2e;&#115;&#101;&#x72;&#x76;&#105;&#x63;&#x65;&#x2e;</a></p>
 ]]></content>
   </entry>
   

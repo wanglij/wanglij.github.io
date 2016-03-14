@@ -262,6 +262,14 @@ Then reinstall rvm, ruby and octopress. BINGO!</p>
 </span><span class='line'>[wanglij@~/octopress]$ bundle install </span></code></pre></td></tr></table></div></figure>
 
 
+<p>NOTE: The reason of downgrading the curl to an older version is that the latest curl requires openssl 1.0.2g. Without the latest openssl, the curl gives the following error:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/usr/lib/libcurl.so.4: undefined symbol: SSL_CTX_set_alpn_protos</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is what we came across when fixing yaourt in here(<a href="http://wanglij.github.io/blog/2016/01/15/behind-companys-firewall/">http://wanglij.github.io/blog/2016/01/15/behind-companys-firewall/</a>).</p>
+
 <h3>References</h3>
 
 <p><a href="http://purplepalmdash.github.io/blog/2014/07/30/zai-githubshang-bu-shu-ni-de-octopressbo-ke/">http://purplepalmdash.github.io/blog/2014/07/30/zai-githubshang-bu-shu-ni-de-octopressbo-ke/</a></p>
