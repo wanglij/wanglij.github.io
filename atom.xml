@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2016-03-09T01:42:56+00:00</updated>
+  <updated>2016-03-14T22:32:40+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -12,6 +12,470 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress Broken After Arch Linux Upgrade]]></title>
+    <link href="http://wanglij.github.io/blog/2016/03/14/octopress-broken-after-arch-linux-upgrade/"/>
+    <updated>2016-03-14T21:31:31+00:00</updated>
+    <id>http://wanglij.github.io/blog/2016/03/14/octopress-broken-after-arch-linux-upgrade</id>
+    <content type="html"><![CDATA[<h3>Octopress issue</h3>
+
+<p>After system upgrade, &ldquo;rake generate&rdquo; cannot generate posts and pages any more after system upgrade:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~/octopress]$ rake generate
+</span><span class='line'>## Generating Site with Jekyll
+</span><span class='line'>identical source/stylesheets/screen.css
+</span><span class='line'>Notice: for 10x faster LSI support, please install http://rb-gsl.rubyforge.org/
+</span><span class='line'>Configuration file: /home/wanglij/octopress/_config.yml
+</span><span class='line'>/home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/openssl.rb:17:in `require': /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/x86_64-linux/openssl.so: undefined symbol: SSLv2_method - /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/x86_64-linux/openssl.so (LoadError)
+</span><span class='line'>        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/openssl.rb:17:in `&lt;top (required)&gt;'
+</span><span class='line'>        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/net/https.rb:22:in `require'
+</span><span class='line'>        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/net/https.rb:22:in `&lt;top (required)&gt;'
+</span><span class='line'>        from /home/wanglij/octopress/plugins/gist_tag.rb:10:in `require'
+</span><span class='line'>        from /home/wanglij/octopress/plugins/gist_tag.rb:10:in `&lt;top (required)&gt;'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:58:in `require'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:58:in `block (2 levels) in require_plugin_files'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:57:in `each'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:57:in `block in require_plugin_files'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:56:in `each'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:56:in `require_plugin_files'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:18:in `conscientious_require'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/site.rb:71:in `setup'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/site.rb:33:in `initialize'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:28:in `new'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:28:in `process'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:17:in `block (2 levels) in init_with_program'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in `call'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in `block in execute'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in `each'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in `execute'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/program.rb:35:in `go'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary.rb:22:in `program'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/bin/jekyll:18:in `&lt;top (required)&gt;'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/jekyll:23:in `load'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/jekyll:23:in `&lt;main&gt;'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/ruby_executable_hooks:15:in `eval'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/ruby_executable_hooks:15:in `&lt;main&gt;'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>My initial thought is that it must be because ruby was updated to newer version. So I tried the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~/octopress]$ rvm use 1.9.3
+</span><span class='line'>Using /home/wanglij/.rvm/gems/ruby-1.9.3-p547
+</span><span class='line'>[wanglij@~/octopress]$ rvm rubygems latest
+</span><span class='line'>...
+</span><span class='line'>[wanglij@~/octopress]$ rvm reinstall all --force</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After doing, this all the ruby versions installed were removed, but none of the ruby versions cannot be reinstalled successfully.
+The make.log file has following errors:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ossl_ssl.c:116:27: error: \u2018SSLv3_method\u2019 undeclared here (not in a function)
+</span><span class='line'>     OSSL_SSL_METHOD_ENTRY(SSLv3),
+</span><span class='line'>                           ^
+</span><span class='line'>ossl_ssl.c:106:69: note: in definition of macro \u2018OSSL_SSL_METHOD_ENTRY\u2019
+</span><span class='line'> #define OSSL_SSL_METHOD_ENTRY(name) { #name, (SSL_METHOD *(*)(void))name##_method }
+</span><span class='line'>                                                                     ^
+</span><span class='line'>ossl_ssl.c:117:27: error: \u2018SSLv3_server_method\u2019 undeclared here (not in a function)
+</span><span class='line'>     OSSL_SSL_METHOD_ENTRY(SSLv3_server),
+</span><span class='line'>                           ^
+</span><span class='line'>ossl_ssl.c:106:69: note: in definition of macro \u2018OSSL_SSL_METHOD_ENTRY\u2019
+</span><span class='line'> #define OSSL_SSL_METHOD_ENTRY(name) { #name, (SSL_METHOD *(*)(void))name##_method }
+</span><span class='line'>                                                                     ^
+</span><span class='line'>ossl_ssl.c:118:27: error: \u2018SSLv3_client_method\u2019 undeclared here (not in a function)
+</span><span class='line'>     OSSL_SSL_METHOD_ENTRY(SSLv3_client),
+</span><span class='line'>                           ^
+</span><span class='line'>ossl_ssl.c:106:69: note: in definition of macro \u2018OSSL_SSL_METHOD_ENTRY\u2019
+</span><span class='line'> #define OSSL_SSL_METHOD_ENTRY(name) { #name, (SSL_METHOD *(*)(void))name##_method }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Tried to install openssl package by running the following command, then install ruby.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~]$ rvm pkg install openssl</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Although the problem wasn&rsquo;t resolved, notice that the version downloaded by last command is 1.0.1, but the openssl in the system is 1.0.2g.
+So after looking at the code of ossl_ssl, I think it must pick up an option which is not supported yet during configuring the build.
+Then I did following to fix the problem:
+First, clean rvm by removing everything in $HOME/.rvm folder.
+Then reinstall rvm, ruby and octopress. BINGO!</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~]$ curl -k -sSL https://rvm.io/mpapis.asc | gpg2 --import -             
+</span><span class='line'>[wanglij@~]$ curl -k -sSL https://get.rvm.io | bash
+</span><span class='line'>[wanglij@~]$ sudo pacman -U /var/cache/pacman/pkg/openssl-1.0.1.k-1-x86_64.pkg.tar.xz
+</span><span class='line'>[wanglij@~]$ sudo pacman -U /var/cache/pacman/pkg/curl-7.39.0-1-x86_64.pkg.tar.xz    
+</span><span class='line'>[wanglij@~]$ rvm install 1.9.3
+</span><span class='line'>[wanglij@~]$ rvm rubygems latest 
+</span><span class='line'>[wanglij@~]$ cd octopress
+</span><span class='line'>[wanglij@~/octopress]$ gem install bundler  
+</span><span class='line'>[wanglij@~/octopress]$ bundle install </span></code></pre></td></tr></table></div></figure>
+
+
+<h3>References</h3>
+
+<p><a href="http://purplepalmdash.github.io/blog/2014/07/30/zai-githubshang-bu-shu-ni-de-octopressbo-ke/">http://purplepalmdash.github.io/blog/2014/07/30/zai-githubshang-bu-shu-ni-de-octopressbo-ke/</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Shared Folder Not Mounted After Arch Linux Upgrade]]></title>
+    <link href="http://wanglij.github.io/blog/2016/03/11/shared-folder-not-mounted-after-arch-linux-upgrade/"/>
+    <updated>2016-03-11T19:37:51+00:00</updated>
+    <id>http://wanglij.github.io/blog/2016/03/11/shared-folder-not-mounted-after-arch-linux-upgrade</id>
+    <content type="html"><![CDATA[<p>My Arch Linux as guest in VWWare will be broken after system upgrade everytime. This is because the shared folder cannot be mounted. Consequently, the systemctl will stop all the services including network and enter a maintenance mode.</p>
+
+<h3>1st shot</h3>
+
+<p>Run the following line:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># mkinitcpio -p linux</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It complained an error about vmhgfs, so I guess it was broken.</p>
+
+<p>Comment all the lines related to mounting shared folders using vmhgfs file type, and reboot the system, so that we can have the Linux properly started with network service working.</p>
+
+<p>Then re-install open-vm-tools-dkms package:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ yaourt --insecure -S open-vm-tools-dkms</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After the installation completed, run mkinitcpio again:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo mkinitcpio -p linux
+</span><span class='line'>==&gt; Building image from preset: /etc/mkinitcpio.d/linux.preset: 'default'
+</span><span class='line'>  -&gt; -k /boot/vmlinuz-linux -c /etc/mkinitcpio.conf -g /boot/initramfs-linux.img
+</span><span class='line'>==&gt; Starting build: 4.4.3-1-ARCH
+</span><span class='line'>  -&gt; Running build hook: [base]
+</span><span class='line'>  -&gt; Running build hook: [udev]
+</span><span class='line'>  -&gt; Running build hook: [autodetect]
+</span><span class='line'>  -&gt; Running build hook: [modconf]
+</span><span class='line'>  -&gt; Running build hook: [block]
+</span><span class='line'>  -&gt; Running build hook: [filesystems]
+</span><span class='line'>  -&gt; Running build hook: [keyboard]
+</span><span class='line'>  -&gt; Running build hook: [fsck]
+</span><span class='line'>==&gt; Generating module dependencies
+</span><span class='line'>==&gt; Creating gzip-compressed initcpio image: /boot/initramfs-linux.img
+</span><span class='line'>==&gt; Image generation successful
+</span><span class='line'>==&gt; Building image from preset: /etc/mkinitcpio.d/linux.preset: 'fallback'
+</span><span class='line'>  -&gt; -k /boot/vmlinuz-linux -c /etc/mkinitcpio.conf -g /boot/initramfs-linux-fallback.img -S autodetect
+</span><span class='line'>==&gt; Starting build: 4.4.3-1-ARCH
+</span><span class='line'>  -&gt; Running build hook: [base]
+</span><span class='line'>  -&gt; Running build hook: [udev]
+</span><span class='line'>  -&gt; Running build hook: [modconf]
+</span><span class='line'>  -&gt; Running build hook: [block]
+</span><span class='line'>==&gt; WARNING: Possibly missing firmware for module: wd719x
+</span><span class='line'>==&gt; WARNING: Possibly missing firmware for module: aic94xx
+</span><span class='line'>  -&gt; Running build hook: [filesystems]
+</span><span class='line'>  -&gt; Running build hook: [keyboard]
+</span><span class='line'>  -&gt; Running build hook: [fsck]
+</span><span class='line'>==&gt; Generating module dependencies
+</span><span class='line'>==&gt; Creating gzip-compressed initcpio image: /boot/initramfs-linux-fallback.img
+</span><span class='line'>==&gt; Image generation successful</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So far, everything seems to be OK, but it still doesn&rsquo;t work. FAILED!</p>
+
+<h3>2nd shot</h3>
+
+<p>In Shared Folders with vmhgfs-fuse utility section, there is an alternative way to mount the shared folders:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># vmhgfs-fuse -o allow_other -o auto_unmount .host:/&lt;shared_folder&gt; &lt;shared folders root directory&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Rule for each shared folder in fstab:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>.host:/&lt;shared_folder&gt; /home/user1/shares fuse.vmhgfs-fuse defaults 0 0</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I tried the command line to mount the folder manually first, and it worked for me, so I believe the fstab rule shold also work. So made change to fstab like below:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>.host:/Documents /home/wanglij/Documents vmhgfs  defaults,uid=1000,dmask=022,fmask=022,user  0 0
+</span><span class='line'>==&gt;
+</span><span class='line'>.host:/Documents  /home/wanglij/Documents fuse.vmhgfs-fuse    defaults,uid=1000,umask=022     0 0</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that the options of vmghfs-fuse are bit different from the options of vmhgfs.</p>
+
+<p>Afer this change, now we can have system started with the shared folders mounted again. But I cannot access these shared folders.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ls -l
+</span><span class='line'>ls: cannot access 'Documents': Permission denied
+</span><span class='line'>ls: cannot access 'P4': Permission denied
+</span><span class='line'>ls: cannot access 'workspace': Permission denied
+</span><span class='line'>ls: cannot access 'Downloads': Permission denied
+</span><span class='line'>total 68
+</span><span class='line'>drwxr-xr-x  3 wanglij root  4096 Aug 18  2015 Desktop
+</span><span class='line'>d?????????  ? ?       ?        ?            ? Documents
+</span><span class='line'>d?????????  ? ?       ?        ?            ? Downloads
+</span><span class='line'>d?????????  ? ?       ?        ?            ? P4
+</span><span class='line'>drwxr-xr-x  2 wanglij root  4096 Jan 27 22:14 bin
+</span><span class='line'>drwxr-xr-x  7 wanglij root  4096 Mar  9 15:29 lab
+</span><span class='line'>drwxr-xr-x 16 wanglij root  4096 Jan 15 20:24 octopress
+</span><span class='line'>drwx------  4 wanglij root 24576 Apr  6  2015 oldDownloads
+</span><span class='line'>drwxr-xr-x  3 wanglij root  4096 Jul 30  2014 qemu
+</span><span class='line'>drwxr-xr-x  2 wanglij root  4096 Feb 26  2015 sdb1
+</span><span class='line'>drwxr-xr-x  3 wanglij root  4096 Dec  2 22:45 test
+</span><span class='line'>drwxr-xr-x 11 wanglij root  4096 Feb  4 18:53 tmp
+</span><span class='line'>drwxr-xr-x  3 wanglij root  4096 Jan 26 22:52 toolchain
+</span><span class='line'>d?????????  ? ?       ?        ?            ? workspace</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then I found if I login as root user, then I am able to asscess these folders. After googling, it turns out this is by design in fuse as a security measure. So eventually, change the fstab rule like below:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>.host:/Documents    /home/wanglij/Documents fuse.vmhgfs-fuse    defaults,uid=1000,umask=022,allow_other 0 0</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And finally, it worked. SUCCEEDED!</p>
+
+<h3>Octopress issue</h3>
+
+<p>&ldquo;rake generate&rdquo; cannot generate posts and pages any more after system upgrade:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~/octopress]$ rake generate
+</span><span class='line'>## Generating Site with Jekyll
+</span><span class='line'>identical source/stylesheets/screen.css
+</span><span class='line'>Notice: for 10x faster LSI support, please install http://rb-gsl.rubyforge.org/
+</span><span class='line'>Configuration file: /home/wanglij/octopress/_config.yml
+</span><span class='line'>/home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/openssl.rb:17:in `require': /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/x86_64-linux/openssl.so: undefined symbol: SSLv2_method - /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/x86_64-linux/openssl.so (LoadError)
+</span><span class='line'>        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/openssl.rb:17:in `&lt;top (required)&gt;'
+</span><span class='line'>        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/net/https.rb:22:in `require'
+</span><span class='line'>        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/net/https.rb:22:in `&lt;top (required)&gt;'
+</span><span class='line'>        from /home/wanglij/octopress/plugins/gist_tag.rb:10:in `require'
+</span><span class='line'>        from /home/wanglij/octopress/plugins/gist_tag.rb:10:in `&lt;top (required)&gt;'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:58:in `require'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:58:in `block (2 levels) in require_plugin_files'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:57:in `each'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:57:in `block in require_plugin_files'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:56:in `each'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:56:in `require_plugin_files'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:18:in `conscientious_require'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/site.rb:71:in `setup'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/site.rb:33:in `initialize'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:28:in `new'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:28:in `process'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:17:in `block (2 levels) in init_with_program'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in `call'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in `block in execute'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in `each'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in `execute'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/program.rb:35:in `go'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary.rb:22:in `program'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/bin/jekyll:18:in `&lt;top (required)&gt;'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/jekyll:23:in `load'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/jekyll:23:in `&lt;main&gt;'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/ruby_executable_hooks:15:in `eval'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/ruby_executable_hooks:15:in `&lt;main&gt;'</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~/octopress]$ rvm use 1.9.3
+</span><span class='line'>Using /home/wanglij/.rvm/gems/ruby-1.9.3-p547
+</span><span class='line'>[wanglij@~/octopress]$ rvm rubygems latest
+</span><span class='line'>...
+</span><span class='line'>[wanglij@~/octopress]$ rvm reinstall all --force</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~]$ curl -k -sSL https://rvm.io/mpapis.asc | gpg2 --import -             
+</span><span class='line'>[wanglij@~]$ curl -k -sSL https://get.rvm.io | bash
+</span><span class='line'>          
+</span><span class='line'>[wanglij@~]$ sudo pacman -U /var/cache/pacman/pkg/openssl-1.0.1.k-1-x86_64.pkg.tar.xz
+</span><span class='line'>[wanglij@~]$ sudo pacman -U /var/cache/pacman/pkg/curl-7.39.0-1-x86_64.pkg.tar.xz    
+</span><span class='line'>
+</span><span class='line'>[wanglij@~]$ rvm install 1.9.3
+</span><span class='line'>[wanglij@~]$ rvm rubygems latest 
+</span><span class='line'>[wanglij@~]$ cd octopress
+</span><span class='line'>[wanglij@~/octopress]$ gem install bundler  
+</span><span class='line'>[wanglij@~/octopress]$ bundle install </span></code></pre></td></tr></table></div></figure>
+
+
+<h3>References</h3>
+
+<ol>
+<li><a href="https://wiki.archlinux.org/index.php/VMware/Installing_Arch_as_a_guest#Shared_Folders_with_vmhgfs-fuse_utility">https://wiki.archlinux.org/index.php/VMware/Installing_Arch_as_a_guest#Shared_Folders_with_vmhgfs-fuse_utility</a><br></li>
+<li><a href="http://serverfault.com/questions/188894/denied-root-access-to-user-mounted-fuse-file-system">http://serverfault.com/questions/188894/denied-root-access-to-user-mounted-fuse-file-system</a><br></li>
+<li><a href="http://purplepalmdash.github.io/blog/2014/07/30/zai-githubshang-bu-shu-ni-de-octopressbo-ke/">http://purplepalmdash.github.io/blog/2014/07/30/zai-githubshang-bu-shu-ni-de-octopressbo-ke/</a><br></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Pacman: The Requested URL Returned Error: 404]]></title>
@@ -2580,7 +3044,7 @@ YAHWEH remembers[4]</p></li>
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#58;&#110;&#101;&#x74;&#x77;&#x6f;&#114;&#x6b;&#x40;&#x6e;&#x65;&#x74;&#x30;&#46;&#115;&#101;&#114;&#x76;&#x69;&#x63;&#x65;&#x2e;">&#110;&#101;&#116;&#119;&#111;&#114;&#x6b;&#64;&#110;&#x65;&#116;&#48;&#x2e;&#x73;&#x65;&#x72;&#118;&#x69;&#x63;&#101;&#46;</a></p>
+<p>Then enable <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#x6f;&#58;&#x6e;&#x65;&#116;&#x77;&#x6f;&#x72;&#107;&#x40;&#x6e;&#101;&#x74;&#48;&#46;&#x73;&#x65;&#114;&#x76;&#105;&#x63;&#101;&#x2e;">&#110;&#101;&#116;&#x77;&#111;&#x72;&#x6b;&#64;&#110;&#x65;&#x74;&#x30;&#x2e;&#115;&#x65;&#114;&#118;&#105;&#x63;&#101;&#x2e;</a></p>
 ]]></content>
   </entry>
   
@@ -2605,528 +3069,6 @@ YAHWEH remembers[4]</p></li>
 <h3>关于爱</h3>
 
 <h3>关于悔改</h3>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[但以理书学习笔记-Ch5]]></title>
-    <link href="http://wanglij.github.io/blog/2014/10/24/daniel05-study-notes/"/>
-    <updated>2014-10-24T15:28:39+00:00</updated>
-    <id>http://wanglij.github.io/blog/2014/10/24/daniel05-study-notes</id>
-    <content type="html"><![CDATA[<h3>引导问题</h3>
-
-<p>Q1:请问伯沙撒犯了哪些罪(sin)?</p>
-
-<p>Q2:请问手指在墙上所写的文字是什么?这些文字的重要性。</p>
-
-<p>Q3:请问但以理在解释文字之前做了哪些回应?从但以理的这些回应中我们能学到些什么?</p>
-
-<p>Q4:请问伯沙撒和太后对但以理的称谓以及言语有何不同?为什么会不同,或者说这些不同之处表明了什么?</p>
-
-<p>Q6:请问当时的但以理的状态是怎样的呢?(年龄,身体状况,在国中的地位等等)</p>
-
-<p>Q5:请问但以理对伯沙撒王和对先王尼布甲尼撒有何不同?为什么?</p>
-
-<h3>背景知识</h3>
-
-<h4>参考时间表</h4>
-
-<p><img class="center" src="http://wanglij.github.io/images/BibleTimeline-4.png"></p>
-
-<h4>新巴比伦王列表</h4>
-
-<table>
-<thead>
-<tr>
-<th>王的名字</th>
-<th> 在位的时间</th>
-<th> 关系</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>那波帕拉沙尔(Nabopolassar) </td>
-<td> 626 BC – 605 BC </td>
-<td></td>
-</tr>
-<tr>
-<td>尼布甲尼撒(Nebuchadnezzar II) </td>
-<td> 605 BC – 562 BC </td>
-<td></td>
-</tr>
-<tr>
-<td>以未米罗达(Evil-Merodach/Amel-Marduk) </td>
-<td> 562 BC – 560 BC </td>
-<td> 尼布甲尼撒的儿子</td>
-</tr>
-<tr>
-<td>涅里格利沙尔(Neriglissar) </td>
-<td> 560 BC – 556 BC </td>
-<td> 尼布甲尼撒的女婿</td>
-</tr>
-<tr>
-<td>拉巴施马尔杜克(Labashi-Marduk) </td>
-<td> 556 BC </td>
-<td> 涅里格利沙尔的儿子</td>
-</tr>
-<tr>
-<td>那波尼达(Nabonidus) </td>
-<td> 556 BC – 539 BC </td>
-<td> 未知</td>
-</tr>
-<tr>
-<td>伯沙撒(Belshazzar) </td>
-<td> </td>
-<td> 那波尼达的儿子，摄政王</td>
-</tr>
-</tbody>
-</table>
-
-
-<p><br></p>
-
-<h4>伯沙撒其人</h4>
-
-<p>For long periods he entrusted rule to his son, Prince Belshazzar. He was a capable soldier but poor
-politician. All of this left him somewhat unpopular with many of his subjects, particularly the
-priesthood and the military class.</p>
-
-<h4>当时的历史局势</h4>
-
-<p>In 539 BC, Cyrus invaded Babylonia. Nabonidus sent his son Belshazzar to head off the huge
-Persian army, however, already massively outnumbered, Belshazzar was betrayed by Gobryas,
-Governor of Assyria, who switched his forces over to the Persian side. The Babylonian forces
-were overwhelmed at the battle of Opis. Nabonidus fled to Borsippa, and on 12 October, after
-Cyrus&#8217; engineers had diverted the waters of the Euphrates, &ldquo;the soldiers of Cyrus entered Babylon
-without fighting.&rdquo;</p>
-
-<h3>经文原文以及注释笔记</h3>
-
-<table>
-<thead>
-<tr>
-<th><strong>Scripture</strong></th>
-<th> <strong>Questions/Notes</strong>&emsp;&emsp;</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><br><strong>伯沙撒王设筵纵饮渎神</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>1.&emsp;伯沙撒王为他的<span style="background-color:yellow">一千大臣设摆盛筵</span>，与这一千人对面饮酒。</td>
-<td></td>
-</tr>
-<tr>
-<td>2.&emsp;伯沙撒欢饮之间，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;吩咐人将他父[ “父”或作“祖”]尼布甲尼撒</td>
-<td> why did the king ask</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;从耶路撒冷殿中所掠的金银器皿拿来，</td>
-<td> for the golden goblets ?</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;王与大臣、皇后、妃嫔好用这器皿饮酒。</td>
-<td> what were the golden</td>
-</tr>
-<tr>
-<td>3.&emsp;于是</td>
-<td>  goblets used for?</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;他们把耶路撒冷神殿库房中所掠的金器皿拿来，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;王和大臣、皇后、妃嫔就<span style="background-color:yellow">用这器皿饮酒</span>。</td>
-<td></td>
-</tr>
-<tr>
-<td>4.&emsp;他们饮酒，<span style="background-color:yellow">赞美金、银、铜、铁、木、石所造的神</span>。</td>
-<td></td>
-</tr>
-<tr>
-<td><br><strong>忽现手指书文于壁，伯沙撒王惊惶惧怕</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>5.&emsp;当时，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;忽有人的指头显出，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;在王宫与灯台相对的粉墙上写字。</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;王看见写字的指头，6.就</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;<span style="background-color:yellow">变了脸色，心意惊惶</span>，</td>
-<td> was so frightened</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;<span style="background-color:yellow">腰骨好像脱节，双膝彼此相碰</span>，</td>
-<td> why did the king lost</td>
-</tr>
-<tr>
-<td>7.&emsp;大声吩咐将用法术的和迦勒底人并观兆的领进来，</td>
-<td> his composure so badly?</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;对巴比伦的哲士说：</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;“谁能读这文字，把讲解告诉我，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;他必身穿紫袍，项戴金链，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;在我国中<span style="background-color:yellow">位列第三</span>。”</td>
-<td> Why the 3rd?</td>
-</tr>
-<tr>
-<td>8.&emsp;于是王的一切哲士都进来，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;却不能读那文字，也不能把讲解告诉王。</td>
-<td></td>
-</tr>
-<tr>
-<td>9.&emsp;伯沙撒王就</td>
-<td> became even</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;<span style="background-color:yellow">甚惊惶，脸色改变</span>，</td>
-<td> more terrified</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;他的大臣也都惊奇。</td>
-<td> nobles were baffled</td>
-</tr>
-<tr>
-<td><br><strong>太后举召但以理</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>10.&emsp;太后[或作皇后]因王和他大臣所说的话，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;就进入宴宫，说：</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;“愿王万岁！你心意不要惊惶，脸面不要变色。</td>
-<td> How did the Queen</td>
-</tr>
-<tr>
-<td>11.&emsp;在你国中有一人，</td>
-<td> mother describe Daniel?</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;他里头有<span style="background-color:yellow">圣神的灵</span>，</td>
-<td>  the spirit of holy gods</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;你父在世的日子，这人</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;心中光明，又有聪明、智慧，<span style="background-color:yellow">好像神的智慧。</td>
-<td> wisdom like that of the gods</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;你父尼布甲尼撒王，就是王的父，</td>
-<td>  Why Daniel was not</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;立他为术士、用法术的和迦勒底人并观兆的领袖。</td>
-<td> well known to Belshazzar?</td>
-</tr>
-<tr>
-<td>12.&emsp;在他里头有美好的灵性，</td>
-<td> akeen mind</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;又有知识、聪明，能圆梦，释谜语，解疑惑。</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;这人名叫但以理，尼布甲尼撒王又称他为伯提沙撒。</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;现在可以召他来，他必解明这意思。”</td>
-<td></td>
-</tr>
-<tr>
-<td><br><strong>王召但以理进入宴宫，并命其讲解文字</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>13.&emsp;但以理就被领到王前。</td>
-<td> How did Belshazzar</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;王问但以理说：</td>
-<td> describe Daniel?</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;“你是<span style="background-color:yellow">被掳之犹大人中的</span>但以理吗？</td>
-<td> one of the exiles</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;就是我父王从犹大<span style="background-color:yellow">掳来的</span>吗？</td>
-<td> brought from Judah</td>
-</tr>
-<tr>
-<td>14.&emsp;我听说</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;你里头有<span style="background-color:yellow">神的灵</span>，</td>
-<td> the spirit of gods</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;心中光明，又有聪明和<span style="background-color:yellow">美好的智慧</span>。</td>
-<td> outstanding wisdom</td>
-</tr>
-<tr>
-<td>15.&emsp;现在哲士和用法术的都领到我面前，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;为叫他们读这文字，把讲解告诉我，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;无奈他们都不能把讲解说出来。</td>
-<td></td>
-</tr>
-<tr>
-<td>16.&emsp;我听说你善于讲解，能解疑惑，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;现在你若能读这文字，把讲解告诉我，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;就必身穿紫袍，项戴金链，在我国中位列第三。”</td>
-<td></td>
-</tr>
-<tr>
-<td><br><strong>但以理拒绝赏赐</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>17.&emsp;但以理在王面前回答说：&#8221;</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;<span style="background-color:yellow">你的赠品可以归你自己</span>，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;<span style="background-color:yellow">你的赏赐可以归给别人</span>，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;<span style="background-color:yellow">我却要为王读这文字</span>，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;<span style="background-color:yellow">把讲解告诉王</span>。</td>
-<td></td>
-</tr>
-<tr>
-<td><br><strong>但以理训责伯沙撒狂傲拜像</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>18.&emsp;王啊，至高的神曾将国位、大权、荣耀、威严赐予你父尼布甲尼撒。</td>
-<td></td>
-</tr>
-<tr>
-<td>19.&emsp;因神所赐他的大权，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;各方、各国、各族的人都在他面前战兢恐惧，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;他可以随意生杀，随意升降。</td>
-<td></td>
-</tr>
-<tr>
-<td>20.&emsp;但他<span style="background-color:yellow">心高气傲，灵也刚愎，甚至行事狂傲</span>，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;就被革去王位，夺去荣耀。</td>
-<td></td>
-</tr>
-<tr>
-<td>21.&emsp;他被赶出离开世人，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;他的心变如兽心，与野驴同居，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;吃草如牛，身被天露滴湿，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;等他知道至高的神</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;在人的国中掌权，凭自己的意旨立人治国。</td>
-<td></td>
-</tr>
-<tr>
-<td>22.&emsp;伯沙撒啊，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;你是他的儿子[或作孙子]，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;<span style="background-color:yellow">你虽知道这一切，你心仍不自卑</span>，</td>
-<td></td>
-</tr>
-<tr>
-<td>23.&emsp;竟向天上的主自高，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;使人将他殿中的器皿拿到你面前，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;你和大臣、皇后、妃嫔<span style="background-color:yellow">用这器皿饮酒</span>。</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;你又<span style="background-color:yellow">赞美那不能看、不能听、无知无识，金、银、铜、铁、木、石所造的神</span>，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;却没有将荣耀归于那</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;手中有你气息，管理你一切行动的神。</td>
-<td></td>
-</tr>
-<tr>
-<td>24.&emsp;因此，从神那里显出指头来写这文字。</td>
-<td></td>
-</tr>
-<tr>
-<td><br><strong>但以理解释文字</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>25.&emsp;“所写的文字是：<span style="background-color:yellow">弥尼，弥尼，提客勒，乌法珥新</span>。</td>
-<td></td>
-</tr>
-<tr>
-<td>26.&emsp;讲解是这样：</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;弥尼，就是神已经数算你国的年日到此完毕。</td>
-<td></td>
-</tr>
-<tr>
-<td>27.&emsp;&emsp;&emsp;提客勒，就是你被称在天平里，显出你的亏欠。</td>
-<td></td>
-</tr>
-<tr>
-<td>28.&emsp;&emsp;&emsp;毗勒斯[与“乌法珥新”同义]，就是你的国分裂，归于玛代人和波斯人。”</td>
-<td></td>
-</tr>
-<tr>
-<td><br><strong>伯沙撒履行他的话</strong></td>
-<td> Did the King believe in</td>
-</tr>
-<tr>
-<td>29.&emsp;伯沙撒下令，人就</td>
-<td> Daniel&rsquo;s explaination?</td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;把紫袍给但以理穿上，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;把金链给他戴在颈项上，</td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;又传令使他在国中位列第三。</td>
-<td></td>
-</tr>
-<tr>
-<td><br><strong>王被杀，玛代人果得其国</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>30.&emsp;当夜，迦勒底王伯沙撒被杀。</td>
-<td></td>
-</tr>
-<tr>
-<td>31.&emsp;玛代人大流士[或作大力乌]年六十二岁，取了迦勒底国。</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-
-
-<h3>References</h3>
-
-<ol>
-<li><a href="https://www.biblegateway.com/passage/?search=%E4%BD%86%E4%BB%A5%E7%90%86%E4%B9%A6%205&amp;version=CUVMPS;NIV">Daniel Ch5, Holy Bible provided by biblegateway.com (CUVMPS|NIV)</a></li>
-<li><a href="http://en.wikipedia.org/wiki/Neo-Babylonian_Empire">Neo-Babylonian Empire provided by Wikipedia</a></li>
-<li>Shepherd&rsquo;s Notes: Daniel, by Stephen B. Miller, Stephen R. Miller (Editor), Henry T. Blackaby</li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[读书]]></title>
-    <link href="http://wanglij.github.io/blog/2014/10/17/reading/"/>
-    <updated>2014-10-17T18:23:41+00:00</updated>
-    <id>http://wanglij.github.io/blog/2014/10/17/reading</id>
-    <content type="html"><![CDATA[<p>读书是另一种旅行</p>
-
-<p>且是只属于一个人的静静的旅行</p>
-
-<p>没有嘈杂，只有风景</p>
-
-<p>没有限速，在文字里走过舒畅的每个英里</p>
-
-<p>喜欢读书，也喜欢旅行</p>
 ]]></content>
   </entry>
   

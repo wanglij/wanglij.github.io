@@ -1,0 +1,412 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Octopress Broken After Arch Linux Upgrade - Lijun's Blog</title>
+  <meta name="author" content="Lijun Wang">
+
+  
+  <meta name="description" content="Octopress issue After system upgrade, &ldquo;rake generate&rdquo; cannot generate posts and pages any more after system upgrade: 1
+2
+3
+4
+5
+6
+7
+8
+9
+10 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wanglij.github.io/blog/2016/03/14/octopress-broken-after-arch-linux-upgrade">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Lijun's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Lijun's Blog</a></h1>
+  
+    <h2>Your word is a lamp on my feet, a light on my path --Psalm 119:105</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wanglij.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Octopress Broken After Arch Linux Upgrade</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-03-14T21:31:31+00:00" pubdate data-updated="true">Mar 14<sup>th</sup>, 2016</time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wanglij.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Octopress issue</h3>
+
+<p>After system upgrade, &ldquo;rake generate&rdquo; cannot generate posts and pages any more after system upgrade:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~/octopress]$ rake generate
+</span><span class='line'>## Generating Site with Jekyll
+</span><span class='line'>identical source/stylesheets/screen.css
+</span><span class='line'>Notice: for 10x faster LSI support, please install http://rb-gsl.rubyforge.org/
+</span><span class='line'>Configuration file: /home/wanglij/octopress/_config.yml
+</span><span class='line'>/home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/openssl.rb:17:in `require': /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/x86_64-linux/openssl.so: undefined symbol: SSLv2_method - /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/x86_64-linux/openssl.so (LoadError)
+</span><span class='line'>        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/openssl.rb:17:in `&lt;top (required)&gt;'
+</span><span class='line'>        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/net/https.rb:22:in `require'
+</span><span class='line'>        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/net/https.rb:22:in `&lt;top (required)&gt;'
+</span><span class='line'>        from /home/wanglij/octopress/plugins/gist_tag.rb:10:in `require'
+</span><span class='line'>        from /home/wanglij/octopress/plugins/gist_tag.rb:10:in `&lt;top (required)&gt;'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:58:in `require'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:58:in `block (2 levels) in require_plugin_files'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:57:in `each'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:57:in `block in require_plugin_files'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:56:in `each'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:56:in `require_plugin_files'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:18:in `conscientious_require'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/site.rb:71:in `setup'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/site.rb:33:in `initialize'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:28:in `new'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:28:in `process'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:17:in `block (2 levels) in init_with_program'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in `call'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in `block in execute'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in `each'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in `execute'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/program.rb:35:in `go'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary.rb:22:in `program'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/bin/jekyll:18:in `&lt;top (required)&gt;'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/jekyll:23:in `load'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/jekyll:23:in `&lt;main&gt;'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/ruby_executable_hooks:15:in `eval'
+</span><span class='line'>        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/ruby_executable_hooks:15:in `&lt;main&gt;'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>My initial thought is that it must be because ruby was updated to newer version. So I tried the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~/octopress]$ rvm use 1.9.3
+</span><span class='line'>Using /home/wanglij/.rvm/gems/ruby-1.9.3-p547
+</span><span class='line'>[wanglij@~/octopress]$ rvm rubygems latest
+</span><span class='line'>...
+</span><span class='line'>[wanglij@~/octopress]$ rvm reinstall all --force</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After doing, this all the ruby versions installed were removed, but none of the ruby versions cannot be reinstalled successfully.
+The make.log file has following errors:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ossl_ssl.c:116:27: error: \u2018SSLv3_method\u2019 undeclared here (not in a function)
+</span><span class='line'>     OSSL_SSL_METHOD_ENTRY(SSLv3),
+</span><span class='line'>                           ^
+</span><span class='line'>ossl_ssl.c:106:69: note: in definition of macro \u2018OSSL_SSL_METHOD_ENTRY\u2019
+</span><span class='line'> #define OSSL_SSL_METHOD_ENTRY(name) { #name, (SSL_METHOD *(*)(void))name##_method }
+</span><span class='line'>                                                                     ^
+</span><span class='line'>ossl_ssl.c:117:27: error: \u2018SSLv3_server_method\u2019 undeclared here (not in a function)
+</span><span class='line'>     OSSL_SSL_METHOD_ENTRY(SSLv3_server),
+</span><span class='line'>                           ^
+</span><span class='line'>ossl_ssl.c:106:69: note: in definition of macro \u2018OSSL_SSL_METHOD_ENTRY\u2019
+</span><span class='line'> #define OSSL_SSL_METHOD_ENTRY(name) { #name, (SSL_METHOD *(*)(void))name##_method }
+</span><span class='line'>                                                                     ^
+</span><span class='line'>ossl_ssl.c:118:27: error: \u2018SSLv3_client_method\u2019 undeclared here (not in a function)
+</span><span class='line'>     OSSL_SSL_METHOD_ENTRY(SSLv3_client),
+</span><span class='line'>                           ^
+</span><span class='line'>ossl_ssl.c:106:69: note: in definition of macro \u2018OSSL_SSL_METHOD_ENTRY\u2019
+</span><span class='line'> #define OSSL_SSL_METHOD_ENTRY(name) { #name, (SSL_METHOD *(*)(void))name##_method }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Tried to install openssl package by running the following command, then install ruby.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~]$ rvm pkg install openssl</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Although the problem wasn&rsquo;t resolved, notice that the version downloaded by last command is 1.0.1, but the openssl in the system is 1.0.2g.
+So after looking at the code of ossl_ssl, I think it must pick up an option which is not supported yet during configuring the build.
+Then I did following to fix the problem:
+First, clean rvm by removing everything in $HOME/.rvm folder.
+Then reinstall rvm, ruby and octopress. BINGO!</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~]$ curl -k -sSL https://rvm.io/mpapis.asc | gpg2 --import -             
+</span><span class='line'>[wanglij@~]$ curl -k -sSL https://get.rvm.io | bash
+</span><span class='line'>[wanglij@~]$ sudo pacman -U /var/cache/pacman/pkg/openssl-1.0.1.k-1-x86_64.pkg.tar.xz
+</span><span class='line'>[wanglij@~]$ sudo pacman -U /var/cache/pacman/pkg/curl-7.39.0-1-x86_64.pkg.tar.xz    
+</span><span class='line'>[wanglij@~]$ rvm install 1.9.3
+</span><span class='line'>[wanglij@~]$ rvm rubygems latest 
+</span><span class='line'>[wanglij@~]$ cd octopress
+</span><span class='line'>[wanglij@~/octopress]$ gem install bundler  
+</span><span class='line'>[wanglij@~/octopress]$ bundle install </span></code></pre></td></tr></table></div></figure>
+
+
+<h3>References</h3>
+
+<p><a href="http://purplepalmdash.github.io/blog/2014/07/30/zai-githubshang-bu-shu-ni-de-octopressbo-ke/">http://purplepalmdash.github.io/blog/2014/07/30/zai-githubshang-bu-shu-ni-de-octopressbo-ke/</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Lijun Wang</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-03-14T21:31:31+00:00" pubdate data-updated="true">Mar 14<sup>th</sup>, 2016</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wanglij.github.io/blog/2016/03/14/octopress-broken-after-arch-linux-upgrade/" data-via="" data-counturl="http://wanglij.github.io/blog/2016/03/14/octopress-broken-after-arch-linux-upgrade/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/03/11/shared-folder-not-mounted-after-arch-linux-upgrade/" title="Previous Post: Shared folder not mounted after Arch Linux upgrade">&laquo; Shared folder not mounted after Arch Linux upgrade</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/03/14/octopress-broken-after-arch-linux-upgrade/">Octopress Broken After Arch Linux Upgrade</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/03/11/shared-folder-not-mounted-after-arch-linux-upgrade/">Shared Folder Not Mounted After Arch Linux Upgrade</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/03/08/pacman-the-requested-url-returned-error-404/">Pacman: The Requested URL Returned Error: 404</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/02/23/funny-moments-with-kids/">童言无忌</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/01/26/install-arm-none-linux-gnueabi-gcc/">Install Arm-none-linux-gnueabi-gcc</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Lijun Wang -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'lijunsblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wanglij.github.io/blog/2016/03/14/octopress-broken-after-arch-linux-upgrade/';
+        var disqus_url = 'http://wanglij.github.io/blog/2016/03/14/octopress-broken-after-arch-linux-upgrade/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

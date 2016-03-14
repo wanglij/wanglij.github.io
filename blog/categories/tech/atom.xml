@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/blog/categories/tech/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2016-03-09T01:42:56+00:00</updated>
+  <updated>2016-03-14T22:32:40+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -12,6 +12,289 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress Broken After Arch Linux Upgrade]]></title>
+    <link href="http://wanglij.github.io/blog/2016/03/14/octopress-broken-after-arch-linux-upgrade/"/>
+    <updated>2016-03-14T21:31:31+00:00</updated>
+    <id>http://wanglij.github.io/blog/2016/03/14/octopress-broken-after-arch-linux-upgrade</id>
+    <content type="html"><![CDATA[<h3>Octopress issue</h3>
+
+<p>After system upgrade, &ldquo;rake generate&rdquo; cannot generate posts and pages any more after system upgrade:
+&#8220;`
+[wanglij@~/octopress]$ rake generate</p>
+
+<h2>Generating Site with Jekyll</h2>
+
+<p>identical source/stylesheets/screen.css
+Notice: for 10x faster LSI support, please install <a href="http://rb-gsl.rubyforge.org/">http://rb-gsl.rubyforge.org/</a>
+Configuration file: /home/wanglij/octopress/<em>config.yml
+/home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/openssl.rb:17:in <code>require': /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/x86_64-linux/openssl.so: undefined symbol: SSLv2_method - /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/x86_64-linux/openssl.so (LoadError)
+        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/openssl.rb:17:in</code><top (required)>&lsquo;
+        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/net/https.rb:22:in <code>require'
+        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/net/https.rb:22:in</code><top (required)>&rsquo;
+        from /home/wanglij/octopress/plugins/gist_tag.rb:10:in <code>require'
+        from /home/wanglij/octopress/plugins/gist_tag.rb:10:in</code><top (required)>&lsquo;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:58:in <code>require'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:58:in</code>block (2 levels) in require_plugin_files&rsquo;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:57:in <code>each'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:57:in</code>block in require_plugin_files&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:56:in <code>each'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:56:in</code>require_plugin_files&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:18:in <code>conscientious_require'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/site.rb:71:in</code>setup&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/site.rb:33:in <code>initialize'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:28:in</code>new&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:28:in <code>process'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:17:in</code>block (2 levels) in init_with_program&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in <code>call'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in</code>block in execute&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in <code>each'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in</code>execute&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/program.rb:35:in <code>go'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary.rb:22:in</code>program&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/bin/jekyll:18:in <code>&lt;top (required)&gt;'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/jekyll:23:in</code>load&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/jekyll:23:in <code>&lt;main&gt;'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/ruby_executable_hooks:15:in</code>eval&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/ruby_executable_hooks:15:in `<main>&lsquo;
+<code>
+My initial thought is that it must be because ruby was updated to newer version. So I tried the following:
+</code>
+[wanglij@~/octopress]$ rvm use 1.9.3
+Using /home/wanglij/.rvm/gems/ruby-1.9.3-p547
+[wanglij@~/octopress]$ rvm rubygems latest
+&hellip;
+[wanglij@~/octopress]$ rvm reinstall all &ndash;force
+<code>
+After doing, this all the ruby versions installed were removed, but none of the ruby versions cannot be reinstalled successfully.
+The make.log file has following errors:
+</code>
+ossl_ssl.c:116:27: error: \u2018SSLv3_method\u2019 undeclared here (not in a function)
+     OSSL_SSL_METHOD_ENTRY(SSLv3),
+                           ^
+ossl_ssl.c:106:69: note: in definition of macro \u2018OSSL_SSL_METHOD_ENTRY\u2019
+ #define OSSL_SSL_METHOD_ENTRY(name) { #name, (SSL_METHOD <em>(</em>)(void))name##</em>method }
+                                                                     ^
+ossl_ssl.c:117:27: error: \u2018SSLv3_server_method\u2019 undeclared here (not in a function)
+     OSSL_SSL_METHOD_ENTRY(SSLv3_server),
+                           ^
+ossl_ssl.c:106:69: note: in definition of macro \u2018OSSL_SSL_METHOD_ENTRY\u2019
+ #define OSSL_SSL_METHOD_ENTRY(name) { #name, (SSL_METHOD <em>(</em>)(void))name##<em>method }
+                                                                     ^
+ossl_ssl.c:118:27: error: \u2018SSLv3_client_method\u2019 undeclared here (not in a function)
+     OSSL_SSL_METHOD_ENTRY(SSLv3_client),
+                           ^
+ossl_ssl.c:106:69: note: in definition of macro \u2018OSSL_SSL_METHOD_ENTRY\u2019
+ #define OSSL_SSL_METHOD_ENTRY(name) { #name, (SSL_METHOD <em>(</em>)(void))name##</em>method }
+<code>
+Tried to install openssl package by running the following command, then install ruby.
+</code>
+[wanglij@~]$ rvm pkg install openssl
+<code>
+Although the problem wasn't resolved, notice that the version downloaded by last command is 1.0.1, but the openssl in the system is 1.0.2g.
+So after looking at the code of ossl_ssl, I think it must pick up an option which is not supported yet during configuring the build.
+Then I did following to fix the problem:
+First, clean rvm by removing everything in $HOME/.rvm folder.
+Then reinstall rvm, ruby and octopress. BINGO!
+</code>
+[wanglij@~]$ curl -k -sSL <a href="https://rvm.io/mpapis.asc">https://rvm.io/mpapis.asc</a> | gpg2 &ndash;import -           <br/>
+[wanglij@~]$ curl -k -sSL <a href="https://get.rvm.io">https://get.rvm.io</a> | bash
+[wanglij@~]$ sudo pacman -U /var/cache/pacman/pkg/openssl-1.0.1.k-1-x86_64.pkg.tar.xz
+[wanglij@~]$ sudo pacman -U /var/cache/pacman/pkg/curl-7.39.0-1-x86_64.pkg.tar.xz  <br/>
+[wanglij@~]$ rvm install 1.9.3
+[wanglij@~]$ rvm rubygems latest
+[wanglij@~]$ cd octopress
+[wanglij@~/octopress]$ gem install bundler<br/>
+[wanglij@~/octopress]$ bundle install
+&#8220;`</p>
+
+<h3>References</h3>
+
+<p><a href="http://purplepalmdash.github.io/blog/2014/07/30/zai-githubshang-bu-shu-ni-de-octopressbo-ke/">http://purplepalmdash.github.io/blog/2014/07/30/zai-githubshang-bu-shu-ni-de-octopressbo-ke/</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Shared Folder Not Mounted After Arch Linux Upgrade]]></title>
+    <link href="http://wanglij.github.io/blog/2016/03/11/shared-folder-not-mounted-after-arch-linux-upgrade/"/>
+    <updated>2016-03-11T19:37:51+00:00</updated>
+    <id>http://wanglij.github.io/blog/2016/03/11/shared-folder-not-mounted-after-arch-linux-upgrade</id>
+    <content type="html"><![CDATA[<p>My Arch Linux as guest in VWWare will be broken after system upgrade everytime. This is because the shared folder cannot be mounted. Consequently, the systemctl will stop all the services including network and enter a maintenance mode.</p>
+
+<h3>1st shot</h3>
+
+<p>Run the following line:
+&#8220;`</p>
+
+<h1>mkinitcpio -p linux</h1>
+
+<pre><code>It complained an error about vmhgfs, so I guess it was broken.
+
+Comment all the lines related to mounting shared folders using vmhgfs file type, and reboot the system, so that we can have the Linux properly started with network service working.
+
+Then re-install open-vm-tools-dkms package:
+</code></pre>
+
+<p>$ yaourt &ndash;insecure -S open-vm-tools-dkms
+<code>
+After the installation completed, run mkinitcpio again:
+</code>
+$ sudo mkinitcpio -p linux
+==> Building image from preset: /etc/mkinitcpio.d/linux.preset: &lsquo;default&rsquo;
+  -> -k /boot/vmlinuz-linux -c /etc/mkinitcpio.conf -g /boot/initramfs-linux.img
+==> Starting build: 4.4.3-1-ARCH
+  -> Running build hook: [base]
+  -> Running build hook: [udev]
+  -> Running build hook: [autodetect]
+  -> Running build hook: [modconf]
+  -> Running build hook: [block]
+  -> Running build hook: [filesystems]
+  -> Running build hook: [keyboard]
+  -> Running build hook: [fsck]
+==> Generating module dependencies
+==> Creating gzip-compressed initcpio image: /boot/initramfs-linux.img
+==> Image generation successful
+==> Building image from preset: /etc/mkinitcpio.d/linux.preset: &lsquo;fallback&rsquo;
+  -> -k /boot/vmlinuz-linux -c /etc/mkinitcpio.conf -g /boot/initramfs-linux-fallback.img -S autodetect
+==> Starting build: 4.4.3-1-ARCH
+  -> Running build hook: [base]
+  -> Running build hook: [udev]
+  -> Running build hook: [modconf]
+  -> Running build hook: [block]
+==> WARNING: Possibly missing firmware for module: wd719x
+==> WARNING: Possibly missing firmware for module: aic94xx
+  -> Running build hook: [filesystems]
+  -> Running build hook: [keyboard]
+  -> Running build hook: [fsck]
+==> Generating module dependencies
+==> Creating gzip-compressed initcpio image: /boot/initramfs-linux-fallback.img
+==> Image generation successful
+&#8220;`
+So far, everything seems to be OK, but it still doesn&rsquo;t work. FAILED!</p>
+
+<h3>2nd shot</h3>
+
+<p>In Shared Folders with vmhgfs-fuse utility section, there is an alternative way to mount the shared folders:
+&#8220;`</p>
+
+<h1>vmhgfs-fuse -o allow_other -o auto_unmount .host:/<shared_folder> <shared folders root directory></h1>
+
+<pre><code>Rule for each shared folder in fstab:
+</code></pre>
+
+<p>.host:/<shared_folder> /home/user1/shares fuse.vmhgfs-fuse defaults 0 0
+<code>
+I tried the command line to mount the folder manually first, and it worked for me, so I believe the fstab rule shold also work. So made change to fstab like below:
+</code>
+.host:/Documents    /home/wanglij/Documents vmhgfs  defaults,uid=1000,dmask=022,fmask=022,user  0 0
+==>
+.host:/Documents    /home/wanglij/Documents fuse.vmhgfs-fuse    defaults,uid=1000,umask=022     0 0
+&#8220;`
+Note that the options of vmghfs-fuse are bit different from the options of vmhgfs.</p>
+
+<p>Afer this change, now we can have system started with the shared folders mounted again. But I cannot access these shared folders.</p>
+
+<pre><code>$ ls -l
+ls: cannot access 'Documents': Permission denied
+ls: cannot access 'P4': Permission denied
+ls: cannot access 'workspace': Permission denied
+ls: cannot access 'Downloads': Permission denied
+total 68
+drwxr-xr-x  3 wanglij root  4096 Aug 18  2015 Desktop
+d?????????  ? ?       ?        ?            ? Documents
+d?????????  ? ?       ?        ?            ? Downloads
+d?????????  ? ?       ?        ?            ? P4
+drwxr-xr-x  2 wanglij root  4096 Jan 27 22:14 bin
+drwxr-xr-x  7 wanglij root  4096 Mar  9 15:29 lab
+drwxr-xr-x 16 wanglij root  4096 Jan 15 20:24 octopress
+drwx------  4 wanglij root 24576 Apr  6  2015 oldDownloads
+drwxr-xr-x  3 wanglij root  4096 Jul 30  2014 qemu
+drwxr-xr-x  2 wanglij root  4096 Feb 26  2015 sdb1
+drwxr-xr-x  3 wanglij root  4096 Dec  2 22:45 test
+drwxr-xr-x 11 wanglij root  4096 Feb  4 18:53 tmp
+drwxr-xr-x  3 wanglij root  4096 Jan 26 22:52 toolchain
+d?????????  ? ?       ?        ?            ? workspace
+</code></pre>
+
+<p>Then I found if I login as root user, then I am able to asscess these folders. After googling, it turns out this is by design in fuse as a security measure. So eventually, change the fstab rule like below:
+<code>
+.host:/Documents    /home/wanglij/Documents fuse.vmhgfs-fuse    defaults,uid=1000,umask=022,allow_other 0 0
+</code>
+And finally, it worked. SUCCEEDED!</p>
+
+<h3>Octopress issue</h3>
+
+<p>&ldquo;rake generate&rdquo; cannot generate posts and pages any more after system upgrade:
+&#8220;`
+[wanglij@~/octopress]$ rake generate</p>
+
+<h2>Generating Site with Jekyll</h2>
+
+<p>identical source/stylesheets/screen.css
+Notice: for 10x faster LSI support, please install <a href="http://rb-gsl.rubyforge.org/">http://rb-gsl.rubyforge.org/</a>
+Configuration file: /home/wanglij/octopress/_config.yml
+/home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/openssl.rb:17:in <code>require': /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/x86_64-linux/openssl.so: undefined symbol: SSLv2_method - /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/x86_64-linux/openssl.so (LoadError)
+        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/openssl.rb:17:in</code><top (required)>&lsquo;
+        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/net/https.rb:22:in <code>require'
+        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/net/https.rb:22:in</code><top (required)>&rsquo;
+        from /home/wanglij/octopress/plugins/gist_tag.rb:10:in <code>require'
+        from /home/wanglij/octopress/plugins/gist_tag.rb:10:in</code><top (required)>&lsquo;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:58:in <code>require'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:58:in</code>block (2 levels) in require_plugin_files&rsquo;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:57:in <code>each'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:57:in</code>block in require_plugin_files&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:56:in <code>each'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:56:in</code>require_plugin_files&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:18:in <code>conscientious_require'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/site.rb:71:in</code>setup&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/site.rb:33:in <code>initialize'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:28:in</code>new&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:28:in <code>process'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:17:in</code>block (2 levels) in init_with_program&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in <code>call'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in</code>block in execute&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in <code>each'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in</code>execute&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/program.rb:35:in <code>go'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary.rb:22:in</code>program&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/bin/jekyll:18:in <code>&lt;top (required)&gt;'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/jekyll:23:in</code>load&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/jekyll:23:in <code>&lt;main&gt;'
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/ruby_executable_hooks:15:in</code>eval&#8217;
+        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/ruby_executable_hooks:15:in `<main>&lsquo;
+&#8220;`</p>
+
+<pre><code>[wanglij@~/octopress]$ rvm use 1.9.3
+Using /home/wanglij/.rvm/gems/ruby-1.9.3-p547
+[wanglij@~/octopress]$ rvm rubygems latest
+...
+[wanglij@~/octopress]$ rvm reinstall all --force
+</code></pre>
+
+<pre><code>[wanglij@~]$ curl -k -sSL https://rvm.io/mpapis.asc | gpg2 --import -             
+[wanglij@~]$ curl -k -sSL https://get.rvm.io | bash
+
+[wanglij@~]$ sudo pacman -U /var/cache/pacman/pkg/openssl-1.0.1.k-1-x86_64.pkg.tar.xz
+[wanglij@~]$ sudo pacman -U /var/cache/pacman/pkg/curl-7.39.0-1-x86_64.pkg.tar.xz    
+
+[wanglij@~]$ rvm install 1.9.3
+[wanglij@~]$ rvm rubygems latest 
+[wanglij@~]$ cd octopress
+[wanglij@~/octopress]$ gem install bundler  
+[wanglij@~/octopress]$ bundle install 
+</code></pre>
+
+<h3>References</h3>
+
+<ol>
+<li><a href="https://wiki.archlinux.org/index.php/VMware/Installing_Arch_as_a_guest#Shared_Folders_with_vmhgfs-fuse_utility">https://wiki.archlinux.org/index.php/VMware/Installing_Arch_as_a_guest#Shared_Folders_with_vmhgfs-fuse_utility</a><br></li>
+<li><a href="http://serverfault.com/questions/188894/denied-root-access-to-user-mounted-fuse-file-system">http://serverfault.com/questions/188894/denied-root-access-to-user-mounted-fuse-file-system</a><br></li>
+<li><a href="http://purplepalmdash.github.io/blog/2014/07/30/zai-githubshang-bu-shu-ni-de-octopressbo-ke/">http://purplepalmdash.github.io/blog/2014/07/30/zai-githubshang-bu-shu-ni-de-octopressbo-ke/</a><br></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A Few Problems Running ArchLinux in VMware]]></title>
