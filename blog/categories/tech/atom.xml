@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/blog/categories/tech/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2016-03-14T22:42:50+00:00</updated>
+  <updated>2016-03-14T22:44:31+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -112,7 +112,7 @@ NOTE: The reason of downgrading the curl to an older version is that the latest 
 </code>
 /usr/lib/libcurl.so.4: undefined symbol: SSL_CTX_set_alpn_protos
 &#8220;`
-This is what we came across when fixing yaourt in here(<a href="http://wanglij.github.io/blog/2016/01/15/behind-companys-firewall/">http://wanglij.github.io/blog/2016/01/15/behind-companys-firewall/</a>).</p>
+This is what we came across when fixing yaourt in <a href="http://wanglij.github.io/blog/2016/01/15/behind-companys-firewall/">here</a>.</p>
 
 <h3>References</h3>
 
