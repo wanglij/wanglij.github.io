@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/blog/categories/tech/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2016-03-14T22:32:40+00:00</updated>
+  <updated>2016-03-14T22:35:23+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -222,68 +222,6 @@ d?????????  ? ?       ?        ?            ? workspace
 .host:/Documents    /home/wanglij/Documents fuse.vmhgfs-fuse    defaults,uid=1000,umask=022,allow_other 0 0
 </code>
 And finally, it worked. SUCCEEDED!</p>
-
-<h3>Octopress issue</h3>
-
-<p>&ldquo;rake generate&rdquo; cannot generate posts and pages any more after system upgrade:
-&#8220;`
-[wanglij@~/octopress]$ rake generate</p>
-
-<h2>Generating Site with Jekyll</h2>
-
-<p>identical source/stylesheets/screen.css
-Notice: for 10x faster LSI support, please install <a href="http://rb-gsl.rubyforge.org/">http://rb-gsl.rubyforge.org/</a>
-Configuration file: /home/wanglij/octopress/_config.yml
-/home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/openssl.rb:17:in <code>require': /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/x86_64-linux/openssl.so: undefined symbol: SSLv2_method - /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/x86_64-linux/openssl.so (LoadError)
-        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/openssl.rb:17:in</code><top (required)>&lsquo;
-        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/net/https.rb:22:in <code>require'
-        from /home/wanglij/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/net/https.rb:22:in</code><top (required)>&rsquo;
-        from /home/wanglij/octopress/plugins/gist_tag.rb:10:in <code>require'
-        from /home/wanglij/octopress/plugins/gist_tag.rb:10:in</code><top (required)>&lsquo;
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:58:in <code>require'
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:58:in</code>block (2 levels) in require_plugin_files&rsquo;
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:57:in <code>each'
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:57:in</code>block in require_plugin_files&#8217;
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:56:in <code>each'
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:56:in</code>require_plugin_files&#8217;
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/plugin_manager.rb:18:in <code>conscientious_require'
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/site.rb:71:in</code>setup&#8217;
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/site.rb:33:in <code>initialize'
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:28:in</code>new&#8217;
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:28:in <code>process'
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/lib/jekyll/commands/build.rb:17:in</code>block (2 levels) in init_with_program&#8217;
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in <code>call'
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in</code>block in execute&#8217;
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in <code>each'
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/command.rb:220:in</code>execute&#8217;
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary/program.rb:35:in <code>go'
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/mercenary-0.3.4/lib/mercenary.rb:22:in</code>program&#8217;
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/gems/jekyll-2.2.0/bin/jekyll:18:in <code>&lt;top (required)&gt;'
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/jekyll:23:in</code>load&#8217;
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/jekyll:23:in <code>&lt;main&gt;'
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/ruby_executable_hooks:15:in</code>eval&#8217;
-        from /home/wanglij/.rvm/gems/ruby-2.1.2/bin/ruby_executable_hooks:15:in `<main>&lsquo;
-&#8220;`</p>
-
-<pre><code>[wanglij@~/octopress]$ rvm use 1.9.3
-Using /home/wanglij/.rvm/gems/ruby-1.9.3-p547
-[wanglij@~/octopress]$ rvm rubygems latest
-...
-[wanglij@~/octopress]$ rvm reinstall all --force
-</code></pre>
-
-<pre><code>[wanglij@~]$ curl -k -sSL https://rvm.io/mpapis.asc | gpg2 --import -             
-[wanglij@~]$ curl -k -sSL https://get.rvm.io | bash
-
-[wanglij@~]$ sudo pacman -U /var/cache/pacman/pkg/openssl-1.0.1.k-1-x86_64.pkg.tar.xz
-[wanglij@~]$ sudo pacman -U /var/cache/pacman/pkg/curl-7.39.0-1-x86_64.pkg.tar.xz    
-
-[wanglij@~]$ rvm install 1.9.3
-[wanglij@~]$ rvm rubygems latest 
-[wanglij@~]$ cd octopress
-[wanglij@~/octopress]$ gem install bundler  
-[wanglij@~/octopress]$ bundle install 
-</code></pre>
 
 <h3>References</h3>
 
