@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2016-03-14T22:44:31+00:00</updated>
+  <updated>2016-04-12T22:38:49+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -12,6 +12,478 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Illegal Instruction Error Due to Singleton Template]]></title>
+    <link href="http://wanglij.github.io/blog/2016/04/12/illegal-instruction-error-due-to-singleton-template/"/>
+    <updated>2016-04-12T22:21:12+00:00</updated>
+    <id>http://wanglij.github.io/blog/2016/04/12/illegal-instruction-error-due-to-singleton-template</id>
+    <content type="html"><![CDATA[<p>Here is header file, singleton.hh, defining the template:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#ifndef _T_SINGLETON_HH_
+</span><span class='line'>#define _T_SINGLETON_HH_
+</span><span class='line'>
+</span><span class='line'>template &lt;class T&gt;
+</span><span class='line'>class Singleton
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    static void construct()
+</span><span class='line'>    {   
+</span><span class='line'>        destruct();
+</span><span class='line'>        instance_ = new T;
+</span><span class='line'>    }   
+</span><span class='line'>    static T*   getInstance()
+</span><span class='line'>    {   
+</span><span class='line'>        if (instance_ == 0)
+</span><span class='line'>        {
+</span><span class='line'>            instance_ = new T;
+</span><span class='line'>        }
+</span><span class='line'>        return instance_;
+</span><span class='line'>    }   
+</span><span class='line'>
+</span><span class='line'>    template &lt;class A&gt;
+</span><span class='line'>    static void construct(A a)
+</span><span class='line'>    {   
+</span><span class='line'>        destruct();
+</span><span class='line'>        instance_ = new T(a);
+</span><span class='line'>    }   
+</span><span class='line'>    template &lt;class A&gt;
+</span><span class='line'>    static T*   getInstance(A a)
+</span><span class='line'>    {   
+</span><span class='line'>        if (instance_ == 0)
+</span><span class='line'>        {
+</span><span class='line'>            instance_ = new T(a);
+</span><span class='line'>        }
+</span><span class='line'>        return instance_;
+</span><span class='line'>    }   
+</span><span class='line'>
+</span><span class='line'>    static void destruct()
+</span><span class='line'>    {   
+</span><span class='line'>        delete instance_;
+</span><span class='line'>        instance_ = 0;
+</span><span class='line'>    }
+</span><span class='line'>protected:
+</span><span class='line'>    static T*   instance_;
+</span><span class='line'>
+</span><span class='line'>    Singleton() {}
+</span><span class='line'>    virtual ~Singleton() {}
+</span><span class='line'>private:
+</span><span class='line'>    Singleton(Singleton const&);
+</span><span class='line'>    Singleton& operator=(Singleton const&);
+</span><span class='line'>};
+</span><span class='line'>
+</span><span class='line'>template &lt;class T&gt;
+</span><span class='line'>T*  Singleton&lt;T&gt;::instance_ = 0;
+</span><span class='line'>
+</span><span class='line'>#endif  // _T_SINGLETON_HH_ //
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And here is the example of using this template:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;iostream&gt;
+</span><span class='line'>
+</span><span class='line'>#include &lt;unistd.h&gt;
+</span><span class='line'>#include &lt;pthread.h&gt;
+</span><span class='line'>
+</span><span class='line'>#include "singleton.hh"
+</span><span class='line'>
+</span><span class='line'>using namespace std;
+</span><span class='line'>
+</span><span class='line'>class X;
+</span><span class='line'>class X1; 
+</span><span class='line'>class ABase;
+</span><span class='line'>class BBase;
+</span><span class='line'>class BB; 
+</span><span class='line'>class CBase;
+</span><span class='line'>
+</span><span class='line'>class X { 
+</span><span class='line'>public:
+</span><span class='line'>    virtual int getX() = 0;
+</span><span class='line'>};
+</span><span class='line'>
+</span><span class='line'>class X1 : public X { 
+</span><span class='line'>public:
+</span><span class='line'>    int getX() { return 1; }
+</span><span class='line'>};
+</span><span class='line'>
+</span><span class='line'>class Timer
+</span><span class='line'>{
+</span><span class='line'>private:
+</span><span class='line'>   static Timer* t_; 
+</span><span class='line'>   BBase* b_; 
+</span><span class='line'>
+</span><span class='line'>   Timer();
+</span><span class='line'>   static void* go_helper(void* context);
+</span><span class='line'>   void go();
+</span><span class='line'>
+</span><span class='line'>public:
+</span><span class='line'>    virtual ~Timer() {}
+</span><span class='line'>
+</span><span class='line'>    static Timer* getInstance();
+</span><span class='line'>    void subscribe(BBase* b); 
+</span><span class='line'>    void unsubscribe(BBase* b) { b_ = NULL; }
+</span><span class='line'>};
+</span><span class='line'>
+</span><span class='line'>class CBase {
+</span><span class='line'>public:
+</span><span class='line'>    CBase(BB& bb) : bb_(bb) {}
+</span><span class='line'>    virtual void run() = 0;
+</span><span class='line'>protected:
+</span><span class='line'>    BB& bb_;
+</span><span class='line'>};
+</span><span class='line'>
+</span><span class='line'>class C1 : public CBase,
+</span><span class='line'>           public Singleton&lt;C1&gt;
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    C1(BB& bb) : CBase(bb) {}
+</span><span class='line'>    void run();
+</span><span class='line'>};
+</span><span class='line'>
+</span><span class='line'>class BBase {
+</span><span class='line'>public:
+</span><span class='line'>    BBase(ABase& a) : a_(a) { Timer::getInstance()-&gt;subscribe(this); } 
+</span><span class='line'>    virtual ~BBase() { Timer::getInstance()-&gt;unsubscribe(this); }
+</span><span class='line'>    virtual void run() = 0;
+</span><span class='line'>protected:
+</span><span class='line'>    ABase&  a_; 
+</span><span class='line'>};
+</span><span class='line'>
+</span><span class='line'>class BB : public BBase {
+</span><span class='line'>public:
+</span><span class='line'>    BB(ABase& a) : BBase(a) {
+</span><span class='line'>        c = C1::getInstance(*this);
+</span><span class='line'>//      c = new C1(*this);    IF WE USE THIS INSTEAD, THEN IT WILL WORK
+</span><span class='line'>    }
+</span><span class='line'>    int getX();
+</span><span class='line'>    void run();
+</span><span class='line'>private:
+</span><span class='line'>    CBase*  c;
+</span><span class='line'>};
+</span><span class='line'>
+</span><span class='line'>class ABase {
+</span><span class='line'>public:
+</span><span class='line'>    ABase() {
+</span><span class='line'>        x = new X1;
+</span><span class='line'>        b = new BB(*this);
+</span><span class='line'>    }
+</span><span class='line'>    void run();
+</span><span class='line'>    int getX() { return x-&gt;getX(); }
+</span><span class='line'>private:
+</span><span class='line'>    X* x;
+</span><span class='line'>    BBase* b;
+</span><span class='line'>};
+</span><span class='line'>
+</span><span class='line'>Timer* Timer::t_ = NULL;
+</span><span class='line'>
+</span><span class='line'>Timer::Timer() : b_(NULL)
+</span><span class='line'>{
+</span><span class='line'>    pthread_t th;
+</span><span class='line'>    pthread_create(&th, NULL, &Timer::go_helper, this);
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>Timer*
+</span><span class='line'>Timer::getInstance() {
+</span><span class='line'>    if (t_ == NULL)
+</span><span class='line'>        t_ = new Timer;
+</span><span class='line'>    return t_;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>void
+</span><span class='line'>Timer::subscribe(BBase* b) { b_ = b; }
+</span><span class='line'>
+</span><span class='line'>void*
+</span><span class='line'>Timer::go_helper(void* context) {
+</span><span class='line'>    Timer *t = reinterpret_cast&lt;Timer*&gt;(context);
+</span><span class='line'>    t-&gt;go();
+</span><span class='line'>    return NULL;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>void
+</span><span class='line'>Timer::go()
+</span><span class='line'>{
+</span><span class='line'>    while(1) {
+</span><span class='line'>        sleep(1);
+</span><span class='line'>        if (b_) b_-&gt;run();
+</span><span class='line'>    }
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>void ABase::run() {
+</span><span class='line'>    cout &lt;&lt; __PRETTY_FUNCTION__ &lt;&lt; getX() &lt;&lt; endl;
+</span><span class='line'>    cout &lt;&lt; __PRETTY_FUNCTION__ &lt;&lt; x-&gt;getX() &lt;&lt; endl;
+</span><span class='line'>    b-&gt;run();
+</span><span class='line'>    while(1)
+</span><span class='line'>        sleep(1);
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int BB::getX() {
+</span><span class='line'>    return a_.getX();
+</span><span class='line'>}
+</span><span class='line'>void BB::run() {
+</span><span class='line'>    cout &lt;&lt; __PRETTY_FUNCTION__ &lt;&lt; endl;
+</span><span class='line'>    c-&gt;run();
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>void C1::run() {
+</span><span class='line'>    cout &lt;&lt; __PRETTY_FUNCTION__ &lt;&lt; bb_.getX() &lt;&lt; endl;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int main()
+</span><span class='line'>{
+</span><span class='line'>    ABase*  a = new ABase;
+</span><span class='line'>    a-&gt;run();
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here is what I got:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>void ABase::run()1
+</span><span class='line'>void ABase::run()1
+</span><span class='line'>virtual void BB::run()
+</span><span class='line'>zsh: segmentation fault (core dumped)  ./a.out</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And the stack given by gdb:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#0  0x00000000004012ba in ABase::getX (this=0x1) at tst_sigill.cc:89
+</span><span class='line'>89        int getX() { return x-&gt;getX(); }
+</span><span class='line'>[Current thread is 1 (Thread 0x7faa0f050740 (LWP 5351))]
+</span><span class='line'>(gdb) bt
+</span><span class='line'>#0  0x00000000004012ba in ABase::getX (this=0x1) at tst_sigill.cc:89
+</span><span class='line'>#1  0x0000000000400e0c in BB::getX (this=0x7ffed6e821f0) at tst_sigill.cc:138
+</span><span class='line'>#2  0x0000000000400e71 in C1::run (this=0xaeedd0) at tst_sigill.cc:146
+</span><span class='line'>#3  0x0000000000400e51 in BB::run (this=0xaeec60) at tst_sigill.cc:142
+</span><span class='line'>#4  0x0000000000400de3 in ABase::run (this=0xaeec20) at tst_sigill.cc:132
+</span><span class='line'>#5  0x0000000000400ed1 in main () at tst_sigill.cc:152</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&rsquo;s worth to be noticed that &ldquo;this&rdquo; pointer of BB and ABase classes seem like have been corrupted. NO CLUE WHY and HOW TO SOLVE THIS PROBLEM YET!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Octopress Broken After Arch Linux Upgrade]]></title>
@@ -2938,31 +3410,7 @@ YAHWEH remembers[4]</p></li>
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#110;&#101;&#x74;&#x77;&#111;&#114;&#107;&#64;&#110;&#101;&#116;&#x30;&#x2e;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#46;">&#110;&#x65;&#x74;&#119;&#111;&#x72;&#x6b;&#64;&#x6e;&#101;&#x74;&#x30;&#x2e;&#115;&#x65;&#x72;&#118;&#x69;&#99;&#x65;&#46;</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[理解基督信仰]]></title>
-    <link href="http://wanglij.github.io/blog/2015/04/21/about-belief/"/>
-    <updated>2015-04-21T20:05:52+00:00</updated>
-    <id>http://wanglij.github.io/blog/2015/04/21/about-belief</id>
-    <content type="html"><![CDATA[<h3>关于罪</h3>
-
-<p>我们常说人无完人，就是说世上没有一个人是完美的人。那之所以让人不完美的原因就是这里所说的罪，或者说是原罪。这个罪有别于法律上所说的罪，但又相关。
-打个不恰当的比方，比如我们在路上开车的时候总要按照限速行驶。如果严格按照限速的规定，我们开过车的人没有一个没超过速的人，无论是有意还是无意的。但是在实际当中只要我们的速度在限度上下的一定范围内，都不是会被认为超速。
-这个对限速的绝对标准就好比神对罪的界定标准，相对这个绝对限速一定范围内的标准就好比世人的道德标准，而法律上的标准就是一个更低的足以底线了。所以说
-当神造人的时候乃是“照着自己的形象”（创1：27）也就是绝对完美的标准来造的，而世人却偏离了这个标准，败坏了神的形象，所以说“世人都犯了罪，亏缺了神的荣耀“ （罗马书3：23)</p>
-
-<p>还需要说明的一点就是，神的标准不仅仅是对我们的行为，还有我们的内心世界，我们的心思意念。还是用开车来比喻，就好比一个人即使从来没超速过，也没有其他的任何违章，哪怕他/她的心里想一下都不可以。可见这是多么高的完美境界，以至于人靠自己根本无法企及。</p>
-
-<h3>关于这个撒旦为王的世界</h3>
-
-<h3>关于救恩</h3>
-
-<h3>关于爱</h3>
-
-<h3>关于悔改</h3>
+<p>Then enable <a href="&#x6d;&#x61;&#105;&#108;&#116;&#111;&#x3a;&#110;&#x65;&#116;&#119;&#111;&#x72;&#107;&#x40;&#110;&#x65;&#x74;&#48;&#x2e;&#115;&#101;&#x72;&#118;&#105;&#x63;&#101;&#x2e;">&#110;&#x65;&#116;&#x77;&#x6f;&#114;&#x6b;&#x40;&#x6e;&#101;&#x74;&#48;&#46;&#x73;&#x65;&#x72;&#x76;&#105;&#99;&#101;&#x2e;</a></p>
 ]]></content>
   </entry>
   

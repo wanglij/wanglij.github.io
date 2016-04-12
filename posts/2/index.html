@@ -9,7 +9,7 @@
   <meta name="author" content="Lijun Wang">
 
   
-  <meta name="description" content="昨天一家人一起去看了马戏。是儿子的第一次也是我的第一次，真的好精彩。 两岁的儿子表现出了从未有过的专注和兴奋。开始他坐在自己的座椅上，在我和我妻子中间。相对于他小小的身躯，那个座椅简直就是一个后仰大沙发，略显滑稽。后来我干脆把他抱在我的腿上，这样一家人凑在两个座位上。 &hellip;">
+  <meta name="description" content="ISSUE I was testing the following program in Arch Linux system. I expect a core dump file created in current direcotry, when I send a SIGSEGV signal &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,176 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/21/troubleshooting-core-dump-file-not-in-current-directory/">Troubleshooting: Core Dump File Not in Current Directory</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-21T14:40:29+00:00" pubdate data-updated="true">Aug 21<sup>st</sup>, 2015</time>
+        
+           | <a href="/blog/2015/08/21/troubleshooting-core-dump-file-not-in-current-directory/#disqus_thread"
+             data-disqus-identifier="http://wanglij.github.io/blog/2015/08/21/troubleshooting-core-dump-file-not-in-current-directory/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>ISSUE</h2>
+
+<p>I was testing the following program in Arch Linux system. I expect a core dump file created in current direcotry, when I send a SIGSEGV signal to the process.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;stdio.h&gt;
+</span><span class='line'>#include &lt;sys/types.h&gt;
+</span><span class='line'>#include &lt;unistd.h&gt;
+</span><span class='line'>#include &lt;signal.h&gt;
+</span><span class='line'>   
+</span><span class='line'>void sighandler(int signum)
+</span><span class='line'>{
+</span><span class='line'>    printf("Process %d got signal %d\n", getpid(), signum);
+</span><span class='line'>    signal(signum, SIG_DFL);
+</span><span class='line'>    kill(getpid(), signum);
+</span><span class='line'>}
+</span><span class='line'>   
+</span><span class='line'>int main()
+</span><span class='line'>{
+</span><span class='line'>    signal(SIGSEGV, sighandler);
+</span><span class='line'>    printf("Process %d waits for someone to send it SIGSEGV\n",
+</span><span class='line'>        getpid());
+</span><span class='line'>    sleep(1000);
+</span><span class='line'> 
+</span><span class='line'>    return 0;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here is what I did:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~/test]$ ./a.out &
+</span><span class='line'>[1] 38145
+</span><span class='line'>[wanglij@~/test]$ Process 38145 waits for someone to send it SIGSEGV
+</span><span class='line'>kill -11 38145
+</span><span class='line'>Process 38145 got signal 11                                                                                          
+</span><span class='line'>[wanglij@~/test]$ 
+</span><span class='line'>[1]  + segmentation fault (core dumped)  ./a.out</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Everything seems to be fine, but there is no core dump file created at all.</p>
+
+<h2>Troubleshooting</h2>
+
+<p>First check the limit of core file size:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~/test]$ ulimit -a
+</span><span class='line'>-t: cpu time (seconds)              unlimited
+</span><span class='line'>-f: file size (blocks)              unlimited
+</span><span class='line'>-d: data seg size (kbytes)          unlimited
+</span><span class='line'>-s: stack size (kbytes)             8192
+</span><span class='line'>-c: core file size (blocks)         unlimited
+</span><span class='line'>-m: resident set size (kbytes)      unlimited
+</span><span class='line'>-u: processes                       15778
+</span><span class='line'>-n: file descriptors                1024
+</span><span class='line'>-l: locked-in-memory size (kbytes)  64
+</span><span class='line'>-v: address space (kbytes)          unlimited
+</span><span class='line'>-x: file locks                      unlimited
+</span><span class='line'>-i: pending signals                 15778
+</span><span class='line'>-q: bytes in POSIX msg queues       819200
+</span><span class='line'>-e: max nice                        20
+</span><span class='line'>-r: max rt priority                 0
+</span><span class='line'>-N 15:                              unlimited</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then, after googling, it turns out it&rsquo;s because of the /proc/sys/kernel/core_pattern file.
+Here is what&rsquo;s in my core_pattern:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~/test]$ cat /proc/sys/kernel/core_pattern 
+</span><span class='line'>|/usr/lib/systemd/systemd-coredump %p %u %g %s %t %e</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Since the first character is a pipe, &ldquo;|&rdquo;, then the rest of the pattern will be treated as a command by the kernel. Consequently, the core dump will be sent to journald as part of system log.
+We need to change the line of the core_pattern to &ldquo;core&rdquo;.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[wanglij@~/test]$ sudo bash -c 'echo core.%e.%p &gt; /proc/sys/kernel/core_pattern'
+</span><span class='line'>[wanglij@~/test]$ cat /proc/sys/kernel/core_pattern
+</span><span class='line'>core.%e.%p</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>References</h2>
+
+<p>[1] <a href="http://www.bogotobogo.com/cplusplus/debugging_core_memory_dump_segmentation_fault_gdb.php">http://www.bogotobogo.com/cplusplus/debugging_core_memory_dump_segmentation_fault_gdb.php</a><br>
+[2] <a href="https://wiki.archlinux.org/index.php/Core_dump">https://wiki.archlinux.org/index.php/Core_dump</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1811,61 +1981,7 @@ YAHWEH remembers[4]</p></li>
 </span><span class='line'>WantedBy=multi-user.target</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then enable <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#110;&#101;&#x74;&#x77;&#111;&#114;&#107;&#64;&#110;&#101;&#116;&#x30;&#x2e;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#46;">&#110;&#x65;&#x74;&#119;&#111;&#x72;&#x6b;&#64;&#x6e;&#101;&#x74;&#x30;&#x2e;&#115;&#x65;&#x72;&#118;&#x69;&#99;&#x65;&#46;</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/21/about-belief/">理解基督信仰</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-04-21T20:05:52+00:00" pubdate data-updated="true">Apr 21<sup>st</sup>, 2015</time>
-        
-           | <a href="/blog/2015/04/21/about-belief/#disqus_thread"
-             data-disqus-identifier="http://wanglij.github.io/blog/2015/04/21/about-belief/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>关于罪</h3>
-
-<p>我们常说人无完人，就是说世上没有一个人是完美的人。那之所以让人不完美的原因就是这里所说的罪，或者说是原罪。这个罪有别于法律上所说的罪，但又相关。
-打个不恰当的比方，比如我们在路上开车的时候总要按照限速行驶。如果严格按照限速的规定，我们开过车的人没有一个没超过速的人，无论是有意还是无意的。但是在实际当中只要我们的速度在限度上下的一定范围内，都不是会被认为超速。
-这个对限速的绝对标准就好比神对罪的界定标准，相对这个绝对限速一定范围内的标准就好比世人的道德标准，而法律上的标准就是一个更低的足以底线了。所以说
-当神造人的时候乃是“照着自己的形象”（创1：27）也就是绝对完美的标准来造的，而世人却偏离了这个标准，败坏了神的形象，所以说“世人都犯了罪，亏缺了神的荣耀“ （罗马书3：23)</p>
-
-<p>还需要说明的一点就是，神的标准不仅仅是对我们的行为，还有我们的内心世界，我们的心思意念。还是用开车来比喻，就好比一个人即使从来没超速过，也没有其他的任何违章，哪怕他/她的心里想一下都不可以。可见这是多么高的完美境界，以至于人靠自己根本无法企及。</p>
-
-<h3>关于这个撒旦为王的世界</h3>
-
-<h3>关于救恩</h3>
-
-<h3>关于爱</h3>
-
-<h3>关于悔改</h3>
+<p>Then enable <a href="&#x6d;&#x61;&#105;&#108;&#116;&#111;&#x3a;&#110;&#x65;&#116;&#119;&#111;&#x72;&#107;&#x40;&#110;&#x65;&#x74;&#48;&#x2e;&#115;&#101;&#x72;&#118;&#105;&#x63;&#101;&#x2e;">&#110;&#x65;&#116;&#x77;&#x6f;&#114;&#x6b;&#x40;&#x6e;&#101;&#x74;&#48;&#46;&#x73;&#x65;&#x72;&#x76;&#105;&#99;&#101;&#x2e;</a></p>
 </div>
   
   
@@ -1890,6 +2006,10 @@ YAHWEH remembers[4]</p></li>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/04/12/illegal-instruction-error-due-to-singleton-template/">Illegal Instruction Error Due to Singleton Template</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/03/14/octopress-broken-after-arch-linux-upgrade/">Octopress Broken After Arch Linux Upgrade</a>
       </li>
     
@@ -1903,10 +2023,6 @@ YAHWEH remembers[4]</p></li>
     
       <li class="post">
         <a href="/blog/2016/02/23/funny-moments-with-kids/">童言无忌</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/01/26/install-arm-none-linux-gnueabi-gcc/">Install Arm-none-linux-gnueabi-gcc</a>
       </li>
     
   </ul>
