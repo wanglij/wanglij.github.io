@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2016-12-16T20:54:40+00:00</updated>
+  <updated>2016-12-16T21:21:04+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -52,8 +52,8 @@ Here are the command lines of doing this</p>
     <content type="html"><![CDATA[<h3>Background</h3>
 
 <p>While I was working on an issue in my work, I noticed another weird unexpected issue.
-The program is multi-threaded program written in C/C++, which runs in QNX platform.
-There is a singleton class in that program that creates a new thread at the end of its constructor method.
+The program is multi-threaded program written in C/C++, which runs in QNX environment.
+There is a singleton class that creates a new thread at the end of its constructor method.
 Since it is a singleton, so we assume that there should be one and only one thread created,
 but as a matter fact, most of the time there were two of them running in the process.
 Eventually, I found that the static function getting the instance of the singleton, get_instance(), was called again within the function executed by the new thread.
@@ -433,6 +433,12 @@ At that point, the parent thread may not return from the constructor yet, so by 
 
 
 <h3>Conclusion</h3>
+
+<p>For the QNX result, by looking at the value of the member variables, we can see that single instance of the class was still guaranteed,
+but the constructor method was called twice. If we let the constructor sleep for a second after creating a new thread, then number of the threads will increase exponentially.
+Whereas in Linux environment, this program runs OK, even if we let it sleep for 10 seconds after creating a new thread.
+No idea if the re-entrant of constructor is defined C++ standard, but it doesn&rsquo;t make much sense to me to invoke the same constructor within the it.
+So I guess it might be a bug of gcc of QNX version.</p>
 ]]></content>
   </entry>
   
