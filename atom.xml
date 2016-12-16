@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2016-12-16T20:50:38+00:00</updated>
+  <updated>2016-12-16T20:53:29+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -18,7 +18,7 @@
     <link href="http://wanglij.github.io/blog/2016/12/16/cmake-error-while-loading-shared-libraries-libjsoncpp-dot-so-dot-11-cannot-open-shared-object-file-no-such-file-or-directory/"/>
     <updated>2016-12-16T20:35:43+00:00</updated>
     <id>http://wanglij.github.io/blog/2016/12/16/cmake-error-while-loading-shared-libraries-libjsoncpp-dot-so-dot-11-cannot-open-shared-object-file-no-such-file-or-directory</id>
-    <content type="html"><![CDATA[<p>I worked on C++ program supposed to be run in QNX, but to facility debugging, I sometimes will try to build the source codes in my Arch Linux virtual machine.
+    <content type="html"><![CDATA[<p>I worked on C++ program supposed to be run in QNX, but to facility debugging, I sometimes will build the source codes in my Arch Linux virtual machine.
 Here are the command lines of doing this</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -29,7 +29,7 @@ Here are the command lines of doing this</p>
 </span><span class='line'>$ cmake -D PLATFORM=LINUX ~/&lt;path-to-project&gt;/PROJECT_NAME/&lt;folder-containing-CMakeLists.txt&gt;</span></code></pre></td></tr></table></div></figure>
 
 
-<p>But for some unknown reason, I can run cmake in my Arch Linux any more recently. It gives the following error</p>
+<p>But for some unknown reason, I can&rsquo;t run cmake in my Arch Linux any more recently. It gives the following error:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>cmake: error while loading shared libraries: libjsoncpp.so.11: cannot open shared object file: No such file or directory</span></code></pre></td></tr></table></div></figure>
