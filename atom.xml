@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2016-12-16T21:21:04+00:00</updated>
+  <updated>2016-12-16T21:23:03+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -307,7 +307,7 @@ At that point, the parent thread may not return from the constructor yet, so by 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>LINUX:</h3>
+<h4>LINUX:</h4>
 
 <p>It runs fine in Linux platform:</p>
 
