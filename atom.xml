@@ -4,7 +4,7 @@
   <title><![CDATA[Lijun's Blog]]></title>
   <link href="http://wanglij.github.io/atom.xml" rel="self"/>
   <link href="http://wanglij.github.io/"/>
-  <updated>2016-06-03T22:57:56+00:00</updated>
+  <updated>2016-12-16T20:27:54+00:00</updated>
   <id>http://wanglij.github.io/</id>
   <author>
     <name><![CDATA[Lijun Wang]]></name>
@@ -12,6 +12,398 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Is Constructor Reenterable?]]></title>
+    <link href="http://wanglij.github.io/blog/2016/12/16/is-constructor-reenterable/"/>
+    <updated>2016-12-16T19:42:36+00:00</updated>
+    <id>http://wanglij.github.io/blog/2016/12/16/is-constructor-reenterable</id>
+    <content type="html"><![CDATA[<h3>Background</h3>
+
+<p>While I was working on an issue in my work, I noticed another weird unexpected issue.
+The program is multi-threaded program written in C/C++, which runs in QNX platform.
+There is a singleton class in that program that creates a new thread at the end of its constructor method.
+Since it is a singleton, so we assume that there should be one and only one thread created,
+but as a matter fact, most of the time there were two of them running in the process.
+Eventually, I found that the static function getting the instance of the singleton, get_instance(), was called again within the function executed by the new thread.
+At that point, the parent thread may not return from the constructor yet, so by calling get_instance() in the new thread the constructor method may be executed the second time, and consequently created another new thread.</p>
+
+<h3>Example</h3>
+
+<p>Based on what I learned, I wrote a simple example program to reproduce and study this issue only.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;unistd.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;pthread.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">ACls</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'><span class="k">public</span><span class="o">:</span>
+</span><span class='line'>    <span class="k">static</span> <span class="n">ACls</span><span class="o">&amp;</span> <span class="n">get_instance</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">__PRETTY_FUNCTION__</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">pthread_self</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">static</span> <span class="n">ACls</span> <span class="n">instance</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">instance</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="k">private</span><span class="o">:</span>
+</span><span class='line'>    <span class="n">ACls</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tid</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">__PRETTY_FUNCTION__</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; - tid: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">tid</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//        sleep(1);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">~</span><span class="n">ACls</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">arg</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">__PRETTY_FUNCTION__</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">pthread_self</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">ACls</span><span class="o">&amp;</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">ACls</span><span class="o">::</span><span class="n">get_instance</span><span class="p">();</span>
+</span><span class='line'>        <span class="n">obj</span><span class="p">.</span><span class="n">i</span> <span class="o">=</span> <span class="n">pthread_self</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">__PRETTY_FUNCTION__</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; - i: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">obj</span><span class="p">.</span><span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">pthread_t</span>   <span class="n">tid</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">public</span><span class="o">:</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">ACls</span><span class="o">::</span><span class="n">get_instance</span><span class="p">().</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">pause</span><span class="p">();</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Results</h3>
+
+<p>I compile it for both Linux and QNX platform. Apparently, it gives different results on different platforms.</p>
+
+<h4>QNX:</h4>
+
+<p>The problem was duplicated on QNX platform.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp"># ./unit-tests</span>
+</span><span class='line'><span class="k">static</span> <span class="n">ACls</span><span class="o">&amp;</span> <span class="n">ACls</span><span class="o">::</span><span class="n">get_instance</span><span class="p">()</span> <span class="mi">1</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="mi">2</span>
+</span><span class='line'><span class="n">ACls</span><span class="o">::</span><span class="n">ACls</span><span class="p">()</span> <span class="o">-</span> <span class="nl">tid</span><span class="p">:</span> <span class="mi">2</span>
+</span><span class='line'><span class="k">static</span> <span class="n">ACls</span><span class="o">&amp;</span> <span class="n">ACls</span><span class="o">::</span><span class="n">get_instance</span><span class="p">()</span> <span class="mi">2</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="mi">3</span>
+</span><span class='line'><span class="n">ACls</span><span class="o">::</span><span class="n">ACls</span><span class="p">()</span> <span class="o">-</span> <span class="nl">tid</span><span class="p">:</span> <span class="mi">3</span>
+</span><span class='line'><span class="k">static</span> <span class="n">ACls</span><span class="o">&amp;</span> <span class="n">ACls</span><span class="o">::</span><span class="n">get_instance</span><span class="p">()</span> <span class="mi">3</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="o">-</span> <span class="nl">i</span><span class="p">:</span> <span class="mi">3</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="o">-</span> <span class="nl">i</span><span class="p">:</span> <span class="mi">2</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="o">-</span> <span class="nl">i</span><span class="p">:</span> <span class="mi">2</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="o">-</span> <span class="nl">i</span><span class="p">:</span> <span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp"># pidin | grep unit</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">couldn</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">fill_info</span>
+</span><span class='line'>  <span class="mi">872490</span>   <span class="mi">1</span> <span class="p">.</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span>        <span class="mi">10</span><span class="n">r</span> <span class="n">SIGWAITINFO</span>
+</span><span class='line'>  <span class="mi">872490</span>   <span class="mi">2</span> <span class="p">.</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span>        <span class="mi">10</span><span class="n">r</span> <span class="n">NANOSLEEP</span>
+</span><span class='line'>  <span class="mi">872490</span>   <span class="mi">3</span> <span class="p">.</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span>        <span class="mi">10</span><span class="n">r</span> <span class="n">NANOSLEEP</span>
+</span><span class='line'><span class="cp"># gdb unit-tests</span>
+</span><span class='line'><span class="n">GNU</span> <span class="n">gdb</span> <span class="mf">5.2.1</span><span class="n">qnx</span><span class="o">-</span><span class="n">nto</span>
+</span><span class='line'><span class="n">Copyright</span> <span class="mi">2002</span> <span class="n">Free</span> <span class="n">Software</span> <span class="n">Foundation</span><span class="p">,</span> <span class="n">Inc</span><span class="p">.</span>
+</span><span class='line'><span class="n">GDB</span> <span class="n">is</span> <span class="n">free</span> <span class="n">software</span><span class="p">,</span> <span class="n">covered</span> <span class="n">by</span> <span class="n">the</span> <span class="n">GNU</span> <span class="n">General</span> <span class="n">Public</span> <span class="n">License</span><span class="p">,</span> <span class="n">and</span> <span class="n">you</span> <span class="n">are</span>
+</span><span class='line'><span class="n">welcome</span> <span class="n">to</span> <span class="n">change</span> <span class="n">it</span> <span class="n">and</span><span class="o">/</span><span class="n">or</span> <span class="n">distribute</span> <span class="n">copies</span> <span class="n">of</span> <span class="n">it</span> <span class="n">under</span> <span class="n">certain</span> <span class="n">conditions</span><span class="p">.</span>
+</span><span class='line'><span class="n">Type</span> <span class="s">&quot;show copying&quot;</span> <span class="n">to</span> <span class="n">see</span> <span class="n">the</span> <span class="n">conditions</span><span class="p">.</span>
+</span><span class='line'><span class="n">There</span> <span class="n">is</span> <span class="n">absolutely</span> <span class="n">no</span> <span class="n">warranty</span> <span class="k">for</span> <span class="n">GDB</span><span class="p">.</span>  <span class="n">Type</span> <span class="s">&quot;show warranty&quot;</span> <span class="k">for</span> <span class="n">details</span><span class="p">.</span>
+</span><span class='line'><span class="n">This</span> <span class="n">GDB</span> <span class="n">was</span> <span class="n">configured</span> <span class="n">as</span> <span class="s">&quot;ntox86&quot;</span><span class="p">...</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">attach</span> <span class="mi">872490</span>
+</span><span class='line'><span class="n">Attaching</span> <span class="n">to</span> <span class="n">program</span> <span class="err">`</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">process</span> <span class="mi">872490</span>
+</span><span class='line'><span class="n">Reading</span> <span class="n">symbols</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libcpp</span><span class="p">.</span><span class="n">so</span><span class="mf">.4</span><span class="p">...</span><span class="n">done</span><span class="p">.</span>
+</span><span class='line'><span class="n">Loaded</span> <span class="n">symbols</span> <span class="k">for</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libcpp</span><span class="p">.</span><span class="n">so</span><span class="mf">.4</span>
+</span><span class='line'><span class="n">Reading</span> <span class="n">symbols</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span><span class="p">...</span><span class="n">done</span><span class="p">.</span>
+</span><span class='line'><span class="n">Loaded</span> <span class="n">symbols</span> <span class="k">for</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span><span class='line'><span class="nl">warning</span><span class="p">:</span> <span class="n">Unable</span> <span class="n">to</span> <span class="n">find</span> <span class="n">dynamic</span> <span class="n">linker</span> <span class="n">breakpoint</span> <span class="n">function</span><span class="p">.</span>
+</span><span class='line'><span class="n">GDB</span> <span class="n">will</span> <span class="n">be</span> <span class="n">unable</span> <span class="n">to</span> <span class="n">debug</span> <span class="n">shared</span> <span class="n">library</span> <span class="n">initializers</span>
+</span><span class='line'><span class="n">and</span> <span class="n">track</span> <span class="n">explicitly</span> <span class="n">loaded</span> <span class="n">dynamic</span> <span class="n">code</span><span class="p">.</span>
+</span><span class='line'><span class="p">[</span><span class="n">Switching</span> <span class="n">to</span> <span class="n">process</span> <span class="mi">872490</span><span class="p">]</span>
+</span><span class='line'><span class="mh">0xb032e985</span> <span class="n">in</span> <span class="n">SignalWaitinfo</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">info</span> <span class="kr">thread</span>
+</span><span class='line'>  <span class="mi">3</span> <span class="n">process</span> <span class="mi">872490</span>  <span class="mh">0xb032f36d</span> <span class="n">in</span> <span class="n">TimerTimeout</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span><span class='line'>  <span class="mi">2</span> <span class="n">process</span> <span class="mi">872490</span>  <span class="mh">0xb032f36d</span> <span class="n">in</span> <span class="n">TimerTimeout</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span><span class='line'><span class="o">*</span> <span class="mi">1</span> <span class="n">process</span> <span class="mi">872490</span>  <span class="mh">0xb032e985</span> <span class="n">in</span> <span class="n">SignalWaitinfo</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">bt</span>
+</span><span class='line'><span class="cp">#0  0xb032e985 in SignalWaitinfo () from /lib/libc.so.2</span>
+</span><span class='line'><span class="cp">#1  0xb031733b in pause () from /lib/libc.so.2</span>
+</span><span class='line'><span class="cp">#2  0x0804a929 in main () at C:/p4/LEADER_EM_DEV/unit-tests/src/main.cpp:53</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="kr">thread</span> <span class="mi">2</span>
+</span><span class='line'><span class="p">[</span><span class="n">Switching</span> <span class="n">to</span> <span class="kr">thread</span> <span class="mi">2</span> <span class="p">(</span><span class="n">process</span> <span class="mi">872490</span><span class="p">)]</span><span class="err">#</span><span class="mi">0</span>  <span class="mh">0xb032f36d</span> <span class="n">in</span> <span class="n">TimerTimeout</span> <span class="p">()</span>
+</span><span class='line'>   <span class="n">from</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">bt</span>
+</span><span class='line'><span class="cp">#0  0xb032f36d in TimerTimeout () from /lib/libc.so.2</span>
+</span><span class='line'><span class="cp">#1  0xb0317ac4 in sleep () from /lib/libc.so.2</span>
+</span><span class='line'><span class="cp">#2  0x0804ba79 in ACls::func(void*) (arg=0x0)</span>
+</span><span class='line'>    <span class="n">at</span> <span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">p4</span><span class="o">/</span><span class="n">LEADER_EM_DEV</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">38</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="kr">thread</span> <span class="mi">3</span>
+</span><span class='line'><span class="p">[</span><span class="n">Switching</span> <span class="n">to</span> <span class="kr">thread</span> <span class="mi">3</span> <span class="p">(</span><span class="n">process</span> <span class="mi">872490</span><span class="p">)]</span><span class="err">#</span><span class="mi">0</span>  <span class="mh">0xb032f36d</span> <span class="n">in</span> <span class="n">TimerTimeout</span> <span class="p">()</span>
+</span><span class='line'>   <span class="n">from</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">bt</span>
+</span><span class='line'><span class="cp">#0  0xb032f36d in TimerTimeout () from /lib/libc.so.2</span>
+</span><span class='line'><span class="cp">#1  0xb0317ac4 in sleep () from /lib/libc.so.2</span>
+</span><span class='line'><span class="cp">#2  0x0804ba79 in ACls::func(void*) (arg=0x0)</span>
+</span><span class='line'>    <span class="n">at</span> <span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">p4</span><span class="o">/</span><span class="n">LEADER_EM_DEV</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">38</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>LINUX:</h3>
+
+<p>It runs fine in Linux platform:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="err">$</span> <span class="p">.</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span>
+</span><span class='line'><span class="k">static</span> <span class="n">ACls</span><span class="o">&amp;</span> <span class="n">ACls</span><span class="o">::</span><span class="n">get_instance</span><span class="p">()</span> <span class="mi">140430000215872</span>
+</span><span class='line'><span class="n">ACls</span><span class="o">::</span><span class="n">ACls</span><span class="p">()</span> <span class="o">-</span> <span class="nl">tid</span><span class="p">:</span> <span class="mi">140429980940032</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="mi">140429980940032</span>
+</span><span class='line'><span class="k">static</span> <span class="n">ACls</span><span class="o">&amp;</span> <span class="n">ACls</span><span class="o">::</span><span class="n">get_instance</span><span class="p">()</span> <span class="mi">140429980940032</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="o">-</span> <span class="nl">i</span><span class="p">:</span> <span class="mi">1730230016</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="o">-</span> <span class="nl">i</span><span class="p">:</span> <span class="mi">1730230016</span>
+</span><span class='line'>
+</span><span class='line'><span class="err">$</span> <span class="n">ps</span> <span class="o">-</span><span class="n">efL</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">unit</span>
+</span><span class='line'><span class="n">wanglij</span>   <span class="mi">7218</span>  <span class="mi">3780</span>  <span class="mi">7218</span>  <span class="mi">0</span>    <span class="mi">2</span> <span class="mi">18</span><span class="o">:</span><span class="mi">34</span> <span class="n">pts</span><span class="o">/</span><span class="mi">3</span>    <span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span> <span class="p">.</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span>
+</span><span class='line'><span class="n">wanglij</span>   <span class="mi">7218</span>  <span class="mi">3780</span>  <span class="mi">7219</span>  <span class="mi">0</span>    <span class="mi">2</span> <span class="mi">18</span><span class="o">:</span><span class="mi">34</span> <span class="n">pts</span><span class="o">/</span><span class="mi">3</span>    <span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span> <span class="p">.</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span>
+</span><span class='line'><span class="err">$</span> <span class="n">sudo</span> <span class="n">gcore</span> <span class="mi">7218</span>
+</span><span class='line'><span class="p">[</span><span class="n">New</span> <span class="n">LWP</span> <span class="mi">7219</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="n">Thread</span> <span class="n">debugging</span> <span class="k">using</span> <span class="n">libthread_db</span> <span class="n">enabled</span><span class="p">]</span>
+</span><span class='line'><span class="n">Using</span> <span class="n">host</span> <span class="n">libthread_db</span> <span class="n">library</span> <span class="s">&quot;/usr/lib/libthread_db.so.1&quot;</span><span class="p">.</span>
+</span><span class='line'><span class="mh">0x00007f21031ac83d</span> <span class="n">in</span> <span class="n">pause</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libpthread</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span>
+</span><span class='line'><span class="n">Saved</span> <span class="n">corefile</span> <span class="n">core</span><span class="mf">.7218</span>
+</span><span class='line'><span class="err">$</span> <span class="n">gdb</span> <span class="n">unit</span><span class="o">-</span><span class="n">tests</span> <span class="n">core</span><span class="mf">.7218</span>
+</span><span class='line'><span class="n">GNU</span> <span class="n">gdb</span> <span class="p">(</span><span class="n">GDB</span><span class="p">)</span> <span class="mf">7.11</span>
+</span><span class='line'><span class="n">Copyright</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="mi">2016</span> <span class="n">Free</span> <span class="n">Software</span> <span class="n">Foundation</span><span class="p">,</span> <span class="n">Inc</span><span class="p">.</span>
+</span><span class='line'><span class="n">License</span> <span class="n">GPLv3</span><span class="o">+:</span> <span class="n">GNU</span> <span class="n">GPL</span> <span class="n">version</span> <span class="mi">3</span> <span class="n">or</span> <span class="n">later</span> <span class="o">&lt;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//gnu.org/licenses/gpl.html&gt;</span>
+</span><span class='line'><span class="n">This</span> <span class="n">is</span> <span class="n">free</span> <span class="nl">software</span><span class="p">:</span> <span class="n">you</span> <span class="n">are</span> <span class="n">free</span> <span class="n">to</span> <span class="n">change</span> <span class="n">and</span> <span class="n">redistribute</span> <span class="n">it</span><span class="p">.</span>
+</span><span class='line'><span class="n">There</span> <span class="n">is</span> <span class="n">NO</span> <span class="n">WARRANTY</span><span class="p">,</span> <span class="n">to</span> <span class="n">the</span> <span class="n">extent</span> <span class="n">permitted</span> <span class="n">by</span> <span class="n">law</span><span class="p">.</span>  <span class="n">Type</span> <span class="s">&quot;show copying&quot;</span>
+</span><span class='line'><span class="n">and</span> <span class="s">&quot;show warranty&quot;</span> <span class="k">for</span> <span class="n">details</span><span class="p">.</span>
+</span><span class='line'><span class="n">This</span> <span class="n">GDB</span> <span class="n">was</span> <span class="n">configured</span> <span class="n">as</span> <span class="s">&quot;x86_64-pc-linux-gnu&quot;</span><span class="p">.</span>
+</span><span class='line'><span class="n">Type</span> <span class="s">&quot;show configuration&quot;</span> <span class="k">for</span> <span class="n">configuration</span> <span class="n">details</span><span class="p">.</span>
+</span><span class='line'><span class="n">For</span> <span class="n">bug</span> <span class="n">reporting</span> <span class="n">instructions</span><span class="p">,</span> <span class="n">please</span> <span class="nl">see</span><span class="p">:</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//www.gnu.org/software/gdb/bugs/&gt;.</span>
+</span><span class='line'><span class="n">Find</span> <span class="n">the</span> <span class="n">GDB</span> <span class="n">manual</span> <span class="n">and</span> <span class="n">other</span> <span class="n">documentation</span> <span class="n">resources</span> <span class="n">online</span> <span class="nl">at</span><span class="p">:</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//www.gnu.org/software/gdb/documentation/&gt;.</span>
+</span><span class='line'><span class="n">For</span> <span class="n">help</span><span class="p">,</span> <span class="n">type</span> <span class="s">&quot;help&quot;</span><span class="p">.</span>
+</span><span class='line'><span class="n">Type</span> <span class="s">&quot;apropos word&quot;</span> <span class="n">to</span> <span class="n">search</span> <span class="k">for</span> <span class="n">commands</span> <span class="n">related</span> <span class="n">to</span> <span class="s">&quot;word&quot;</span><span class="p">...</span>
+</span><span class='line'><span class="n">Reading</span> <span class="n">symbols</span> <span class="n">from</span> <span class="n">unit</span><span class="o">-</span><span class="n">tests</span><span class="p">...</span><span class="n">done</span><span class="p">.</span>
+</span><span class='line'><span class="p">[</span><span class="n">New</span> <span class="n">LWP</span> <span class="mi">7218</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="n">New</span> <span class="n">LWP</span> <span class="mi">7219</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nl">warning</span><span class="p">:</span> <span class="n">Could</span> <span class="n">not</span> <span class="n">load</span> <span class="n">shared</span> <span class="n">library</span> <span class="n">symbols</span> <span class="k">for</span> <span class="n">linux</span><span class="o">-</span><span class="n">vdso</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span><span class="p">.</span>
+</span><span class='line'><span class="n">Do</span> <span class="n">you</span> <span class="n">need</span> <span class="s">&quot;set solib-search-path&quot;</span> <span class="n">or</span> <span class="s">&quot;set sysroot&quot;</span><span class="o">?</span>
+</span><span class='line'><span class="p">[</span><span class="n">Thread</span> <span class="n">debugging</span> <span class="k">using</span> <span class="n">libthread_db</span> <span class="n">enabled</span><span class="p">]</span>
+</span><span class='line'><span class="n">Using</span> <span class="n">host</span> <span class="n">libthread_db</span> <span class="n">library</span> <span class="s">&quot;/usr/lib/libthread_db.so.1&quot;</span><span class="p">.</span>
+</span><span class='line'><span class="n">Core</span> <span class="n">was</span> <span class="n">generated</span> <span class="n">by</span> <span class="err">`</span><span class="p">.</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span><span class="err">&#39;</span><span class="p">.</span>
+</span><span class='line'><span class="cp">#0  0x00007f21031ac83d in pause () from /usr/lib/libpthread.so.0</span>
+</span><span class='line'><span class="p">[</span><span class="n">Current</span> <span class="kr">thread</span> <span class="n">is</span> <span class="mi">1</span> <span class="p">(</span><span class="n">Thread</span> <span class="mh">0x7f21037bf740</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">7218</span><span class="p">))]</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">info</span> <span class="kr">thread</span>
+</span><span class='line'>  <span class="n">Id</span>   <span class="n">Target</span> <span class="n">Id</span>         <span class="n">Frame</span>
+</span><span class='line'><span class="o">*</span> <span class="mi">1</span>    <span class="n">Thread</span> <span class="mh">0x7f21037bf740</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">7218</span><span class="p">)</span> <span class="mh">0x00007f21031ac83d</span> <span class="n">in</span> <span class="n">pause</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libpthread</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span>
+</span><span class='line'>  <span class="mi">2</span>    <span class="n">Thread</span> <span class="mh">0x7f210255d700</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">7219</span><span class="p">)</span> <span class="mh">0x00007f210261561d</span> <span class="n">in</span> <span class="n">nanosleep</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">bt</span>
+</span><span class='line'><span class="cp">#0  0x00007f21031ac83d in pause () from /usr/lib/libpthread.so.0</span>
+</span><span class='line'><span class="cp">#1  0x0000000000400cd5 in main () at /home/wanglij/P4/LEADER_EM_DEV/unit-tests/src/main.cpp:53</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="kr">thread</span> <span class="mi">2</span>
+</span><span class='line'><span class="p">[</span><span class="n">Switching</span> <span class="n">to</span> <span class="kr">thread</span> <span class="mi">2</span> <span class="p">(</span><span class="n">Thread</span> <span class="mh">0x7f210255d700</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">7219</span><span class="p">))]</span>
+</span><span class='line'><span class="cp">#0  0x00007f210261561d in nanosleep () from /usr/lib/libc.so.6</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">bt</span>
+</span><span class='line'><span class="cp">#0  0x00007f210261561d in nanosleep () from /usr/lib/libc.so.6</span>
+</span><span class='line'><span class="cp">#1  0x00007f210261556a in sleep () from /usr/lib/libc.so.6</span>
+</span><span class='line'><span class="cp">#2  0x000000000040107e in ACls::func (arg=&lt;optimized out&gt;) at /home/wanglij/P4/LEADER_EM_DEV/unit-tests/src/main.cpp:38</span>
+</span><span class='line'><span class="cp">#3  0x00007f21031a3424 in start_thread () from /usr/lib/libpthread.so.0</span>
+</span><span class='line'><span class="cp">#4  0x00007f2102645cbd in clone () from /usr/lib/libc.so.6</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Conclusion</h3>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Acts 5 Study Notes]]></title>
@@ -3203,446 +3595,6 @@ At midnight the LORD struck down all the firstborn of both people and animals in
 并<strong>神和人喜爱他的心</strong>，<br>
 都一齐增长。<br>
 </span></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[路加福音 1 (Study Notes)]]></title>
-    <link href="http://wanglij.github.io/blog/2015/05/20/luke-1-study-notes/"/>
-    <updated>2015-05-20T03:36:33+00:00</updated>
-    <id>http://wanglij.github.io/blog/2015/05/20/luke-1-study-notes</id>
-    <content type="html"><![CDATA[<h2>关于作者路加</h2>
-
-<p>根据新约圣经，路加是个医生；曾经和保罗同工，也是路加福音和使徒行传的作者。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>歌罗西书 4:14 所亲爱的医生路加和底马问你们安。
-</span><span class='line'>提摩太后书 4:11 独有路加在我这里。你来的时候，要把马可带来，因为他在传道的事上于我有益处。
-</span><span class='line'>腓利门书 1:24 与我同工的马可、亚里达古、底马、路加也都问你安。
-</span><span class='line'>使徒行传 1:1-2
-</span><span class='line'>1 提阿非罗啊，我已经作了前书，论到耶稣开头一切所行所教训的，
-</span><span class='line'>2 直到他借着圣灵吩咐所拣选的使徒以后，被接上升的日子为止。</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>路加福音 1:1-4</h2>
-
-<p><span style="background-color:yellow">
-1&ensp;&ensp;提阿非罗大人哪，<br>
- &ensp;&emsp;有<strong>好些人</strong>提笔作书，述说<strong>在我们中间所成就的事，</strong><br>
- &ensp;&emsp;是照<strong>传道的人从起初亲眼看见又传给我们的。</strong> <br>
-3&ensp;&ensp;这些事我既<strong>从起头都详细考察了，</strong><br>
- &ensp;&emsp;就定意要<strong>按着次序</strong>写给你， <br>
-4&ensp;&ensp;使你知道<strong>所学之道都是确实的。</strong>
-</span></p>
-
-<h4>Q(&amp;A)</h4>
-
-<ol>
-<li><p>提阿非罗是谁？<br>
-路加福音和使徒行传都是写给提阿非罗的；可能是一个卓越的罗马军官。</p></li>
-<li><p>“在我们中间所成就的事” 是什么事呢？
-指耶稣基督道成肉身，来到世间传道，最终被钉十字架从而完成救赎的事。</p></li>
-<li><p>这一段对我们的信有什么启发？
-要通过仔细认真的查考我们所信的，从而知道我们所信的确实的，也知道我们所信的到底是什么，不可盲信。</p></li>
-<li><p>又如何理解这里的启示和下面的这段经文呢？</p></li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>24 那十二个门徒中有称为低土马的多马，耶稣来的时候，他没有和他们同在。 
-</span><span class='line'>25 那些门徒就对他说：“我们已经看见主了！”多马却说：“我非看见他手上的钉痕，用指头探入那钉痕，又用手探入他的肋旁，我总不信。”
-</span><span class='line'>26 过了八日，门徒又在屋里，多马也和他们同在。门都关了，耶稣来站在当中说：“愿你们平安！” 
-</span><span class='line'>27 就对多马说：“伸过你的指头来，摸我的手！伸出你的手来，探入我的肋旁！不要疑惑，总要信！” 
-</span><span class='line'>28 多马说：“我的主！我的神！” 
-</span><span class='line'>29 耶稣对他说：“你因看见了我才信，那没有看见就信的有福了！”</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>路加福音 1:5-7</h2>
-
-<p><span style="background-color:yellow">
-5&ensp;&ensp;犹太王希律的时候<br>
- &ensp;&emsp;亚比雅班里有一个祭司，名叫<strong>撒迦利亚</strong>。<br>
- &ensp;&emsp;他妻子是亚伦的后人，名叫<strong>伊利莎伯</strong>。 <br>
-6&ensp;&ensp;他们二人在神面前都是义人，<br>
- &ensp;&emsp;遵行主的一切诫命礼仪，<br>
- &ensp;&emsp;没有可指摘的。 <br>
-7&ensp;&ensp;只是没有孩子，因为伊利莎伯不生育，两个人又年纪老迈了。
-</span></p>
-
-<h4>Q(&amp;A)</h4>
-
-<ol>
-<li><p>犹太王希律(Herod)是谁？<br>
-Herod is a name used of several kings belonging to the Herodian Dynasty of the Roman province of Judaea:</p>
-
-<ul>
-<li>Herod the Great (c. 74-4 BC)</li>
-<li>Herod Archelaus (23 BC-c. AD 18)</li>
-<li><strong>Herod Antipas</strong> (20 BC-c. AD 40), tetrarch of Galilee and Peraea, called &ldquo;Herod the Tetrarch&rdquo; or &ldquo;Herod&rdquo; in the New Testament up to Acts 4:27, and described therein as ordering John the Baptist&rsquo;s death and as mocking Jesus</li>
-<li>Herod II (c. 27 BC-33 AD)</li>
-<li>Philip the Tetrarch (4 BC-AD 34)</li>
-<li>Herod Agrippa I (c. 10 BC-AD 44)</li>
-<li>Herod of Chalcis, also known as Herod III, king of Chalcis (AD 41-48)</li>
-<li>Herod Agrippa II (AD 27-100)</li>
-<li>Herodes Atticus (AD 101-177)</li>
-</ul>
-</li>
-<li><p>犹太王希律的时候是什么时候？</p>
-
-<table>
-<thead>
-<tr>
-<th>Period   </th>
-<th> Emperor</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>27BC-AD14</strong>    </td>
-<td> <strong>Augustus (first)</strong></td>
-</tr>
-<tr>
-<td>98-117   </td>
-<td> Trajan</td>
-</tr>
-<tr>
-<td>284-305  </td>
-<td> Diocletian</td>
-</tr>
-<tr>
-<td>306-337  </td>
-<td> Constantine I</td>
-</tr>
-<tr>
-<td>379-395  </td>
-<td> Theodosius I</td>
-</tr>
-<tr>
-<td>474-480  </td>
-<td> Julius Neposa</td>
-</tr>
-<tr>
-<td>527-565  </td>
-<td> Justinian I</td>
-</tr>
-<tr>
-<td>1449-1453 </td>
-<td> Constantine XI b</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li><p>什么是亚比雅班？<br>
-旧约祭司共有24班，亚比雅班是第八班（历代志上 24:6-19）</p></li>
-<li><p>撒迦利亚这个名字的意思
-YAHWEH remembers[4]</p></li>
-<li><p>伊利莎伯这个名字的意思
-&ldquo;my God is an oath&rdquo; or perhaps &ldquo;my God is abundance&rdquo;[5]</p></li>
-<li><p>亚伦是谁？</p></li>
-<li><p>旧约圣经中相似的例子<br>
-亚伯拉罕和撒拉</p>
-
-<pre><code>创世纪 16：1 亚伯兰的妻子撒莱不给他生儿女。
-</code></pre></li>
-</ol>
-
-
-<h2>路加福音 1: 8-10</h2>
-
-<p><span style="background-color:yellow">
-8&ensp;&ensp;撒迦利亚按班次在神面前供祭司的职分，<br>
-9&ensp;&ensp;<strong>照祭司的规矩掣签</strong>，得进主殿烧香。 <br>
-10&ensp;烧香的时候，众百姓在外面祷告。<br>
-</span></p>
-
-<h2>路加福音 1:11-17</h2>
-
-<p><span style="background-color:yellow">
-11&ensp;有主的使者站在香坛的右边向他显现。 <br>
-12&ensp;撒迦利亚看见，就<strong>惊慌害怕</strong>。 <br>
-13&ensp;天使对他说：“撒迦利亚，不要害怕，因为<strong>你的祈祷已经被听见了</strong>。<br>
-&ensp;&emsp;你的妻子伊利莎白要给你生一个儿子，你要给他起名叫<strong>约翰</strong>。 <br>
-14&ensp;你必欢喜快乐，<br>
-&ensp;&emsp;有许多人因他出世也必喜乐。 <br>
-15&ensp;他在主面前将要为大，<br>
-&ensp;&emsp;淡酒浓酒都不喝，<br>
-&ensp;&emsp;从母腹里就被圣灵充满了。<br>
-16&ensp;他要使许多以色列人回转，<br>
-&ensp;&emsp;归于主他们的神。 <br>
-17&ensp;他必有以利亚的心志能力，<br>
-&ensp;&emsp;行在主的前面，<br>
-&ensp;&emsp;叫为父的心转向儿女，<br>
-&ensp;&emsp;叫悖逆的人转从义人的智慧，<br>
-&ensp;&emsp;又为主预备合用的百姓。”
-</span></p>
-
-<h4>Q(&amp;A)</h4>
-
-<ol>
-<li><p>约翰的意思
- &ldquo;YAHWEH is gracious&rdquo;[6]</p></li>
-<li><p>以利亚是谁？<br>
-列王记上 17-19,21<br>
-列王记下 1-2</p></li>
-<li><p>旧约圣经中相似的例子<br>
-亚伯拉罕和撒拉<br>
-创世纪 17：1-2, 15-16</p></li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>1 亚伯兰年九十九岁的时候，耶和华向他显现，对他说：“我是全能的神，你当在我面前做完全人。 
-</span><span class='line'>2 我就与你立约，使你的后裔极其繁多。” 
-</span><span class='line'>---
-</span><span class='line'>15 神又对亚伯拉罕说：“你的妻子撒莱，不可再叫撒莱，她的名要叫撒拉。 
-</span><span class='line'>16 我必赐福给她，也要使你从她得一个儿子。我要赐福给她，她也要做多国之母，必有百姓的君王从她而出。” </span></code></pre></td></tr></table></div></figure>
-
-
-<h4>与旧约中的预言呼应</h4>
-
-<p>   玛拉基书 3:1-2</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>1 万军之耶和华说：“我要差遣我的使者在我前面预备道路。你们所寻求的主必忽然进入他的殿，立约的使者，就是你们所仰慕的，快要来到。
-</span><span class='line'>2 “他来的日子，谁能当得起呢？他显现的时候，谁能立得住呢？因为他如炼金之人的火，如漂布之人的碱。 </span></code></pre></td></tr></table></div></figure>
-
-
-<p>   玛拉基书 4:5-6</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>5 “看哪，耶和华大而可畏之日未到以前，我必差遣先知以利亚到你们那里去。 
-</span><span class='line'>6 他必使父亲的心转向儿女，儿女的心转向父亲，免得我来咒诅遍地。”</span></code></pre></td></tr></table></div></figure>
-
-
-<p>   以赛亚书 42:9,46:10-11，48:3-8</p>
-
-<h4>新约圣经的其他相关经节</h4>
-
-<p>哥林多前书 14：1-5<br>
-路加福音 24:44-47，7:24-27</p>
-
-<h2>路加福音 1:18-23</h2>
-
-<p><span style="background-color:yellow">
-18&ensp;撒迦利亚对天使说：<br>
-&ensp;&emsp;“我凭着什么可知道这事呢？<br>
-&ensp;&emsp;我已经老了，我的妻子也年纪老迈了。” <br>
-19&ensp;天使回答说：<br>
-&ensp;&emsp;“我是站在神面前的<strong>加百列</strong>，<br>
-&ensp;&emsp;奉差而来对你说话，将这好信息报给你。 <br>
-20&ensp;到了时候，这话必然应验。<br>
-&ensp;&emsp;只因你不信，你必哑巴，不能说话，直到这事成就的日子。” <br>
-21&ensp;百姓等候撒迦利亚，诧异他许久在殿里。 <br>
-22&ensp;及至他出来，不能和他们说话，他们就知道他在殿里见了异象，<br>
-&ensp;&emsp;因为他直向他们打手势，竟成了哑巴。<br>
-23&ensp;他供职的日子已满，就回家去了。<br>
-</span></p>
-
-<p>与亚伯拉罕所经历的非常相似</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>创世纪17:15-19
-</span><span class='line'>15 神又对亚伯拉罕说：“你的妻子撒莱，不可再叫撒莱，她的名要叫撒拉。 
-</span><span class='line'>16 我必赐福给她，也要使你从她得一个儿子。我要赐福给她，她也要做多国之母，必有百姓的君王从她而出。”
-</span><span class='line'>17 亚伯拉罕就俯伏在地喜笑，心里说：“一百岁的人还能得孩子吗？撒拉已经九十岁了，还能生养吗？” 
-</span><span class='line'>18 亚伯拉罕对神说：“但愿以实玛利活在你面前。”
-</span><span class='line'>19 神说：“不然，你妻子撒拉要给你生一个儿子，你要给他起名叫以撒。我要与他坚定所立的约，做他后裔永远的约。</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>路加福音 1:24-25</h2>
-
-<p><span style="background-color:yellow">
-24&ensp;这些日子以后，他的妻子伊利莎白怀了孕，就<strong>隐藏</strong>了五个月， <br>
-25&ensp;说：“主在眷顾我的日子这样看待我，要把我在人间的羞耻除掉。”
-</span></p>
-
-<h4>Q(&amp;A)</h4>
-
-<ol>
-<li><p>为什么要隐藏五个月？</p></li>
-<li><p>25节的这句话是谁说的？如何理解这句话？</p></li>
-</ol>
-
-
-<h2>路加福音 1:26-38</h2>
-
-<p><span style="background-color:yellow">
-26&ensp;到了第六个月，天使<strong>加百列</strong>奉神的差遣往<strong>加利利</strong>的一座城去，这城名叫<strong>拿撒勒</strong>；<br>
-27&ensp;到一个童女那里，是<strong>已经许配大卫家的一个人</strong>，名叫<strong>约瑟</strong>，<br>
-&ensp;&emsp;童女的名字叫<strong>马利亚</strong>。<br>
-28&ensp;天使进去，对她说：<br>
-&ensp;&emsp;“蒙大恩的女子，我问你安，主和你同在了！” <br>
-29&ensp;马利亚因这话就很惊慌，<br>
-&ensp;&emsp;又<strong>反复思想</strong>这样问安是什么意思。 <br>
-30&ensp;天使对她说：<br>
-&ensp;&emsp;“马利亚，不要怕，你在神面前已经蒙恩了。 <br>
-31&ensp;你要怀孕生子，可以给他起名叫<strong>耶稣</strong>。 <br>
-32&ensp;他要为大，称为至高者的儿子；<br>
-&ensp;&emsp;主神要把他祖大卫的位给他， <br>
-33&ensp;他要做雅各家的王，直到永远；<br>
-&ensp;&emsp;他的国也没有穷尽。” <br>
-34&ensp;马利亚对天使说：“我没有出嫁，怎么有这事呢？” <br>
-35&ensp;天使回答说：<br>
-&ensp;&emsp;“圣灵要临到你身上，至高者的能力要荫庇你。<br>
-&ensp;&emsp;因此，所要生的圣者必称为神的儿子[a]。 <br>
-36&ensp;况且你的亲戚伊利莎白，在年老的时候也怀了男胎，<br>
-&ensp;&emsp;就是那素来称为不生育的，现在有孕六个月了。 <br>
-37&ensp;因为出于神的话，没有一句不带能力的。” <br>
-38&ensp;马利亚说：<br>
-&ensp;&emsp;“我是主的使女，情愿照你的话成就在我身上！”天使就离开她去了。
-</span></p>
-
-<h4>Q(&amp;A)</h4>
-
-<ol>
-<li><p>对比亚伯拉罕，撒迦利亚和马利亚类似经历</p></li>
-<li><p>对比马太福音中对此事的描述</p></li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>马太福音1:18-25
-</span><span class='line'>18 耶稣基督降生的事记在下面：他母亲马利亚已经许配了约瑟，还没有迎娶，马利亚就从圣灵怀了孕。 
-</span><span class='line'>19 她丈夫约瑟是个义人，不愿意明明地羞辱她，想要暗暗地把她休了。 
-</span><span class='line'>20 正思念这事的时候，有主的使者向他梦中显现，说：“大卫的子孙约瑟，不要怕，只管娶过你的妻子马利亚来，因她所怀的孕是从圣灵来的。 
-</span><span class='line'>21 她将要生一个儿子，你要给他起名叫耶稣，因他要将自己的百姓从罪恶里救出来。” 
-</span><span class='line'>22 这一切的事成就，是要应验主借先知所说的话说： 
-</span><span class='line'>23 “必有童女怀孕生子，人要称他的名为以马内利。”（“以马内利”翻出来就是“神与我们同在”。） 
-</span><span class='line'>24 约瑟醒了，起来，就遵着主使者的吩咐把妻子娶过来， 
-</span><span class='line'>25 只是没有和她同房，等她生了儿子[b]，就给他起名叫耶稣。</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>路加福音 1:39-45</h2>
-
-<p><span style="background-color:yellow">
-39&ensp;那时候，马利亚起身急忙往山地里去，来到犹大的一座城， <br>
-40&ensp;进了撒迦利亚的家，问伊利莎白安。 <br>
-41&ensp;伊利莎白一听马利亚问安，所怀的胎就在腹里跳动，<br>
-&ensp;&emsp;<strong>伊利莎白且被圣灵充满，</strong> <br>
-42&ensp;高声喊着说：<br>
-&ensp;&emsp;“你在妇女中是有福的！<br>
-&ensp;&emsp;你所怀的胎也是有福的！ <br>
-43&ensp;我主的母到我这里来，这是从哪里得的呢？ <br>
-44&ensp;因为你问安的声音一入我耳，我腹里的胎就欢喜跳动。 <br>
-45&ensp;这相信的女子是有福的！因为<strong>主对她所说的话都要应验。</strong>”
-</span></p>
-
-<h4>Q(&amp;A)</h4>
-
-<ol>
-<li><p>被圣灵充满所说的话是不是等同于神灵在说话呢？</p></li>
-<li><p>“主对她所说的话”指那些话？
-31-33</p></li>
-</ol>
-
-
-<h2>路加福音 1:46-56</h2>
-
-<p><span style="background-color:yellow">
-46&ensp;马利亚说：“我心尊主为大， <br>
-47&ensp;我灵以神我的救主为乐， <br>
-48&ensp;因为他顾念他使女的卑微。从今以后，万代要称我有福， <br>
-49&ensp;那有权能的为我成就了大事，他的名为圣！ <br>
-50&ensp;他怜悯敬畏他的人，直到世世代代。 <br>
-51&ensp;他用膀臂施展大能，那狂傲的人正心里妄想就被他赶散了。 <br>
-52&ensp;他叫有权柄的失位，叫卑贱的升高； <br>
-53&ensp;叫饥饿的得饱美食，叫富足的空手回去。 <br>
-54&ensp;他扶助了他的仆人以色列， <br>
-55&ensp;为要记念亚伯拉罕和他的后裔，施怜悯直到永远，正如从前对我们列祖所说的话。”<br>
-56&ensp;马利亚和伊利莎白同住约有三个月，就回家去了。
-</span></p>
-
-<h4>相关的经节</h4>
-
-<h2>路加福音 1:57-66</h2>
-
-<p><span style="background-color:yellow">
-57&ensp;伊利莎白的产期到了，就生了一个儿子。 <br>
-58&ensp;邻里亲族听见主向她大施怜悯，就和她一同欢乐。 <br>
-59&ensp;到了第八日，他们来要给孩子行割礼，<br>
-&ensp;&emsp;并要照他父亲的名字叫他撒迦利亚。 <br>
-60&ensp;他母亲说：“不可，<strong>要叫他约翰</strong>。” <br>
-61&ensp;他们说：“你亲族中没有叫这名字的。” <br>
-62&ensp;他们就向他父亲打手势，问他要叫这孩子什么名字。 <br>
-63&ensp;他要了一块写字的板，就写上说：“他的名字是约翰。”他们便都稀奇。 <br>
-64&ensp;撒迦利亚的口立时开了，舌头也舒展了，就说出话来，称颂神。 <br>
-65&ensp;周围居住的人都惧怕。这一切的事就传遍了犹太的山地。 <br>
-66&ensp;凡听见的人都将这事放在心里，说：<br>
-&ensp;&emsp;“这个孩子将来怎么样呢？”因为有主与他同在。
-</span></p>
-
-<h4>Q(&amp;A)</h4>
-
-<ol>
-<li><p>他母亲为何知道“要叫他约翰”？</p></li>
-<li><p>他们稀奇什么？</p></li>
-<li><p>周围居住的人为何都惧怕？</p></li>
-</ol>
-
-
-<h2>路加福音 1:67-80</h2>
-
-<p><span style="background-color:yellow">
-67&ensp;他父亲<strong>撒迦利亚被圣灵充满了</strong>，就预言说： <br>
-68&ensp;“主以色列的神是应当称颂的！<br>
-&ensp;&emsp;因他眷顾他的百姓，为他们施行<strong>救赎</strong>， <br>
-69&ensp;在他仆人大卫家中，为我们兴起了<strong>拯救的角</strong>， <br>
-70&ensp;正如主借着从创世以来圣先知的口所说的话， <br>
-71&ensp;拯救我们脱离仇敌和一切恨我们之人的手； <br>
-72&ensp;向我们列祖施怜悯、记念<strong>他的圣约</strong>， <br>
-73&ensp;就是<strong>他对我们祖宗亚伯拉罕所起的誓</strong>， <br>
-74&ensp;叫我们既从仇敌手中被救出来， <br>
-75&ensp;就可以终身在他面前，坦然无惧地用圣洁、公义侍奉他。 <br>
-76&ensp;孩子啊，你要称为<strong>至高者的先知</strong>，<br>
-&ensp;&emsp;因为你要行在主的前面，预备他的道路， <br>
-77&ensp;叫他的百姓因罪得赦就知道救恩。 <br>
-78&ensp;因我们神怜悯的心肠，叫清晨的日光从高天临到我们， <br>
-79&ensp;要照亮坐在黑暗中死荫里的人，<br>
-&ensp;&emsp;把我们的脚引到平安的路上。”<br>
-80&ensp;那孩子渐渐长大，心灵强健，住在旷野，<br>
-&ensp;&emsp;直到他显明在以色列人面前的日子。
-</span></p>
-
-<h2>References</h2>
-
-<ol>
-<li><a href="https://www.biblegateway.com/passage/?search=%E8%B7%AF%E5%8A%A0%E7%A6%8F%E9%9F%B3%201&amp;version=CUVMPS;NIV">路加福音@biblegateway</a></li>
-<li><a href="http://en.wikipedia.org/wiki/Herod">http://en.wikipedia.org/wiki/Herod</a></li>
-<li><a href="http://en.wikipedia.org/wiki/Roman_Empire">http://en.wikipedia.org/wiki/Roman_Empire</a></li>
-<li><a href="http://www.behindthename.com/name/zechariah">http://www.behindthename.com/name/zechariah</a></li>
-<li><a href="http://www.behindthename.com/name/elizabeth">http://www.behindthename.com/name/elizabeth</a></li>
-<li><a href="http://www.behindthename.com/name/john">http://www.behindthename.com/name/john</a></li>
-</ol>
-
 ]]></content>
   </entry>
   

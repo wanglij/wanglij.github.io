@@ -1,0 +1,620 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Is Constructor Reenterable? - Lijun's Blog</title>
+  <meta name="author" content="Lijun Wang">
+
+  
+  <meta name="description" content="Background While I was working on an issue in my work, I noticed another weird unexpected issue.
+The program is multi-threaded program written in C/C &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wanglij.github.io/blog/2016/12/16/is-constructor-reenterable">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Lijun's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Lijun's Blog</a></h1>
+  
+    <h2>Your word is a lamp on my feet, a light on my path --Psalm 119:105</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wanglij.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Is Constructor Reenterable?</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-12-16T19:42:36+00:00" pubdate data-updated="true">Dec 16<sup>th</sup>, 2016</time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wanglij.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Background</h3>
+
+<p>While I was working on an issue in my work, I noticed another weird unexpected issue.
+The program is multi-threaded program written in C/C++, which runs in QNX platform.
+There is a singleton class in that program that creates a new thread at the end of its constructor method.
+Since it is a singleton, so we assume that there should be one and only one thread created,
+but as a matter fact, most of the time there were two of them running in the process.
+Eventually, I found that the static function getting the instance of the singleton, get_instance(), was called again within the function executed by the new thread.
+At that point, the parent thread may not return from the constructor yet, so by calling get_instance() in the new thread the constructor method may be executed the second time, and consequently created another new thread.</p>
+
+<h3>Example</h3>
+
+<p>Based on what I learned, I wrote a simple example program to reproduce and study this issue only.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;unistd.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;pthread.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">ACls</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'><span class="k">public</span><span class="o">:</span>
+</span><span class='line'>    <span class="k">static</span> <span class="n">ACls</span><span class="o">&amp;</span> <span class="n">get_instance</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">__PRETTY_FUNCTION__</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">pthread_self</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">static</span> <span class="n">ACls</span> <span class="n">instance</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">instance</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="k">private</span><span class="o">:</span>
+</span><span class='line'>    <span class="n">ACls</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tid</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">__PRETTY_FUNCTION__</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; - tid: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">tid</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//        sleep(1);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">~</span><span class="n">ACls</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">arg</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">__PRETTY_FUNCTION__</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">pthread_self</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">ACls</span><span class="o">&amp;</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">ACls</span><span class="o">::</span><span class="n">get_instance</span><span class="p">();</span>
+</span><span class='line'>        <span class="n">obj</span><span class="p">.</span><span class="n">i</span> <span class="o">=</span> <span class="n">pthread_self</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">__PRETTY_FUNCTION__</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; - i: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">obj</span><span class="p">.</span><span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">pthread_t</span>   <span class="n">tid</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">public</span><span class="o">:</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">ACls</span><span class="o">::</span><span class="n">get_instance</span><span class="p">().</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">pause</span><span class="p">();</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Results</h3>
+
+<p>I compile it for both Linux and QNX platform. Apparently, it gives different results on different platforms.</p>
+
+<h4>QNX:</h4>
+
+<p>The problem was duplicated on QNX platform.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp"># ./unit-tests</span>
+</span><span class='line'><span class="k">static</span> <span class="n">ACls</span><span class="o">&amp;</span> <span class="n">ACls</span><span class="o">::</span><span class="n">get_instance</span><span class="p">()</span> <span class="mi">1</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="mi">2</span>
+</span><span class='line'><span class="n">ACls</span><span class="o">::</span><span class="n">ACls</span><span class="p">()</span> <span class="o">-</span> <span class="nl">tid</span><span class="p">:</span> <span class="mi">2</span>
+</span><span class='line'><span class="k">static</span> <span class="n">ACls</span><span class="o">&amp;</span> <span class="n">ACls</span><span class="o">::</span><span class="n">get_instance</span><span class="p">()</span> <span class="mi">2</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="mi">3</span>
+</span><span class='line'><span class="n">ACls</span><span class="o">::</span><span class="n">ACls</span><span class="p">()</span> <span class="o">-</span> <span class="nl">tid</span><span class="p">:</span> <span class="mi">3</span>
+</span><span class='line'><span class="k">static</span> <span class="n">ACls</span><span class="o">&amp;</span> <span class="n">ACls</span><span class="o">::</span><span class="n">get_instance</span><span class="p">()</span> <span class="mi">3</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="o">-</span> <span class="nl">i</span><span class="p">:</span> <span class="mi">3</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="o">-</span> <span class="nl">i</span><span class="p">:</span> <span class="mi">2</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="o">-</span> <span class="nl">i</span><span class="p">:</span> <span class="mi">2</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="o">-</span> <span class="nl">i</span><span class="p">:</span> <span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp"># pidin | grep unit</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">couldn</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">fill_info</span>
+</span><span class='line'>  <span class="mi">872490</span>   <span class="mi">1</span> <span class="p">.</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span>        <span class="mi">10</span><span class="n">r</span> <span class="n">SIGWAITINFO</span>
+</span><span class='line'>  <span class="mi">872490</span>   <span class="mi">2</span> <span class="p">.</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span>        <span class="mi">10</span><span class="n">r</span> <span class="n">NANOSLEEP</span>
+</span><span class='line'>  <span class="mi">872490</span>   <span class="mi">3</span> <span class="p">.</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span>        <span class="mi">10</span><span class="n">r</span> <span class="n">NANOSLEEP</span>
+</span><span class='line'><span class="cp"># gdb unit-tests</span>
+</span><span class='line'><span class="n">GNU</span> <span class="n">gdb</span> <span class="mf">5.2.1</span><span class="n">qnx</span><span class="o">-</span><span class="n">nto</span>
+</span><span class='line'><span class="n">Copyright</span> <span class="mi">2002</span> <span class="n">Free</span> <span class="n">Software</span> <span class="n">Foundation</span><span class="p">,</span> <span class="n">Inc</span><span class="p">.</span>
+</span><span class='line'><span class="n">GDB</span> <span class="n">is</span> <span class="n">free</span> <span class="n">software</span><span class="p">,</span> <span class="n">covered</span> <span class="n">by</span> <span class="n">the</span> <span class="n">GNU</span> <span class="n">General</span> <span class="n">Public</span> <span class="n">License</span><span class="p">,</span> <span class="n">and</span> <span class="n">you</span> <span class="n">are</span>
+</span><span class='line'><span class="n">welcome</span> <span class="n">to</span> <span class="n">change</span> <span class="n">it</span> <span class="n">and</span><span class="o">/</span><span class="n">or</span> <span class="n">distribute</span> <span class="n">copies</span> <span class="n">of</span> <span class="n">it</span> <span class="n">under</span> <span class="n">certain</span> <span class="n">conditions</span><span class="p">.</span>
+</span><span class='line'><span class="n">Type</span> <span class="s">&quot;show copying&quot;</span> <span class="n">to</span> <span class="n">see</span> <span class="n">the</span> <span class="n">conditions</span><span class="p">.</span>
+</span><span class='line'><span class="n">There</span> <span class="n">is</span> <span class="n">absolutely</span> <span class="n">no</span> <span class="n">warranty</span> <span class="k">for</span> <span class="n">GDB</span><span class="p">.</span>  <span class="n">Type</span> <span class="s">&quot;show warranty&quot;</span> <span class="k">for</span> <span class="n">details</span><span class="p">.</span>
+</span><span class='line'><span class="n">This</span> <span class="n">GDB</span> <span class="n">was</span> <span class="n">configured</span> <span class="n">as</span> <span class="s">&quot;ntox86&quot;</span><span class="p">...</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">attach</span> <span class="mi">872490</span>
+</span><span class='line'><span class="n">Attaching</span> <span class="n">to</span> <span class="n">program</span> <span class="err">`</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">process</span> <span class="mi">872490</span>
+</span><span class='line'><span class="n">Reading</span> <span class="n">symbols</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libcpp</span><span class="p">.</span><span class="n">so</span><span class="mf">.4</span><span class="p">...</span><span class="n">done</span><span class="p">.</span>
+</span><span class='line'><span class="n">Loaded</span> <span class="n">symbols</span> <span class="k">for</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libcpp</span><span class="p">.</span><span class="n">so</span><span class="mf">.4</span>
+</span><span class='line'><span class="n">Reading</span> <span class="n">symbols</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span><span class="p">...</span><span class="n">done</span><span class="p">.</span>
+</span><span class='line'><span class="n">Loaded</span> <span class="n">symbols</span> <span class="k">for</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span><span class='line'><span class="nl">warning</span><span class="p">:</span> <span class="n">Unable</span> <span class="n">to</span> <span class="n">find</span> <span class="n">dynamic</span> <span class="n">linker</span> <span class="n">breakpoint</span> <span class="n">function</span><span class="p">.</span>
+</span><span class='line'><span class="n">GDB</span> <span class="n">will</span> <span class="n">be</span> <span class="n">unable</span> <span class="n">to</span> <span class="n">debug</span> <span class="n">shared</span> <span class="n">library</span> <span class="n">initializers</span>
+</span><span class='line'><span class="n">and</span> <span class="n">track</span> <span class="n">explicitly</span> <span class="n">loaded</span> <span class="n">dynamic</span> <span class="n">code</span><span class="p">.</span>
+</span><span class='line'><span class="p">[</span><span class="n">Switching</span> <span class="n">to</span> <span class="n">process</span> <span class="mi">872490</span><span class="p">]</span>
+</span><span class='line'><span class="mh">0xb032e985</span> <span class="n">in</span> <span class="n">SignalWaitinfo</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">info</span> <span class="kr">thread</span>
+</span><span class='line'>  <span class="mi">3</span> <span class="n">process</span> <span class="mi">872490</span>  <span class="mh">0xb032f36d</span> <span class="n">in</span> <span class="n">TimerTimeout</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span><span class='line'>  <span class="mi">2</span> <span class="n">process</span> <span class="mi">872490</span>  <span class="mh">0xb032f36d</span> <span class="n">in</span> <span class="n">TimerTimeout</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span><span class='line'><span class="o">*</span> <span class="mi">1</span> <span class="n">process</span> <span class="mi">872490</span>  <span class="mh">0xb032e985</span> <span class="n">in</span> <span class="n">SignalWaitinfo</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">bt</span>
+</span><span class='line'><span class="cp">#0  0xb032e985 in SignalWaitinfo () from /lib/libc.so.2</span>
+</span><span class='line'><span class="cp">#1  0xb031733b in pause () from /lib/libc.so.2</span>
+</span><span class='line'><span class="cp">#2  0x0804a929 in main () at C:/p4/LEADER_EM_DEV/unit-tests/src/main.cpp:53</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="kr">thread</span> <span class="mi">2</span>
+</span><span class='line'><span class="p">[</span><span class="n">Switching</span> <span class="n">to</span> <span class="kr">thread</span> <span class="mi">2</span> <span class="p">(</span><span class="n">process</span> <span class="mi">872490</span><span class="p">)]</span><span class="err">#</span><span class="mi">0</span>  <span class="mh">0xb032f36d</span> <span class="n">in</span> <span class="n">TimerTimeout</span> <span class="p">()</span>
+</span><span class='line'>   <span class="n">from</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">bt</span>
+</span><span class='line'><span class="cp">#0  0xb032f36d in TimerTimeout () from /lib/libc.so.2</span>
+</span><span class='line'><span class="cp">#1  0xb0317ac4 in sleep () from /lib/libc.so.2</span>
+</span><span class='line'><span class="cp">#2  0x0804ba79 in ACls::func(void*) (arg=0x0)</span>
+</span><span class='line'>    <span class="n">at</span> <span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">p4</span><span class="o">/</span><span class="n">LEADER_EM_DEV</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">38</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="kr">thread</span> <span class="mi">3</span>
+</span><span class='line'><span class="p">[</span><span class="n">Switching</span> <span class="n">to</span> <span class="kr">thread</span> <span class="mi">3</span> <span class="p">(</span><span class="n">process</span> <span class="mi">872490</span><span class="p">)]</span><span class="err">#</span><span class="mi">0</span>  <span class="mh">0xb032f36d</span> <span class="n">in</span> <span class="n">TimerTimeout</span> <span class="p">()</span>
+</span><span class='line'>   <span class="n">from</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">bt</span>
+</span><span class='line'><span class="cp">#0  0xb032f36d in TimerTimeout () from /lib/libc.so.2</span>
+</span><span class='line'><span class="cp">#1  0xb0317ac4 in sleep () from /lib/libc.so.2</span>
+</span><span class='line'><span class="cp">#2  0x0804ba79 in ACls::func(void*) (arg=0x0)</span>
+</span><span class='line'>    <span class="n">at</span> <span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">p4</span><span class="o">/</span><span class="n">LEADER_EM_DEV</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">38</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>LINUX:</h3>
+
+<p>It runs fine in Linux platform:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="err">$</span> <span class="p">.</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span>
+</span><span class='line'><span class="k">static</span> <span class="n">ACls</span><span class="o">&amp;</span> <span class="n">ACls</span><span class="o">::</span><span class="n">get_instance</span><span class="p">()</span> <span class="mi">140430000215872</span>
+</span><span class='line'><span class="n">ACls</span><span class="o">::</span><span class="n">ACls</span><span class="p">()</span> <span class="o">-</span> <span class="nl">tid</span><span class="p">:</span> <span class="mi">140429980940032</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="mi">140429980940032</span>
+</span><span class='line'><span class="k">static</span> <span class="n">ACls</span><span class="o">&amp;</span> <span class="n">ACls</span><span class="o">::</span><span class="n">get_instance</span><span class="p">()</span> <span class="mi">140429980940032</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="o">-</span> <span class="nl">i</span><span class="p">:</span> <span class="mi">1730230016</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ACls</span><span class="o">::</span><span class="n">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="o">-</span> <span class="nl">i</span><span class="p">:</span> <span class="mi">1730230016</span>
+</span><span class='line'>
+</span><span class='line'><span class="err">$</span> <span class="n">ps</span> <span class="o">-</span><span class="n">efL</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">unit</span>
+</span><span class='line'><span class="n">wanglij</span>   <span class="mi">7218</span>  <span class="mi">3780</span>  <span class="mi">7218</span>  <span class="mi">0</span>    <span class="mi">2</span> <span class="mi">18</span><span class="o">:</span><span class="mi">34</span> <span class="n">pts</span><span class="o">/</span><span class="mi">3</span>    <span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span> <span class="p">.</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span>
+</span><span class='line'><span class="n">wanglij</span>   <span class="mi">7218</span>  <span class="mi">3780</span>  <span class="mi">7219</span>  <span class="mi">0</span>    <span class="mi">2</span> <span class="mi">18</span><span class="o">:</span><span class="mi">34</span> <span class="n">pts</span><span class="o">/</span><span class="mi">3</span>    <span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span> <span class="p">.</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span>
+</span><span class='line'><span class="err">$</span> <span class="n">sudo</span> <span class="n">gcore</span> <span class="mi">7218</span>
+</span><span class='line'><span class="p">[</span><span class="n">New</span> <span class="n">LWP</span> <span class="mi">7219</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="n">Thread</span> <span class="n">debugging</span> <span class="k">using</span> <span class="n">libthread_db</span> <span class="n">enabled</span><span class="p">]</span>
+</span><span class='line'><span class="n">Using</span> <span class="n">host</span> <span class="n">libthread_db</span> <span class="n">library</span> <span class="s">&quot;/usr/lib/libthread_db.so.1&quot;</span><span class="p">.</span>
+</span><span class='line'><span class="mh">0x00007f21031ac83d</span> <span class="n">in</span> <span class="n">pause</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libpthread</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span>
+</span><span class='line'><span class="n">Saved</span> <span class="n">corefile</span> <span class="n">core</span><span class="mf">.7218</span>
+</span><span class='line'><span class="err">$</span> <span class="n">gdb</span> <span class="n">unit</span><span class="o">-</span><span class="n">tests</span> <span class="n">core</span><span class="mf">.7218</span>
+</span><span class='line'><span class="n">GNU</span> <span class="n">gdb</span> <span class="p">(</span><span class="n">GDB</span><span class="p">)</span> <span class="mf">7.11</span>
+</span><span class='line'><span class="n">Copyright</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="mi">2016</span> <span class="n">Free</span> <span class="n">Software</span> <span class="n">Foundation</span><span class="p">,</span> <span class="n">Inc</span><span class="p">.</span>
+</span><span class='line'><span class="n">License</span> <span class="n">GPLv3</span><span class="o">+:</span> <span class="n">GNU</span> <span class="n">GPL</span> <span class="n">version</span> <span class="mi">3</span> <span class="n">or</span> <span class="n">later</span> <span class="o">&lt;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//gnu.org/licenses/gpl.html&gt;</span>
+</span><span class='line'><span class="n">This</span> <span class="n">is</span> <span class="n">free</span> <span class="nl">software</span><span class="p">:</span> <span class="n">you</span> <span class="n">are</span> <span class="n">free</span> <span class="n">to</span> <span class="n">change</span> <span class="n">and</span> <span class="n">redistribute</span> <span class="n">it</span><span class="p">.</span>
+</span><span class='line'><span class="n">There</span> <span class="n">is</span> <span class="n">NO</span> <span class="n">WARRANTY</span><span class="p">,</span> <span class="n">to</span> <span class="n">the</span> <span class="n">extent</span> <span class="n">permitted</span> <span class="n">by</span> <span class="n">law</span><span class="p">.</span>  <span class="n">Type</span> <span class="s">&quot;show copying&quot;</span>
+</span><span class='line'><span class="n">and</span> <span class="s">&quot;show warranty&quot;</span> <span class="k">for</span> <span class="n">details</span><span class="p">.</span>
+</span><span class='line'><span class="n">This</span> <span class="n">GDB</span> <span class="n">was</span> <span class="n">configured</span> <span class="n">as</span> <span class="s">&quot;x86_64-pc-linux-gnu&quot;</span><span class="p">.</span>
+</span><span class='line'><span class="n">Type</span> <span class="s">&quot;show configuration&quot;</span> <span class="k">for</span> <span class="n">configuration</span> <span class="n">details</span><span class="p">.</span>
+</span><span class='line'><span class="n">For</span> <span class="n">bug</span> <span class="n">reporting</span> <span class="n">instructions</span><span class="p">,</span> <span class="n">please</span> <span class="nl">see</span><span class="p">:</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//www.gnu.org/software/gdb/bugs/&gt;.</span>
+</span><span class='line'><span class="n">Find</span> <span class="n">the</span> <span class="n">GDB</span> <span class="n">manual</span> <span class="n">and</span> <span class="n">other</span> <span class="n">documentation</span> <span class="n">resources</span> <span class="n">online</span> <span class="nl">at</span><span class="p">:</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//www.gnu.org/software/gdb/documentation/&gt;.</span>
+</span><span class='line'><span class="n">For</span> <span class="n">help</span><span class="p">,</span> <span class="n">type</span> <span class="s">&quot;help&quot;</span><span class="p">.</span>
+</span><span class='line'><span class="n">Type</span> <span class="s">&quot;apropos word&quot;</span> <span class="n">to</span> <span class="n">search</span> <span class="k">for</span> <span class="n">commands</span> <span class="n">related</span> <span class="n">to</span> <span class="s">&quot;word&quot;</span><span class="p">...</span>
+</span><span class='line'><span class="n">Reading</span> <span class="n">symbols</span> <span class="n">from</span> <span class="n">unit</span><span class="o">-</span><span class="n">tests</span><span class="p">...</span><span class="n">done</span><span class="p">.</span>
+</span><span class='line'><span class="p">[</span><span class="n">New</span> <span class="n">LWP</span> <span class="mi">7218</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="n">New</span> <span class="n">LWP</span> <span class="mi">7219</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nl">warning</span><span class="p">:</span> <span class="n">Could</span> <span class="n">not</span> <span class="n">load</span> <span class="n">shared</span> <span class="n">library</span> <span class="n">symbols</span> <span class="k">for</span> <span class="n">linux</span><span class="o">-</span><span class="n">vdso</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span><span class="p">.</span>
+</span><span class='line'><span class="n">Do</span> <span class="n">you</span> <span class="n">need</span> <span class="s">&quot;set solib-search-path&quot;</span> <span class="n">or</span> <span class="s">&quot;set sysroot&quot;</span><span class="o">?</span>
+</span><span class='line'><span class="p">[</span><span class="n">Thread</span> <span class="n">debugging</span> <span class="k">using</span> <span class="n">libthread_db</span> <span class="n">enabled</span><span class="p">]</span>
+</span><span class='line'><span class="n">Using</span> <span class="n">host</span> <span class="n">libthread_db</span> <span class="n">library</span> <span class="s">&quot;/usr/lib/libthread_db.so.1&quot;</span><span class="p">.</span>
+</span><span class='line'><span class="n">Core</span> <span class="n">was</span> <span class="n">generated</span> <span class="n">by</span> <span class="err">`</span><span class="p">.</span><span class="o">/</span><span class="n">unit</span><span class="o">-</span><span class="n">tests</span><span class="err">&#39;</span><span class="p">.</span>
+</span><span class='line'><span class="cp">#0  0x00007f21031ac83d in pause () from /usr/lib/libpthread.so.0</span>
+</span><span class='line'><span class="p">[</span><span class="n">Current</span> <span class="kr">thread</span> <span class="n">is</span> <span class="mi">1</span> <span class="p">(</span><span class="n">Thread</span> <span class="mh">0x7f21037bf740</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">7218</span><span class="p">))]</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">info</span> <span class="kr">thread</span>
+</span><span class='line'>  <span class="n">Id</span>   <span class="n">Target</span> <span class="n">Id</span>         <span class="n">Frame</span>
+</span><span class='line'><span class="o">*</span> <span class="mi">1</span>    <span class="n">Thread</span> <span class="mh">0x7f21037bf740</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">7218</span><span class="p">)</span> <span class="mh">0x00007f21031ac83d</span> <span class="n">in</span> <span class="n">pause</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libpthread</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span>
+</span><span class='line'>  <span class="mi">2</span>    <span class="n">Thread</span> <span class="mh">0x7f210255d700</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">7219</span><span class="p">)</span> <span class="mh">0x00007f210261561d</span> <span class="n">in</span> <span class="n">nanosleep</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">bt</span>
+</span><span class='line'><span class="cp">#0  0x00007f21031ac83d in pause () from /usr/lib/libpthread.so.0</span>
+</span><span class='line'><span class="cp">#1  0x0000000000400cd5 in main () at /home/wanglij/P4/LEADER_EM_DEV/unit-tests/src/main.cpp:53</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="kr">thread</span> <span class="mi">2</span>
+</span><span class='line'><span class="p">[</span><span class="n">Switching</span> <span class="n">to</span> <span class="kr">thread</span> <span class="mi">2</span> <span class="p">(</span><span class="n">Thread</span> <span class="mh">0x7f210255d700</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">7219</span><span class="p">))]</span>
+</span><span class='line'><span class="cp">#0  0x00007f210261561d in nanosleep () from /usr/lib/libc.so.6</span>
+</span><span class='line'><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">bt</span>
+</span><span class='line'><span class="cp">#0  0x00007f210261561d in nanosleep () from /usr/lib/libc.so.6</span>
+</span><span class='line'><span class="cp">#1  0x00007f210261556a in sleep () from /usr/lib/libc.so.6</span>
+</span><span class='line'><span class="cp">#2  0x000000000040107e in ACls::func (arg=&lt;optimized out&gt;) at /home/wanglij/P4/LEADER_EM_DEV/unit-tests/src/main.cpp:38</span>
+</span><span class='line'><span class="cp">#3  0x00007f21031a3424 in start_thread () from /usr/lib/libpthread.so.0</span>
+</span><span class='line'><span class="cp">#4  0x00007f2102645cbd in clone () from /usr/lib/libc.so.6</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Conclusion</h3>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Lijun Wang</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-12-16T19:42:36+00:00" pubdate data-updated="true">Dec 16<sup>th</sup>, 2016</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wanglij.github.io/blog/2016/12/16/is-constructor-reenterable/" data-via="" data-counturl="http://wanglij.github.io/blog/2016/12/16/is-constructor-reenterable/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/06/03/acts-5-study-notes/" title="Previous Post: Acts 5 Study Notes">&laquo; Acts 5 Study Notes</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/12/16/is-constructor-reenterable/">Is Constructor Reenterable?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/03/acts-5-study-notes/">Acts 5 Study Notes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/13/acts-4-study-notes/">Acts 4 Study Notes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/04/12/illegal-instruction-error-due-to-singleton-template/">Illegal Instruction Error Due to Singleton Template</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/03/14/octopress-broken-after-arch-linux-upgrade/">Octopress Broken After Arch Linux Upgrade</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Lijun Wang -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'lijunsblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wanglij.github.io/blog/2016/12/16/is-constructor-reenterable/';
+        var disqus_url = 'http://wanglij.github.io/blog/2016/12/16/is-constructor-reenterable/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
