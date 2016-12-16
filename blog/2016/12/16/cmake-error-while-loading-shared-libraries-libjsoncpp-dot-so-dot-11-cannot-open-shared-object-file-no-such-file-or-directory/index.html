@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Pacman: The Requested URL Returned Error: 404 - Lijun's Blog</title>
+  <title>Cmake: Error While Loading Shared Libraries: libjsoncpp.so.11: Cannot Open Shared Object File: No Such File or Directory - Lijun's Blog</title>
   <meta name="author" content="Lijun Wang">
 
   
-  <meta name="description" content="pacman always gives the error &ldquo;The requested URL returned error: 404&rdquo;.
-The problem was resolved by running 1
-pacman -Syy ">
+  <meta name="description" content="I worked on C++ program supposed to be run in QNX, but to facility debugging, I sometimes will try to build the source codes in my Arch Linux virtual &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@ pacman -Syy ">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://wanglij.github.io/blog/2016/03/08/pacman-the-requested-url-returned-error-404">
+  <link rel="canonical" href="http://wanglij.github.io/blog/2016/12/16/cmake-error-while-loading-shared-libraries-libjsoncpp-dot-so-dot-11-cannot-open-shared-object-file-no-such-file-or-directory">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Lijun's Blog" type="application/atom+xml">
@@ -70,7 +68,7 @@ pacman -Syy ">
   
   <header>
     
-      <h1 class="entry-title">Pacman: The Requested URL Returned Error: 404</h1>
+      <h1 class="entry-title">Cmake: Error While Loading Shared Libraries: libjsoncpp.so.11: Cannot Open Shared Object File: No Such File or Directory</h1>
     
     
       <p class="meta">
@@ -86,7 +84,7 @@ pacman -Syy ">
   
 
 
-<time datetime="2016-03-08T23:02:02+00:00" pubdate data-updated="true">Mar 8<sup>th</sup>, 2016</time>
+<time datetime="2016-12-16T20:35:43+00:00" pubdate data-updated="true">Dec 16<sup>th</sup>, 2016</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://wanglij.github.io">Comments</a>
@@ -96,11 +94,27 @@ pacman -Syy ">
   </header>
 
 
-<div class="entry-content"><p>pacman always gives the error &ldquo;The requested URL returned error: 404&rdquo;.
-The problem was resolved by running</p>
+<div class="entry-content"><p>I worked on C++ program supposed to be run in QNX, but to facility debugging, I sometimes will try to build the source codes in my Arch Linux virtual machine.
+Here are the command lines of doing this</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>pacman -Syy</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir ~/&lt;path-to-project&gt;/PROJECT_NAME_linux
+</span><span class='line'>$ cd  ~/&lt;path-to-project&gt;/PROJECT_NAME_linux
+</span><span class='line'>$ cmake -D PLATFORM=LINUX ~/&lt;path-to-project&gt;/PROJECT_NAME/&lt;folder-containing-CMakeLists.txt&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But for some unknown reason, I can run cmake in my Arch Linux any more recently. It gives the following error</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cmake: error while loading shared libraries: libjsoncpp.so.11: cannot open shared object file: No such file or directory</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This was solved by installing jsoncpp.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo pacman -S jsoncpp</span></code></pre></td></tr></table></div></figure>
 
 </div>
 
@@ -124,7 +138,7 @@ The problem was resolved by running</p>
   
 
 
-<time datetime="2016-03-08T23:02:02+00:00" pubdate data-updated="true">Mar 8<sup>th</sup>, 2016</time>
+<time datetime="2016-12-16T20:35:43+00:00" pubdate data-updated="true">Dec 16<sup>th</sup>, 2016</time>
       
 
 
@@ -132,7 +146,7 @@ The problem was resolved by running</p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wanglij.github.io/blog/2016/03/08/pacman-the-requested-url-returned-error-404/" data-via="" data-counturl="http://wanglij.github.io/blog/2016/03/08/pacman-the-requested-url-returned-error-404/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wanglij.github.io/blog/2016/12/16/cmake-error-while-loading-shared-libraries-libjsoncpp-dot-so-dot-11-cannot-open-shared-object-file-no-such-file-or-directory/" data-via="" data-counturl="http://wanglij.github.io/blog/2016/12/16/cmake-error-while-loading-shared-libraries-libjsoncpp-dot-so-dot-11-cannot-open-shared-object-file-no-such-file-or-directory/" >Tweet</a>
   
   
   
@@ -141,10 +155,8 @@ The problem was resolved by running</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2016/02/23/funny-moments-with-kids/" title="Previous Post: 童言无忌">&laquo; 童言无忌</a>
+        <a class="basic-alignment left" href="/blog/2016/12/16/is-constructor-reenterable/" title="Previous Post: Is Constructor Reenterable?">&laquo; Is Constructor Reenterable?</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2016/03/11/shared-folder-not-mounted-after-arch-linux-upgrade/" title="Next Post: Shared folder not mounted after Arch Linux upgrade">Shared folder not mounted after Arch Linux upgrade &raquo;</a>
       
     </p>
   </footer>
@@ -210,8 +222,8 @@ The problem was resolved by running</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://wanglij.github.io/blog/2016/03/08/pacman-the-requested-url-returned-error-404/';
-        var disqus_url = 'http://wanglij.github.io/blog/2016/03/08/pacman-the-requested-url-returned-error-404/';
+        var disqus_identifier = 'http://wanglij.github.io/blog/2016/12/16/cmake-error-while-loading-shared-libraries-libjsoncpp-dot-so-dot-11-cannot-open-shared-object-file-no-such-file-or-directory/';
+        var disqus_url = 'http://wanglij.github.io/blog/2016/12/16/cmake-error-while-loading-shared-libraries-libjsoncpp-dot-so-dot-11-cannot-open-shared-object-file-no-such-file-or-directory/';
         var disqus_script = 'embed.js';
       
     (function () {
